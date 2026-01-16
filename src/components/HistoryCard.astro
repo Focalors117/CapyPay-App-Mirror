@@ -1,0 +1,71 @@
+---
+const { date, description } = Astro.props;
+let amount = Astro.props.amount;
+let isNegative = amount.toString().includes("-");
+
+// Determine colors based on transaction type for a dark theme
+const amountColor = isNegative ? "text-rose-400" : "text-emerald-400";
+const iconBg = isNegative ? "bg-rose-500/10" : "bg-emerald-500/10";
+const iconColor = isNegative ? "text-rose-500" : "text-emerald-500";
+
+const displayAmount = isNegative ? amount : `+${amount}`;
+---
+
+<div
+  class="group flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 transition-all duration-300 cursor-pointer w-[calc(100%-8px)] mx-auto hover:bg-white/10 hover:border-white/20 hover:scale-[1.01] overflow-hidden"
+>
+  <div class="flex items-center gap-4 min-w-0">
+    <div
+      class={`w-12 h-12 rounded-full ${iconBg} flex items-center justify-center ${iconColor} transition-transform shrink-0`}
+    >
+      {
+        isNegative ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"
+            />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 10l7-7m0 0l7 7m-7-7v18"
+            />
+          </svg>
+        )
+      }
+    </div>
+
+    <div class="min-w-0 flex-1 mr-2">
+      <h3
+        class="text-white font-medium group-hover:text-indigo-200 transition-colors truncate"
+      >
+        {description}
+      </h3>
+      <p class="text-xs text-slate-400">{date}</p>
+    </div>
+  </div>
+
+  <div class="text-right shrink-0">
+    <div class={`text-lg font-bold tracking-wide ${amountColor}`}>
+      {displayAmount}
+    </div>
+  </div>
+</div>

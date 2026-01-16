@@ -1,0 +1,70 @@
+---
+const { amount } = Astro.props;
+---
+
+<div
+  class="relative overflow-hidden bg-linear-to-br from-indigo-600 to-violet-700 rounded-3xl p-8 text-white transition-all duration-500 isolate z-10"
+>
+  <!-- 
+    Decoración de fondo (Círculos borrosos).
+    Dan profundidad a la tarjeta azul. No toquen el z-index o se monta encima del texto.
+  -->
+  <div
+    class="absolute top-0 right-0 -mr-8 -mt-8 w-64 h-64 rounded-full bg-white opacity-10 blur-3xl pointer-events-none"
+  >
+  </div>
+  <div
+    class="absolute bottom-0 left-0 -ml-8 -mb-8 w-40 h-40 rounded-full bg-indigo-950 opacity-20 blur-2xl pointer-events-none"
+  >
+  </div>
+
+  <div class="relative z-0">
+    <div class="flex justify-between items-start mb-2">
+      <h2 class="text-indigo-200 text-sm font-medium tracking-wide uppercase">
+        Saldo Total
+      </h2>
+      <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-medium"
+        >VISA **** 4242</span
+      >
+    </div>
+
+    <p class="text-5xl font-bold tracking-tight mb-8">
+      ${amount}
+    </p>
+
+    <div class="flex gap-3">
+      <button
+        class="flex-1 bg-white text-indigo-900 py-3 px-6 rounded-xl font-semibold shadow-lg hover:bg-slate-100 hover:scale-[1.02] active:scale-95 transition-all text-center flex justify-center items-center gap-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          ><path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+            clip-rule="evenodd"></path></svg
+        >
+        <span>Recargar</span>
+      </button>
+
+      <button
+        class="flex-1 bg-indigo-800/50 backdrop-blur-md border border-white/20 text-white py-3 px-6 rounded-xl font-semibold hover:bg-indigo-800/70 hover:scale-[1.02] active:scale-95 transition-all text-center flex justify-center items-center gap-2 group"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 transition-transform group-hover:rotate-45"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z"
+            clip-rule="evenodd"></path>
+        </svg>
+        <span>Enviar</span>
+      </button>
+    </div>
+  </div>
+</div>

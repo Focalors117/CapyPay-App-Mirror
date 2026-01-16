@@ -1,0 +1,259 @@
+---
+import CapyPay from "../layouts/MainLayout.astro";
+import BalanceCard from "../components/BalanceCard.astro";
+import HistoryCard from "../components/HistoryCard.astro";
+import QuickTransfer from "../components/QuickTransfer.astro";
+import ExpenseChart from "../components/ExpenseChart.astro";
+---
+
+<CapyPay title="Dashboard | CapyPay">
+  <!-- 
+    GRID PRINCIPAL
+    Aquí organizamos todo en 12 columnas.
+    En móvil es 1 sola columna (grid-cols-1), pero en PC usamos las 12 (lg:grid-cols-12).
+  -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full h-full min-h-0">
+    <!-- 
+      COLUMNA IZQUIERDA: Historial de movimientos.
+      OJO AQUÍ: 'order-3' significa que en el cel se va al fondo, 
+      pero 'lg:order-1' lo pone de primero a la izquierda en PC.
+    -->
+    <aside
+      class="lg:col-span-3 animate-fade-in-left order-3 lg:order-1 flex flex-col gap-6 h-full min-h-0"
+    >
+      <div
+        class="bg-white/5 border border-white/10 rounded-3xl flex flex-col h-full min-h-0 isolate shadow-lg"
+      >
+        <div class="p-6 pb-2 shrink-0">
+          <div class="flex justify-between items-center">
+            <h2 class="text-xl font-bold text-white">Actividad</h2>
+            <button
+              class="text-sm text-indigo-400 hover:text-indigo-300 transition-colors cursor-pointer"
+              >Ver</button
+            >
+          </div>
+        </div>
+
+        <div class="px-4 pb-4 overflow-y-auto custom-scrollbar flex-1">
+          <div class="space-y-3 pt-2">
+            <div
+              class="text-xs font-bold text-slate-500 uppercase tracking-widest bg-[#16172b] py-2 z-10 w-full rounded-md px-2 sticky top-0"
+            >
+              Hoy
+            </div>
+            <HistoryCard
+              date="09:42 AM"
+              description="Netflix"
+              amount="-15.99"
+            />
+            <HistoryCard
+              date="08:30 AM"
+              description="Starbucks"
+              amount="-8.50"
+            />
+            <HistoryCard date="07:15 AM" description="Uber" amount="-12.00" />
+
+            <div
+              class="text-xs font-bold text-slate-500 uppercase tracking-widest bg-[#16172b] py-2 z-10 w-full rounded-md px-2 sticky top-0 mt-4"
+            >
+              Ayer
+            </div>
+            <HistoryCard
+              date="19:20 PM"
+              description="Transferencia"
+              amount="250.00"
+            />
+            <HistoryCard
+              date="14:15 PM"
+              description="Uber Ride"
+              amount="-12.40"
+            />
+            <HistoryCard
+              date="12:00 PM"
+              description="Alquiler"
+              amount="-850.00"
+            />
+            <HistoryCard
+              date="10:00 AM"
+              description="Freelance"
+              amount="1250.00"
+            />
+
+            <div
+              class="text-xs font-bold text-slate-500 uppercase tracking-widest bg-[#16172b] py-2 z-10 w-full rounded-md px-2 sticky top-0 mt-4"
+            >
+              Esta Semana
+            </div>
+            <HistoryCard date="Lunes" description="Spotify" amount="-9.99" />
+            <HistoryCard date="Lunes" description="Gym" amount="-45.00" />
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 
+      COLUMNA CENTRAL: Header (saludo) y Tarjeta de Saldo.
+      En el cel sale de primero (order-1), en PC va en el medio (order-2).
+      Ocupa 6 espacios (col-span-6), o sea, es la más ancha.
+    -->
+    <section
+      class="lg:col-span-6 flex flex-col gap-6 animate-fade-in-down order-1 lg:order-2 h-full min-h-0"
+    >
+      <!-- Header -->
+      <header
+        class="flex justify-between items-center bg-white/5 border border-white/10 rounded-3xl p-6 w-full shrink-0 isolate shadow-lg"
+      >
+        <div>
+          <h1 class="text-2xl font-bold text-white flex gap-2 items-center">
+            Hola, Usuario <span
+              class="animate-wave origin-bottom-right inline-block">👋</span
+            >
+          </h1>
+          <p class="text-slate-400 text-sm mt-1">Resumen financiero</p>
+        </div>
+        <div
+          class="text-xs font-medium bg-indigo-500/20 text-indigo-200 border border-indigo-500/30 px-3 py-1.5 rounded-full whitespace-nowrap"
+        >
+          {
+            new Date().toLocaleDateString("es-ES", {
+              month: "long",
+              day: "numeric",
+            })
+          }
+        </div>
+      </header>
+
+      <!-- Balance Card Section -->
+      <div class="flex flex-col gap-6 flex-1 min-h-0">
+        <div class="w-full shrink-0">
+          <BalanceCard amount="12,450.00" />
+        </div>
+
+        <!-- Quick Stats attached to Center -->
+        <div class="grid grid-cols-2 gap-4 w-full flex-1">
+          <div
+            class="bg-white/5 border border-white/10 p-4 rounded-2xl flex items-center gap-3 cursor-pointer transition-colors group h-full"
+          >
+            <div
+              class="w-10 h-10 shrink-0 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center transition-transform"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                ><path
+                  fill-rule="evenodd"
+                  d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z"
+                  clip-rule="evenodd"></path></svg
+              >
+            </div>
+            <div>
+              <h4 class="text-white text-sm font-medium">Ingresos</h4>
+              <p class="text-emerald-400 text-xs font-bold">+15%</p>
+            </div>
+          </div>
+
+          <div
+            class="bg-white/5 border border-white/10 p-4 rounded-2xl flex items-center gap-3 cursor-pointer transition-colors group h-full"
+          >
+            <div
+              class="w-10 h-10 shrink-0 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center transition-transform"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                ><path
+                  fill-rule="evenodd"
+                  d="M12 13a1 1 0 110 2h5a1 1 0 011-1V9a1 1 0 11-2 0v2.586l-4.293-4.293a1 1 0 01-1.414 0L8 9.586 3.707 5.293a1 1 0 01-1.414 1.414l5 5a1 1 0 011.414 0L11 9.414 14.586 13H12z"
+                  clip-rule="evenodd"></path></svg
+              >
+            </div>
+            <div>
+              <h4 class="text-white text-sm font-medium">Gastos</h4>
+              <p class="text-rose-400 text-xs font-bold">-5%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Column: Tools -->
+    <!-- Order 2 on mobile, Order 3 on desktop (right) -->
+    <aside
+      class="lg:col-span-3 flex flex-col gap-6 animate-fade-in-up order-2 lg:order-3 h-full min-h-0"
+    >
+      <div class="shrink-0">
+        <QuickTransfer />
+      </div>
+      <div class="flex-1 min-h-0">
+        <ExpenseChart />
+      </div>
+    </aside>
+  </div>
+
+  <style>
+    /* Keyframes */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    @keyframes wave {
+      0%,
+      100% {
+        transform: rotate(0deg);
+      }
+      25% {
+        transform: rotate(20deg);
+      }
+      75% {
+        transform: rotate(-15deg);
+      }
+    }
+
+    .animate-fade-in-down {
+      animation: fadeInDown 0.6s ease-out forwards;
+    }
+    .animate-fade-in-up {
+      animation: fadeInUp 0.6s ease-out forwards;
+      opacity: 0;
+      animation-delay: 0.2s;
+    }
+    .animate-fade-in-left {
+      animation: fadeInLeft 0.6s ease-out forwards;
+      opacity: 0;
+      animation-delay: 0.1ms;
+    }
+    .animate-wave {
+      animation: wave 1.5s infinite;
+    }
+  </style>
+</CapyPay>

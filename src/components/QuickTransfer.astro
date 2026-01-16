@@ -1,0 +1,42 @@
+---
+const contacts = [
+  { name: "Ana", src: "https://i.pravatar.cc/150?u=a042581f4e29026024d" },
+  { name: "Carlos", src: "https://i.pravatar.cc/150?u=a042581f4e29026704d" },
+  { name: "Luisa", src: "https://i.pravatar.cc/150?u=a04258114e29026702d" },
+  { name: "Miguel", src: "https://i.pravatar.cc/150?u=a042581f4e29026094d" },
+  { name: "Sofía", src: "https://i.pravatar.cc/150?u=a042581f4e29026025d" },
+];
+---
+
+<div
+  class="bg-white/5 rounded-3xl p-6 border border-white/10 shadow-lg isolate overflow-visible"
+>
+  <h3 class="text-white text-lg font-semibold mb-2">Envío Rápido</h3>
+  <div class="flex gap-4 overflow-x-auto py-4 px-1 custom-scrollbar -mx-1">
+    <div
+      class="flex flex-col items-center gap-2 cursor-pointer group min-w-15 transition-transform hover:scale-110 duration-300"
+    >
+      <div
+        class="w-14 h-14 rounded-full bg-violet-600/50 flex items-center justify-center border-2 border-dashed border-white/30 transition-colors group-hover:border-white/60 group-hover:bg-violet-600/70"
+      >
+        <span class="text-2xl text-white">+</span>
+      </div>
+      <span class="text-xs text-gray-300 group-hover:text-white">Nuevo</span>
+    </div>
+
+    {
+      contacts.map((contact) => (
+        <div class="flex flex-col items-center gap-2 cursor-pointer group min-w-15 transition-transform hover:scale-110 duration-300">
+          <img
+            src={contact.src}
+            alt={contact.name}
+            class="w-14 h-14 rounded-full object-cover border-2 border-transparent transition-all ring-2 ring-transparent"
+          />
+          <span class="text-xs text-gray-300 transition-colors">
+            {contact.name}
+          </span>
+        </div>
+      ))
+    }
+  </div>
+</div>
