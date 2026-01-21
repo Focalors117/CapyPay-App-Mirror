@@ -1,27 +1,50 @@
 ---
 const contacts = [
-  { name: "Ana", src: "https://i.pravatar.cc/150?u=a042581f4e29026024d" },
-  { name: "Carlos", src: "https://i.pravatar.cc/150?u=a042581f4e29026704d" },
-  { name: "Luisa", src: "https://i.pravatar.cc/150?u=a04258114e29026702d" },
-  { name: "Miguel", src: "https://i.pravatar.cc/150?u=a042581f4e29026094d" },
-  { name: "Sofía", src: "https://i.pravatar.cc/150?u=a042581f4e29026025d" },
+  { name: "Angu", src: "https://api.dicebear.com/9.x/avataaars/svg?seed=Angu" },
+  {
+    name: "Reptiliano",
+    src: "https://api.dicebear.com/9.x/avataaars/svg?seed=Reptiliano",
+  },
+  {
+    name: "AngelaGozo",
+    src: "https://api.dicebear.com/9.x/avataaars/svg?seed=AngelaGozo",
+  },
+  {
+    name: "DGCIM",
+    src: "https://api.dicebear.com/9.x/avataaars/svg?seed=DGCIM",
+  },
 ];
 ---
 
 <div
-  class="bg-white/5 rounded-3xl p-6 border border-white/10 shadow-lg isolate overflow-visible"
+  class="bg-[#0a0a0a] rounded-3xl p-6 border border-white/10 shadow-lg isolate overflow-visible relative group"
 >
-  <h3 class="text-white text-lg font-semibold mb-2">Envío Rápido</h3>
-  <div class="flex gap-4 overflow-x-auto py-4 px-1 custom-scrollbar -mx-1">
+  <!-- Glow -->
+  <div
+    class="absolute -top-10 -right-10 w-32 h-32 bg-[#d7fd48]/10 rounded-full blur-2xl group-hover:bg-[#d7fd48]/15 transition-all duration-700"
+  >
+  </div>
+
+  <h3 class="text-white text-lg font-semibold mb-2 relative z-10">
+    Envío Rápido
+  </h3>
+  <div
+    class="flex gap-4 overflow-x-auto py-4 px-1 custom-scrollbar -mx-1 relative z-10"
+  >
     <div
-      class="flex flex-col items-center gap-2 cursor-pointer group min-w-15 transition-transform hover:scale-110 duration-300"
+      class="flex flex-col items-center gap-2 cursor-pointer group/add min-w-15 transition-transform hover:scale-110 duration-300"
     >
       <div
-        class="w-14 h-14 rounded-full bg-violet-600/50 flex items-center justify-center border-2 border-dashed border-white/30 transition-colors group-hover:border-white/60 group-hover:bg-violet-600/70"
+        class="w-14 h-14 rounded-full bg-[#d7fd48]/10 flex items-center justify-center border-2 border-dashed border-[#d7fd48]/50 transition-colors group-hover/add:border-[#d7fd48] group-hover/add:bg-[#d7fd48] group-hover/add:text-black hover:shadow-[0_0_15px_rgba(215,253,72,0.5)]"
       >
-        <span class="text-2xl text-white">+</span>
+        <span class="text-2xl text-[#d7fd48] group-hover/add:text-black mb-1"
+          >+</span
+        >
       </div>
-      <span class="text-xs text-gray-300 group-hover:text-white">Nuevo</span>
+      <span
+        class="text-xs text-slate-400 group-hover/add:text-[#d7fd48] transition-colors"
+        >Nuevo</span
+      >
     </div>
 
     {
@@ -30,9 +53,9 @@ const contacts = [
           <img
             src={contact.src}
             alt={contact.name}
-            class="w-14 h-14 rounded-full object-cover border-2 border-transparent transition-all ring-2 ring-transparent"
+            class="w-14 h-14 rounded-full object-cover border-2 border-transparent group-hover:border-[#d7fd48] transition-all bg-slate-800"
           />
-          <span class="text-xs text-gray-300 transition-colors">
+          <span class="text-xs text-slate-400 group-hover:text-white transition-colors">
             {contact.name}
           </span>
         </div>

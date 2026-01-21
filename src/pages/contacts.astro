@@ -6,16 +6,22 @@ import MainLayout from "../layouts/MainLayout.astro";
   <div class="flex flex-col gap-6 h-full p-4 lg:p-0">
     <!-- Header -->
     <div
-      class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white/5 p-6 rounded-3xl border border-white/10 shadow-lg"
+      class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-[#0a0a0a] p-6 rounded-3xl border border-white/10 shadow-lg relative overflow-hidden group"
     >
-      <div>
+      <!-- Glow effect -->
+      <div
+        class="absolute -top-24 -right-24 w-48 h-48 bg-[#d7fd48]/10 rounded-full blur-3xl group-hover:bg-[#d7fd48]/20 transition-all duration-700"
+      >
+      </div>
+
+      <div class="relative z-10">
         <h1 class="text-2xl font-bold text-white mb-2">Mis Contactos</h1>
         <p class="text-slate-400 text-sm">
           Gestiona tu libreta de direcciones para transferencias rápidas.
         </p>
       </div>
       <button
-        class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl font-medium transition-all shadow-lg shadow-indigo-500/20 flex items-center gap-2"
+        class="bg-[#d7fd48] hover:bg-[#bce628] text-black px-5 py-2.5 rounded-xl font-bold transition-all shadow-[0_0_20px_rgba(215,253,72,0.3)] hover:shadow-[0_0_30px_rgba(215,253,72,0.5)] flex items-center gap-2 relative z-10"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -38,27 +44,33 @@ import MainLayout from "../layouts/MainLayout.astro";
     <div
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 flex-1 overflow-y-auto custom-scrollbar content-start"
     >
-      <!-- Contact Card 1 -->
+      <!-- Contact Card: Angu -->
       <div
-        class="bg-white/5 border border-white/5 rounded-2xl p-4 flex items-center gap-4 hover:bg-white/10 transition-colors group cursor-pointer relative overflow-hidden"
+        class="bg-[#0a0a0a] border border-white/5 rounded-2xl p-4 flex items-center gap-4 hover:border-[#d7fd48]/30 transition-all group cursor-pointer relative overflow-hidden"
       >
         <div
-          class="absolute top-0 right-0 w-16 h-16 bg-white/5 rounded-bl-full -mr-8 -mt-8 transition-all group-hover:bg-white/10"
+          class="absolute top-0 right-0 w-16 h-16 bg-[#d7fd48]/5 rounded-bl-full -mr-8 -mt-8 transition-all group-hover:bg-[#d7fd48]/10"
         >
         </div>
 
         <img
-          src="https://api.dicebear.com/9.x/avataaars/svg?seed=Alice"
-          alt="Alice"
-          class="w-12 h-12 rounded-full bg-slate-800"
+          src="https://api.dicebear.com/9.x/avataaars/svg?seed=Angu"
+          alt="Angu"
+          class="w-12 h-12 rounded-full bg-slate-800 border-2 border-transparent group-hover:border-[#d7fd48] transition-colors"
         />
 
         <div class="flex-1 min-w-0">
-          <h3 class="text-white font-medium truncate">Alice Freeman</h3>
-          <p class="text-xs text-slate-400 truncate">@alice.free</p>
+          <h3
+            class="text-white font-medium truncate group-hover:text-[#d7fd48] transition-colors"
+          >
+            Angu
+          </h3>
+          <p class="text-xs text-slate-400 truncate">@angu_dev</p>
         </div>
 
-        <button class="text-slate-500 hover:text-white transition-colors p-2">
+        <button
+          class="text-slate-500 hover:text-[#d7fd48] transition-colors p-2"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-5 w-5"
@@ -76,20 +88,30 @@ import MainLayout from "../layouts/MainLayout.astro";
         </button>
       </div>
 
-      <!-- Contact Card 2 -->
+      <!-- Contact Card: Reptiliano -->
       <div
-        class="bg-white/5 border border-white/5 rounded-2xl p-4 flex items-center gap-4 hover:bg-white/10 transition-colors group cursor-pointer relative overflow-hidden"
+        class="bg-[#0a0a0a] border border-white/5 rounded-2xl p-4 flex items-center gap-4 hover:border-[#d7fd48]/30 transition-all group cursor-pointer relative overflow-hidden"
       >
+        <div
+          class="absolute top-0 right-0 w-16 h-16 bg-[#d7fd48]/5 rounded-bl-full -mr-8 -mt-8 transition-all group-hover:bg-[#d7fd48]/10"
+        >
+        </div>
         <img
-          src="https://api.dicebear.com/9.x/avataaars/svg?seed=Bob"
-          alt="Bob"
-          class="w-12 h-12 rounded-full bg-slate-800"
+          src="https://api.dicebear.com/9.x/avataaars/svg?seed=Reptiliano"
+          alt="Reptiliano"
+          class="w-12 h-12 rounded-full bg-slate-800 border-2 border-transparent group-hover:border-[#d7fd48] transition-colors"
         />
         <div class="flex-1 min-w-0">
-          <h3 class="text-white font-medium truncate">Bob Smith</h3>
-          <p class="text-xs text-slate-400 truncate">@bob_builder</p>
+          <h3
+            class="text-white font-medium truncate group-hover:text-[#d7fd48] transition-colors"
+          >
+            Reptiliano
+          </h3>
+          <p class="text-xs text-slate-400 truncate">@lzr_king</p>
         </div>
-        <button class="text-slate-500 hover:text-white transition-colors p-2">
+        <button
+          class="text-slate-500 hover:text-[#d7fd48] transition-colors p-2"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-5 w-5"
@@ -107,20 +129,71 @@ import MainLayout from "../layouts/MainLayout.astro";
         </button>
       </div>
 
-      <!-- Contact Card 3 -->
+      <!-- Contact Card: AngelaGozo -->
       <div
-        class="bg-white/5 border border-white/5 rounded-2xl p-4 flex items-center gap-4 hover:bg-white/10 transition-colors group cursor-pointer relative overflow-hidden"
+        class="bg-[#0a0a0a] border border-white/5 rounded-2xl p-4 flex items-center gap-4 hover:border-[#d7fd48]/30 transition-all group cursor-pointer relative overflow-hidden"
       >
+        <div
+          class="absolute top-0 right-0 w-16 h-16 bg-[#d7fd48]/5 rounded-bl-full -mr-8 -mt-8 transition-all group-hover:bg-[#d7fd48]/10"
+        >
+        </div>
         <img
-          src="https://api.dicebear.com/9.x/avataaars/svg?seed=Charlie"
-          alt="Charlie"
-          class="w-12 h-12 rounded-full bg-slate-800"
+          src="https://api.dicebear.com/9.x/avataaars/svg?seed=AngelaGozo"
+          alt="AngelaGozo"
+          class="w-12 h-12 rounded-full bg-slate-800 border-2 border-transparent group-hover:border-[#d7fd48] transition-colors"
         />
         <div class="flex-1 min-w-0">
-          <h3 class="text-white font-medium truncate">Charlie Brown</h3>
-          <p class="text-xs text-slate-400 truncate">@charlie.b</p>
+          <h3
+            class="text-white font-medium truncate group-hover:text-[#d7fd48] transition-colors"
+          >
+            AngelaGozo
+          </h3>
+          <p class="text-xs text-slate-400 truncate">@ang.gz</p>
         </div>
-        <button class="text-slate-500 hover:text-white transition-colors p-2">
+        <button
+          class="text-slate-500 hover:text-[#d7fd48] transition-colors p-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+            ></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Contact Card: DGCIM -->
+      <div
+        class="bg-[#0a0a0a] border border-white/5 rounded-2xl p-4 flex items-center gap-4 hover:border-[#d7fd48]/30 transition-all group cursor-pointer relative overflow-hidden"
+      >
+        <div
+          class="absolute top-0 right-0 w-16 h-16 bg-[#d7fd48]/5 rounded-bl-full -mr-8 -mt-8 transition-all group-hover:bg-[#d7fd48]/10"
+        >
+        </div>
+        <img
+          src="https://api.dicebear.com/9.x/avataaars/svg?seed=DGCIM"
+          alt="DGCIM"
+          class="w-12 h-12 rounded-full bg-slate-800 border-2 border-transparent group-hover:border-[#d7fd48] transition-colors"
+        />
+        <div class="flex-1 min-w-0">
+          <h3
+            class="text-white font-medium truncate group-hover:text-[#d7fd48] transition-colors"
+          >
+            DGCIM
+          </h3>
+          <p class="text-xs text-slate-400 truncate">@gov.secure</p>
+        </div>
+        <button
+          class="text-slate-500 hover:text-[#d7fd48] transition-colors p-2"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-5 w-5"
@@ -140,11 +213,11 @@ import MainLayout from "../layouts/MainLayout.astro";
 
       <!-- Add Placeholder -->
       <div
-        class="border-2 border-dashed border-white/10 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-all cursor-pointer text-slate-500 hover:text-indigo-400 h-[88px] md:h-auto"
+        class="border-2 border-dashed border-white/10 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 hover:border-[#d7fd48] hover:bg-[#d7fd48]/5 transition-all cursor-pointer text-slate-500 hover:text-[#d7fd48] h-[88px] md:h-auto group"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
+          class="h-6 w-6 group-hover:scale-110 transition-transform"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import NavBar from "../components/NavBar.astro";
 import Sidebar from "../components/Sidebar.astro";
-const { title = "CapyPay" } = Astro.props;
+const { title = "CapyPay", showSidebar = false } = Astro.props;
 ---
 
 <html lang="es">
@@ -20,7 +20,7 @@ const { title = "CapyPay" } = Astro.props;
       }
     </style>
   </head>
-  <body class="flex h-screen overflow-hidden bg-[#0f101f] text-slate-100">
+  <body class="flex h-screen overflow-hidden bg-[#0a0a0a] text-slate-200">
     <!-- 
       FONDO AMBIENTAL
       Estos círculos (divs) son los que dan esa luz de fondo borrosa.
@@ -32,15 +32,19 @@ const { title = "CapyPay" } = Astro.props;
       >
       </div>
       <div
-        class="absolute bottom-[-15%] right-[-15%] w-[35%] h-[35%] bg-indigo-900/15 rounded-full blur-[110px] pointer-events-none -z-20"
+        class="absolute bottom-[-15%] right-[-15%] w-[35%] h-[35%] bg-purple-900/20 rounded-full blur-[110px] pointer-events-none -z-20"
       >
       </div>
     </div>
 
     <!-- Sidebar (Desktop) -->
-    <div class="hidden lg:flex shrink-0 h-full">
-      <Sidebar />
-    </div>
+    {
+      showSidebar && (
+        <div class="hidden lg:flex shrink-0 h-full">
+          <Sidebar />
+        </div>
+      )
+    }
 
     <!-- Main Content Wrapper -->
     <div

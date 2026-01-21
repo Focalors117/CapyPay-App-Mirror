@@ -1,240 +1,30 @@
 ---
-import CapyPay from "../layouts/MainLayout.astro";
-import BalanceCard from "../components/BalanceCard.astro";
-import HistoryCard from "../components/HistoryCard.astro";
-import QuickPay from "../components/QuickPay.astro";
-import FinanceChart from "../components/FinanceChart.astro";
-import TransferWidget from "../components/TransferWidget.astro";
-import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
+import MainLayout from "../layouts/MainLayout.astro";
 ---
 
-<CapyPay title="Dashboard | CapyPay">
-  <!-- 
-    GRID PRINCIPAL
-    Aquí organizamos todo en 12 columnas.
-  -->
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full h-full min-h-0">
-    <!-- 
-      COLUMNA IZQUIERDA: Widgets (4 Cols)
-      BalanceCard + QuickPay + Chart
-    -->
-    <aside
-      class="lg:col-span-4 animate-fade-in-left order-2 lg:order-1 flex flex-col gap-6 h-full min-h-0"
-    >
-      <div class="shrink-0">
-        <BalanceCard amount="12,450.00" />
-      </div>
+<MainLayout title="Bienvenido a CapyPay">
+  <div
+    class="flex flex-col items-center justify-center min-h-screen text-center gap-6"
+  >
+    <h1 class="text-5xl font-bold text-white mb-4">
+      Bienvenido a <span class="text-emerald-400">CapyPay</span>
+    </h1>
+    <p class="text-slate-400 text-xl max-w-2xl">
+      La forma más rápida y segura de manejar tus finanzas.
+    </p>
 
-      <div class="shrink-0">
-        <QuickPay />
-      </div>
-
-      <div class="flex-1 min-h-[300px]">
-        <FinanceChart />
-      </div>
-    </aside>
-
-    <!-- 
-      COLUMNA PRINCIPAL (8 Cols)
-      Contiene Header, Widgets Centrales y Actividad Derecha
-    -->
-    <section
-      class="lg:col-span-8 flex flex-col gap-6 h-full min-h-0 order-1 lg:order-2"
-    >
-      <!-- Header (Full Width of Main Section) -->
-      <header
-        class="flex justify-between items-center bg-white/5 border border-white/10 rounded-3xl p-6 w-full shrink-0 isolate shadow-lg animate-fade-in-down"
+    <div class="flex gap-4 mt-8">
+      <a
+        href="/dashboard"
+        class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-lg hover:shadow-emerald-500/20"
       >
-        <div>
-          <h1 class="text-2xl font-bold text-white flex gap-2 items-center">
-            Hola, Usuario <span
-              class="animate-wave origin-bottom-right inline-block">👋</span
-            >
-          </h1>
-          <p class="text-slate-400 text-xs mt-1 flex items-center gap-1">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-            Último acceso: Hoy, 09:30 AM
-          </p>
-        </div>
-        <div
-          class="text-xs font-medium bg-indigo-500/20 text-indigo-200 border border-indigo-500/30 px-3 py-1.5 rounded-full whitespace-nowrap"
-        >
-          {
-            new Date().toLocaleDateString("es-ES", {
-              month: "long",
-              day: "numeric",
-            })
-          }
-        </div>
-      </header>
-
-      <!-- Inner Grid: Center + Right -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
-        <!-- CENTER COLUMN (New Widgets): 1 Col -->
-        <div class="flex flex-col gap-6 animate-fade-in-up">
-          <!-- Transfer Widget (Takes remaining space) -->
-          <div class="flex-1 min-h-[200px]">
-            <TransferWidget />
-          </div>
-          <!-- Exchange Rate Widget (Smaller) -->
-          <div class="h-40 shrink-0">
-            <ExchangeRateWidget />
-          </div>
-        </div>
-
-        <!-- RIGHT COLUMN (Activity): 1 Col -->
-        <div
-          class="h-full min-h-0 animate-fade-in-up"
-          style="animation-delay: 100ms;"
-        >
-          <!-- Activity Module -->
-          <div
-            class="bg-white/5 border border-white/10 rounded-3xl flex flex-col h-full isolate shadow-lg w-full overflow-hidden"
-          >
-            <div class="p-6 pb-4 shrink-0 border-b border-white/5">
-              <div class="flex flex-col gap-2">
-                <h2 class="text-xl font-bold text-white">Actividad</h2>
-                <div class="flex gap-1 overflow-x-auto pb-1 no-scrollbar">
-                  <button
-                    class="text-[10px] bg-white/10 hover:bg-white/20 text-white px-2 py-1 rounded-lg transition-colors whitespace-nowrap"
-                    >Todos</button
-                  >
-                  <button
-                    class="text-[10px] text-slate-400 hover:text-white px-2 py-1 rounded-lg transition-colors whitespace-nowrap"
-                    >Ingresos</button
-                  >
-                  <button
-                    class="text-[10px] text-slate-400 hover:text-white px-2 py-1 rounded-lg transition-colors whitespace-nowrap"
-                    >Gastos</button
-                  >
-                </div>
-              </div>
-            </div>
-
-            <div class="p-4 overflow-y-auto custom-scrollbar flex-1">
-              <div class="space-y-4">
-                <div class="relative">
-                  <div
-                    class="sticky top-0 bg-[#16172b]/95 backdrop-blur-sm py-1 z-10 mb-2 border-b border-white/5"
-                  >
-                    <span
-                      class="p-4 text-[10px] font-bold text-indigo-400 uppercase tracking-widest"
-                      >Hoy</span
-                    >
-                  </div>
-                  <div class="grid grid-cols-1 gap-2">
-                    <HistoryCard
-                      date="09:42 AM"
-                      description="Gatorade Rojo"
-                      amount="-15.99"
-                    />
-                    <HistoryCard
-                      date="08:30 AM"
-                      description="Donacion a hambarbar"
-                      amount="-8.50"
-                    />
-                    <HistoryCard
-                      date="07:15 AM"
-                      description="Furina C6R5"
-                      amount="-2400.00"
-                    />
-                  </div>
-                </div>
-
-                <div class="relative mt-4">
-                  <div
-                    class="sticky top-0 bg-[#16172b]/95 backdrop-blur-sm py-1 z-10 mb-2 border-b border-white/5"
-                  >
-                    <span
-                      class="p-4 text-[10px] font-bold text-indigo-400 uppercase tracking-widest"
-                      >Ayer</span
-                    >
-                  </div>
-                  <div class="grid grid-cols-1 gap-2">
-                    <HistoryCard
-                      date="19:20 PM"
-                      description="Bono de Guerra"
-                      amount="250.00"
-                    />
-                    <HistoryCard
-                      date="14:15 PM"
-                      description="Robo del colector del bus"
-                      amount="-12.40"
-                    />
-                    <HistoryCard
-                      date="12:00 PM"
-                      description="Pago de Alquiler (puente)"
-                      amount="-850.00"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+        Ir al Dashboard
+      </a>
+      <button
+        class="border border-white/20 hover:bg-white/10 text-white font-medium py-3 px-8 rounded-full transition-colors"
+      >
+        Saber más
+      </button>
+    </div>
   </div>
-
-  <style>
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    @keyframes fadeInLeft {
-      from {
-        opacity: 0;
-        transform: translateX(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-    @keyframes wave {
-      0%,
-      100% {
-        transform: rotate(0deg);
-      }
-      25% {
-        transform: rotate(20deg);
-      }
-      75% {
-        transform: rotate(-15deg);
-      }
-    }
-
-    .animate-fade-in-down {
-      animation: fadeInDown 0.6s ease-out forwards;
-    }
-    .animate-fade-in-up {
-      animation: fadeInUp 0.6s ease-out forwards;
-      opacity: 0;
-      animation-delay: 0.2s;
-    }
-    .animate-fade-in-left {
-      animation: fadeInLeft 0.6s ease-out forwards;
-      opacity: 0;
-      animation-delay: 0.1ms;
-    }
-    .animate-wave {
-      animation: wave 1.5s infinite;
-    }
-  </style>
-</CapyPay>
+</MainLayout>
