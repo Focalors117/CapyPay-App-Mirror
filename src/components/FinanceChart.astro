@@ -1,0 +1,91 @@
+---
+---
+<div class="bg-white/5 rounded-3xl p-6 border border-white/10 shadow-lg w-full h-full flex flex-col isolate relative overflow-hidden group min-h-[400px]">
+  
+  <!-- Header Section -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 relative z-10">
+    <!-- Totals -->
+    <div class="flex gap-4 sm:gap-4">
+        <div>
+            <p class="text-[10px] sm:text-xs text-slate-400 mb-0.5">Ingresos Totales</p>
+            <p class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                $5,240.50
+                <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded-full">+12%</span>
+            </p>
+        </div>
+        <div>
+            <p class="text-[10px] sm:text-xs text-slate-400 mb-0.5">Pagos Totales</p>
+            <p class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                $2,120.00
+                <span class="text-[10px] bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded-full">-5%</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Period Toggle -->
+    <div class="bg-[#0f101f] p-1 rounded-xl flex items-center border border-white/5 self-end sm:self-auto">
+        <button class="px-2 py-1 rounded-lg text-[10px] font-medium bg-indigo-600 text-white shadow-sm transition-all text-nowrap">Semanal</button>
+        <button class="px-2 py-1 rounded-lg text-[10px] font-medium text-slate-400 hover:text-white transition-all text-nowrap">Mensual</button>
+        <button class="px-2 py-1 rounded-lg text-[10px] font-medium text-slate-400 hover:text-white transition-all text-nowrap hidden md:block">3 Meses</button>
+    </div>
+  </div>
+
+  <!-- Chart Visual Representation -->
+  <div class="flex-1 w-full bg-[#0f101f]/30 rounded-2xl p-2 sm:p-4 border border-white/5 relative flex gap-2">
+      
+      <!-- Y-Axis Labels (Money Scale) -->
+      <div class="flex flex-col justify-between text-[9px] sm:text-[10px] text-slate-500 font-mono py-6 shrink-0 text-right pr-2 select-none h-full">
+          <span>$100</span>
+          <span>$80</span>
+          <span>$60</span>
+          <span>$40</span>
+          <span>$20</span>
+          <span>$0</span>
+      </div>
+
+      <!-- Chart Area -->
+      <div class="flex-1 relative flex items-end justify-between gap-1 sm:gap-2 h-full pl-2 border-l border-white/5 border-dashed">
+          <!-- Grid Lines Background -->
+          <div class="absolute inset-x-0 inset-y-6 flex flex-col justify-between pointer-events-none opacity-10 w-full z-0 px-1">
+              <div class="w-full h-px bg-white border-t border-dashed border-slate-500"></div>
+              <div class="w-full h-px bg-white border-t border-dashed border-slate-500"></div>
+              <div class="w-full h-px bg-white border-t border-dashed border-slate-500"></div>
+              <div class="w-full h-px bg-white border-t border-dashed border-slate-500"></div>
+              <div class="w-full h-px bg-white border-t border-dashed border-slate-500"></div>
+          </div>
+
+          <!-- Bars -->
+          {[
+            { day: 'Lun', income: 60, expense: 40 },
+            { day: 'Mar', income: 45, expense: 30 },
+            { day: 'Mie', income: 80, expense: 60 },
+            { day: 'Jue', income: 55, expense: 70 },
+            { day: 'Vie', income: 90, expense: 50 },
+            { day: 'Sab', income: 70, expense: 40 },
+            { day: 'Dom', income: 30, expense: 20 },
+          ].map((item, index) => (
+              <div class="flex flex-col justify-end items-center h-full flex-1 gap-2 z-10 group/bar cursor-pointer pb-6"> <!-- pb-6 to accommodate x-axis labels below -->
+                
+                 <!-- Tooltip -->
+                 <div class="opacity-0 group-hover/bar:opacity-100 absolute top-0 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] p-2 rounded transform -translate-y-full transition-opacity border border-white/10 pointer-events-none whitespace-nowrap z-50 shadow-xl">
+                     <span class="text-emerald-400">Inc: ${item.income}</span> <br/> 
+                     <span class="text-rose-400">Exp: ${item.expense}</span>
+                 </div>
+
+                 <!-- Dual Bars container -->
+                 <div class="w-full max-w-[12px] sm:max-w-[20px] md:max-w-[30px] h-full flex items-end justify-center relative space-x-0.5">
+                     <!-- Income Bar -->
+                     <div style={`height: ${item.income}%`} class="w-full bg-emerald-500 rounded-t-sm opacity-80 group-hover/bar:opacity-100 transition-all"></div>
+                     <!-- Expense Bar -->
+                     <div style={`height: ${item.expense}%`} class="w-full bg-rose-500 rounded-t-sm opacity-80 group-hover/bar:opacity-100 transition-all"></div>
+                 </div>
+                 
+                 <!-- X-Axis Label -->
+                 <span class="absolute bottom-1 text-[9px] sm:text-[10px] text-slate-500 font-medium">{item.day}</span>
+              </div>
+          ))}
+      </div>
+
+  </div>
+
+</div>

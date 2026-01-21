@@ -1,0 +1,225 @@
+---
+
+---
+
+<div
+  class="bg-white/5 rounded-3xl p-6 border border-white/10 shadow-lg flex flex-col h-full relative overflow-hidden group"
+>
+  <!-- Header -->
+  <div class="flex justify-between items-start mb-6 z-10">
+    <div>
+      <h3 class="text-white text-lg font-semibold flex items-center gap-2">
+        Transferir
+        <span
+          class="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded-full border border-indigo-500/30"
+          >Rápido</span
+        >
+      </h3>
+      <p class="text-slate-400 text-xs mt-1">
+        Envía dinero a contactos o usuarios
+      </p>
+    </div>
+    <button class="text-slate-400 hover:text-white transition-colors">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+        ></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Background Glow -->
+  <div
+    class="absolute -right-10 -top-10 w-40 h-40 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none group-hover:bg-indigo-600/30 transition-colors"
+  >
+  </div>
+
+  <!-- Tabs -->
+  <div
+    class="flex p-1 bg-[#0f101f]/50 rounded-xl border border-white/5 mb-6 z-10"
+    id="transferTabs"
+  >
+    <button
+      class="flex-1 py-2 rounded-lg text-xs font-medium text-white bg-white/10 shadow-sm transition-all"
+      data-tab="contact"
+    >
+      Mis Contactos
+    </button>
+    <button
+      class="flex-1 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition-all"
+      data-tab="external"
+    >
+      Usuario Externo
+    </button>
+  </div>
+
+  <!-- Content: Contact Mode -->
+  <div
+    id="tabContact"
+    class="flex flex-col gap-4 flex-1 z-10 transition-all duration-300"
+  >
+    <div class="space-y-1">
+      <label class="text-xs text-slate-400 font-medium ml-1">Destinatario</label
+      >
+      <div class="relative">
+        <select
+          class="w-full bg-[#0f101f] text-white text-sm rounded-xl border border-white/10 p-3 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 appearance-none cursor-pointer"
+        >
+          <option value="" disabled selected>Selecciona un contacto...</option>
+          <option value="1">Angu</option>
+          <option value="2">AngelaGozo</option>
+          <option value="3">Hambarbar</option>
+        </select>
+        <div class="absolute right-3 top-3 pointer-events-none text-slate-400">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-1">
+      <label class="text-xs text-slate-400 font-medium ml-1">Cantidad</label>
+      <div class="relative">
+        <span
+          class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-semibold"
+          >$</span
+        >
+        <input
+          type="number"
+          placeholder="0.00"
+          class="w-full bg-[#0f101f] text-white text-lg font-bold rounded-xl border border-white/10 py-3 pl-8 pr-4 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder:text-slate-600"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Content: External Mode (Hidden by default) -->
+  <div
+    id="tabExternal"
+    class="hidden flex-col gap-4 flex-1 z-10 transition-all duration-300"
+  >
+    <div class="space-y-1">
+      <label class="text-xs text-slate-400 font-medium ml-1"
+        >ID de Usuario / Email</label
+      >
+      <div class="relative">
+        <input
+          type="text"
+          placeholder="@usuario o correo"
+          class="w-full bg-[#0f101f] text-white text-sm rounded-xl border border-white/10 p-3 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+        />
+        <div
+          class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500 hidden"
+        >
+          <!-- Success Icon Placeholder -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+      </div>
+      <p class="text-[10px] text-slate-500 ml-1">
+        Buscando en la base de datos global...
+      </p>
+    </div>
+
+    <div class="space-y-1">
+      <label class="text-xs text-slate-400 font-medium ml-1">Cantidad</label>
+      <div class="relative">
+        <span
+          class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-semibold"
+          >$</span
+        >
+        <input
+          type="number"
+          placeholder="0.00"
+          class="w-full bg-[#0f101f] text-white text-lg font-bold rounded-xl border border-white/10 py-3 pl-8 pr-4 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder:text-slate-600"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Send Button -->
+  <button
+    class="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 rounded-xl transition-all shadow-lg shadow-indigo-500/20 active:scale-95 flex justify-center items-center gap-2 group/btn z-10"
+  >
+    <span>Enviar Ahora</span>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4 group-hover/btn:translate-x-1 transition-transform"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+    </svg>
+  </button>
+</div>
+
+<script>
+  const buttons = document.querySelectorAll("#transferTabs button");
+  const tabContact = document.getElementById("tabContact");
+  const tabExternal = document.getElementById("tabExternal");
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const target = btn.getAttribute("data-tab");
+
+      // Reset Buttons
+      buttons.forEach((b) => {
+        b.classList.remove("bg-white/10", "text-white", "shadow-sm");
+        b.classList.add("text-slate-400");
+      });
+
+      // Activate Button
+      btn.classList.add("bg-white/10", "text-white", "shadow-sm");
+      btn.classList.remove("text-slate-400");
+
+      // Switch Content
+      if (target === "contact") {
+        tabContact.classList.remove("hidden");
+        tabContact.classList.add("flex");
+        tabExternal.classList.add("hidden");
+        tabExternal.classList.remove("flex");
+      } else {
+        tabExternal.classList.remove("hidden");
+        tabExternal.classList.add("flex");
+        tabContact.classList.add("hidden");
+        tabContact.classList.remove("flex");
+      }
+    });
+  });
+</script>

@@ -1,0 +1,373 @@
+---
+// src/components/Sidebar.astro
+---
+
+<aside
+  id="sidebar"
+  class="group flex flex-col h-screen sticky top-0 z-50 transition-all duration-300 w-72 bg-[#0f101f]/95 border-r border-white/10 shrink-0"
+>
+  <!-- Header: Logo, Collapse -->
+  <div
+    class="flex flex-col shrink-0 border-b border-white/5 transition-all duration-300 pb-2"
+    id="headerSection"
+  >
+    <!-- Logo & Name -->
+    <div
+      class="h-16 flex items-center px-6 transition-all duration-300 w-full overflow-hidden whitespace-nowrap"
+    >
+      <div class="flex items-center gap-3 transition-all duration-300">
+        <div
+          class="w-8 h-8 bg-linear-to-tr from-indigo-600 to-violet-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-500/30 shrink-0"
+        >
+          C
+        </div>
+        <span
+          class="text-xl font-bold bg-clip-text text-transparent bg-linear-to-r from-indigo-700 to-violet-700 sidebar-content"
+        >
+          CapyPay
+        </span>
+      </div>
+    </div>
+
+    <!-- Toggle Buttons -->
+    <div
+      class="w-full flex justify-end px-4 transition-all duration-300"
+      id="toggleContainer"
+    >
+      <!-- Collapse Button -->
+      <button
+        id="sidebarToggle"
+        class="text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all p-1"
+        aria-label="Toggle Sidebar"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 transition-transform duration-300"
+          id="toggleIcon"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- User Profile Section -->
+  <div
+    class="flex flex-col items-center p-6 border-b border-white/5 overflow-hidden whitespace-nowrap transition-all duration-300 origin-top"
+  >
+    <!-- Profile Photo -->
+    <div
+      class="w-12 h-12 lg:w-20 lg:h-20 rounded-full p-1 bg-linear-to-tr from-indigo-500 to-purple-500 mb-3 shadow-lg shadow-indigo-500/20 transition-all duration-300 sidebar-photo"
+    >
+      <img
+        src="https://api.dicebear.com/9.x/lorelei/svg?seed=Aneka"
+        alt="User Profile"
+        class="w-full h-full rounded-full bg-slate-900 object-cover"
+      />
+    </div>
+    <!-- Name -->
+    <h3 class="text-white font-semibold text-lg mb-1 sidebar-content">
+      Cormex
+    </h3>
+
+    <!-- Level Bar -->
+    <div class="w-full mt-2 sidebar-content">
+      <div class="flex justify-between text-xs text-slate-400 mb-1">
+        <span>Nivel Actual</span>
+        <span class="text-indigo-400 font-bold">12</span>
+      </div>
+      <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+        <div
+          class="bg-gradient-to-r from-indigo-500 to-purple-500 h-full rounded-full w-[65%] shadow-[0_0_10px_rgba(99,102,241,0.5)]"
+        >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contacts Section -->
+  <div
+    class="flex-1 overflow-hidden hover:overflow-y-auto custom-scrollbar flex flex-col py-4"
+  >
+    <!-- Search Bar -->
+    <div class="px-4 mb-4">
+      <div class="relative group/search">
+        <input
+          type="text"
+          placeholder="Buscar..."
+          class="w-full bg-slate-800/50 text-slate-200 text-sm rounded-lg pl-9 pr-3 py-2 border border-white/5 focus:outline-none focus:border-indigo-500/50 focus:bg-slate-800 transition-all placeholder:text-slate-500 sidebar-content"
+        />
+        <div
+          class="absolute left-0 top-0 h-full w-9 flex items-center justify-center text-slate-500 pointer-events-none group-focus-within/search:text-indigo-400 sidebar-search-icon"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contacts Title -->
+    <div class="px-6 mb-2 sidebar-content transition-opacity duration-300">
+      <h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest">
+        Frecuentes
+      </h4>
+    </div>
+
+    <div class="flex flex-col gap-1 px-3">
+      {/* Placeholder Contacts */}
+      {
+        [
+          { name: "Angu", status: "online" },
+          { name: "Reptiliano", status: "offline" },
+          { name: "AngelaGozo", status: "online" },
+          { name: "DGCIM", status: "busy" },
+        ].map((contact, i) => (
+          <div class="group/item flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors relative cursor-pointer">
+            <div class="relative shrink-0">
+              <div class="w-9 h-9 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-300 border border-white/5">
+                {contact.name.charAt(0)}
+              </div>
+              <span
+                class={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-[#0f101f] ${contact.status === "online" ? "bg-emerald-500" : contact.status === "busy" ? "bg-amber-500" : "bg-slate-500"}`}
+              />
+            </div>
+
+            <div class="flex-1 overflow-hidden whitespace-nowrap sidebar-content transition-opacity duration-300 flex justify-between items-center min-w-0 gap-2">
+              <div class="overflow-hidden min-w-0">
+                <p class="text-sm text-slate-200 font-medium truncate">
+                  {contact.name}
+                </p>
+                <p class="text-xs text-slate-500 truncate capitalize">
+                  {contact.status}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+
+      <!-- Add Contact Button -->
+      <a
+        href="/contacts"
+        class="group/add flex items-center gap-3 p-2 rounded-lg hover:bg-indigo-500/10 transition-colors relative w-full text-left mt-1"
+      >
+        <div class="relative shrink-0">
+          <div
+            class="w-9 h-9 rounded-full bg-slate-800 border-2 border-dashed border-slate-600 flex items-center justify-center text-slate-400 group-hover/add:text-indigo-400 group-hover/add:border-indigo-400 transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4v16m8-8H4"></path>
+            </svg>
+          </div>
+        </div>
+
+        <div
+          class="overflow-hidden whitespace-nowrap sidebar-content transition-opacity duration-300"
+        >
+          <p
+            class="text-sm text-slate-400 group-hover/add:text-indigo-300 font-medium truncate transition-colors"
+          >
+            Ver todos / Añadir
+          </p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer: Settings -->
+  <div
+    class="p-4 border-t border-white/5 mt-auto bg-[#0f101f]/50 flex flex-col gap-1"
+  >
+    <!-- Share Button -->
+    <button
+      class="flex items-center gap-3 text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-lg transition-all group/share w-full text-left"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 shrink-0 group-hover/share:scale-110 transition-transform duration-300"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+        ></path>
+      </svg>
+      <span
+        class="font-medium whitespace-nowrap sidebar-content transition-opacity duration-300"
+        >Compartir</span
+      >
+    </button>
+
+    <!-- Settings Button -->
+    <a
+      href="/settings"
+      class="flex items-center gap-3 text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-lg transition-all group/settings w-full"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 shrink-0 group-hover/settings:rotate-90 transition-transform duration-500"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+        ></path>
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+      </svg>
+      <span
+        class="font-medium whitespace-nowrap sidebar-content transition-opacity duration-300"
+        >Ajustes</span
+      >
+    </a>
+  </div>
+</aside>
+
+<script>
+  const sidebar = document.getElementById("sidebar");
+  const toggleBtn = document.getElementById("sidebarToggle");
+  const toggleIcon = document.getElementById("toggleIcon");
+  const contents = document.querySelectorAll(".sidebar-content");
+
+  const photo = document.querySelector(".sidebar-photo");
+  const profileSection = photo?.parentElement;
+
+  // Header Elements
+  const headerSection = document.getElementById("headerSection");
+  const toggleContainer = document.getElementById("toggleContainer");
+
+  let isCollapsed = false;
+
+  toggleBtn?.addEventListener("click", () => {
+    isCollapsed = !isCollapsed;
+
+    if (isCollapsed) {
+      // Collapse
+      sidebar?.classList.remove("w-72");
+      sidebar?.classList.add("w-20");
+
+      // Header Adjustments for Center Alignment
+      toggleContainer?.classList.remove("justify-end", "px-4");
+      toggleContainer?.classList.add("justify-center", "px-0");
+
+      // Resize Photo
+      photo?.classList.remove("lg:w-20", "lg:h-20");
+      photo?.classList.add("w-10", "h-10");
+      profileSection?.classList.remove("p-6");
+      profileSection?.classList.add("p-2", "py-6");
+
+      // Hide text/large content
+      contents.forEach((el) => {
+        el.classList.add("opacity-0", "pointer-events-none", "hidden");
+      });
+
+      // Special handling for search icon visibility in collapsed state
+      const searchIcon = document.querySelector(".sidebar-search-icon");
+      searchIcon?.classList.remove(
+        "absolute",
+        "left-0",
+        "top-0",
+        "h-full",
+        "w-9",
+        "pointer-events-none",
+      );
+      searchIcon?.classList.add(
+        "w-full",
+        "h-10",
+        "relative",
+        "mx-auto",
+        "cursor-pointer",
+        "bg-slate-800/50",
+        "rounded-lg",
+        "hover:bg-white/5",
+        "transition-colors",
+      );
+
+      // Flip Icon
+      toggleIcon?.classList.add("rotate-180");
+    } else {
+      // Expand
+      sidebar?.classList.remove("w-20");
+      sidebar?.classList.add("w-72");
+
+      // Restore search icon
+      const searchIcon = document.querySelector(".sidebar-search-icon");
+      searchIcon?.classList.add(
+        "absolute",
+        "left-0",
+        "top-0",
+        "h-full",
+        "w-9",
+        "pointer-events-none",
+      );
+      searchIcon?.classList.remove(
+        "w-full",
+        "h-10",
+        "relative",
+        "mx-auto",
+        "cursor-pointer",
+        "bg-slate-800/50",
+        "rounded-lg",
+        "hover:bg-white/5",
+        "transition-colors",
+      );
+
+      // Header Restoration
+      toggleContainer?.classList.add("justify-end", "px-4");
+      toggleContainer?.classList.remove("justify-center", "px-0");
+
+      // Restore Photo
+      photo?.classList.add("lg:w-20", "lg:h-20");
+      photo?.classList.remove("w-10", "h-10");
+      profileSection?.classList.add("p-6");
+      profileSection?.classList.remove("p-2", "py-6");
+
+      // Show content
+      contents.forEach((el) => {
+        el.classList.remove("opacity-0", "pointer-events-none", "hidden");
+      });
+
+      // Reset Icon
+      toggleIcon?.classList.remove("rotate-180");
+    }
+  });
+</script>
