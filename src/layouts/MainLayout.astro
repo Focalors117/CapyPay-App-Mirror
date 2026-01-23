@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import NavBar from "../components/NavBar.astro";
 import Sidebar from "../components/Sidebar.astro";
+import BottomNav from "../components/BottomNav.astro";
 const { title = "CapyPay", showSidebar = false } = Astro.props;
 ---
 
@@ -20,7 +21,7 @@ const { title = "CapyPay", showSidebar = false } = Astro.props;
       }
     </style>
   </head>
-  <body class="flex h-screen overflow-hidden bg-[#0a0a0a] text-slate-200">
+  <body class="flex h-screen overflow-hidden bg-[#0a0a0a] text-brand-white">
     <!-- 
       FONDO AMBIENTAL
       Estos círculos (divs) son los que dan esa luz de fondo borrosa.
@@ -50,22 +51,31 @@ const { title = "CapyPay", showSidebar = false } = Astro.props;
     <div
       class="flex-1 flex flex-col h-full overflow-y-auto custom-scrollbar relative min-w-0"
     >
-      <!-- Navbar (Mobile Only) -->
-      <div class="lg:hidden sticky top-0 z-40">
-        <NavBar />
-      </div>
+      <!-- Navbar (Mobile Only - Hide on Dashboard) -->
+      {
+        !showSidebar && (
+          <div class="lg:hidden sticky top-0 z-40">
+            <NavBar />
+          </div>
+        )
+      }
 
       <main
-        class="grow w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 relative flex flex-col min-h-0"
+        class={`grow w-full max-w-400 mx-auto px-4 sm:px-6 lg:px-8 py-6 relative flex flex-col min-h-0 ${showSidebar ? "pb-40 lg:pb-6" : ""}`}
       >
         <slot />
       </main>
 
-      <footer class="border-t border-white/5 py-4 shrink-0 mx-6">
+      <footer
+        class="hidden lg:block border-t border-white/5 py-4 shrink-0 mx-6"
+      >
         <div class="text-center text-slate-500 text-xs">
           &copy; {new Date().getFullYear()} CapyPay. Todos los derechos reservados.
         </div>
       </footer>
     </div>
+
+    <!-- Mobile Bottom Nav (Dashboard Only) -->
+    {showSidebar && <BottomNav />}
   </body>
 </html>

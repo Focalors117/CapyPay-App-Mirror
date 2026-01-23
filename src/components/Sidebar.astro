@@ -4,11 +4,11 @@
 
 <aside
   id="sidebar"
-  class="group flex flex-col h-screen sticky top-0 z-50 transition-all duration-300 w-72 bg-[#0a0a0a] border-r border-[#d7fd48]/20 shrink-0"
+  class="group flex flex-col h-screen sticky top-0 z-50 transition-all duration-300 w-72 bg-[#0a0a0a] border-r border-brand-lime/20 shrink-0"
 >
   <!-- Header: Logo, Collapse -->
   <div
-    class="flex flex-col shrink-0 border-b border-[#d7fd48]/10 transition-all duration-300 pb-2"
+    class="flex flex-col shrink-0 border-b border-brand-lime/10 transition-all duration-300 pb-2"
     id="headerSection"
   >
     <!-- Logo & Name -->
@@ -17,7 +17,7 @@
     >
       <div class="flex items-center gap-3 transition-all duration-300">
         <div
-          class="w-8 h-8 bg-[#d7fd48] rounded-lg flex items-center justify-center text-black font-bold shadow-[0_0_15px_rgba(215,253,72,0.3)] shrink-0"
+          class="w-8 h-8 bg-brand-lime rounded-lg flex items-center justify-center text-black font-bold shadow-[0_0_15px_rgba(215,253,73,0.3)] shrink-0"
         >
           C
         </div>
@@ -62,7 +62,7 @@
   >
     <!-- Profile Photo -->
     <div
-      class="w-12 h-12 lg:w-20 lg:h-20 rounded-full p-1 bg-[#d7fd48]/20 mb-3 shadow-[0_0_15px_rgba(215,253,72,0.1)] transition-all duration-300 sidebar-photo border border-[#d7fd48]/30"
+      class="w-12 h-12 lg:w-20 lg:h-20 rounded-full p-1 bg-brand-lime/20 mb-3 shadow-[0_0_15px_rgba(215,253,72,0.1)] transition-all duration-300 sidebar-photo border border-brand-lime/30"
     >
       <img
         src="https://api.dicebear.com/9.x/lorelei/svg?seed=Aneka"
@@ -79,11 +79,11 @@
     <div class="w-full mt-2 sidebar-content">
       <div class="flex justify-between text-xs text-slate-400 mb-1">
         <span>Nivel Actual</span>
-        <span class="text-[#d7fd48] font-bold">12</span>
+        <span class="text-brand-lime font-bold">12</span>
       </div>
       <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
         <div
-          class="bg-[#d7fd48] h-full rounded-full w-[65%] shadow-[0_0_10px_rgba(215,253,72,0.5)]"
+          class="bg-brand-lime h-full rounded-full w-[65%] shadow-[0_0_10px_rgba(215,253,72,0.5)]"
         >
         </div>
       </div>
@@ -100,10 +100,10 @@
         <input
           type="text"
           placeholder="Buscar..."
-          class="w-full bg-slate-800/50 text-slate-200 text-sm rounded-lg pl-9 pr-3 py-2 border border-white/5 focus:outline-none focus:border-[#d7fd48]/50 focus:bg-slate-800 transition-all placeholder:text-slate-500 sidebar-content"
+          class="w-full bg-slate-800/50 text-slate-200 text-sm rounded-lg pl-9 pr-3 py-2 border border-white/5 focus:outline-none focus:border-brand-lime/50 focus:bg-slate-800 transition-all placeholder:text-slate-500 sidebar-content"
         />
         <div
-          class="absolute left-0 top-0 h-full w-9 flex items-center justify-center text-slate-500 pointer-events-none group-focus-within/search:text-[#d7fd48] sidebar-search-icon"
+          class="absolute left-0 top-0 h-full w-9 flex items-center justify-center text-slate-500 pointer-events-none group-focus-within/search:text-brand-lime sidebar-search-icon"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +144,7 @@
                 {contact.name.charAt(0)}
               </div>
               <span
-                class={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-[#0f101f] ${contact.status === "online" ? "bg-emerald-500" : contact.status === "busy" ? "bg-amber-500" : "bg-slate-500"}`}
+                class={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-brand-black ${contact.status === "online" ? "bg-emerald-500" : contact.status === "busy" ? "bg-amber-500" : "bg-slate-500"}`}
               />
             </div>
 
@@ -169,7 +169,7 @@
       >
         <div class="relative shrink-0">
           <div
-            class="w-9 h-9 rounded-full bg-slate-800 border-2 border-dashed border-slate-600 flex items-center justify-center text-slate-400 group-hover/add:text-[#d7fd48] group-hover/add:border-[#d7fd48] transition-colors"
+            class="w-9 h-9 rounded-full bg-slate-800 border-2 border-dashed border-slate-600 flex items-center justify-center text-slate-400 group-hover/add:text-brand-lime group-hover/add:border-brand-lime transition-colors"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +191,7 @@
           class="overflow-hidden whitespace-nowrap sidebar-content transition-opacity duration-300"
         >
           <p
-            class="text-sm text-slate-400 group-hover/add:text-[#d6fd48] font-medium truncate transition-colors"
+            class="text-sm text-slate-400 group-hover/add:text-brand-lime font-medium truncate transition-colors"
           >
             Ver todos / Añadir
           </p>
@@ -202,7 +202,7 @@
 
   <!-- Footer: Settings -->
   <div
-    class="p-4 border-t border-white/5 mt-auto bg-[#0f101f]/50 flex flex-col gap-1"
+    class="p-4 border-t border-white/5 mt-auto bg-brand-black/50 flex flex-col gap-1"
   >
     <!-- Share Button -->
     <button
@@ -255,6 +255,31 @@
       <span
         class="font-medium whitespace-nowrap sidebar-content transition-opacity duration-300"
         >Ajustes</span
+      >
+    </a>
+
+    <!-- Logout Button -->
+    <a
+      href="/"
+      class="flex items-center gap-3 text-red-400 hover:text-red-300 hover:bg-white/5 p-2 rounded-lg transition-all group/logout w-full"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 shrink-0 group-hover/logout:translate-x-1 transition-transform duration-300"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+        ></path>
+      </svg>
+      <span
+        class="font-medium whitespace-nowrap sidebar-content transition-opacity duration-300"
+        >Cerrar Sesión</span
       >
     </a>
   </div>

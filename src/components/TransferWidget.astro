@@ -3,15 +3,15 @@
 ---
 
 <div
-  class="bg-neutral-900 rounded-3xl p-6 border border-white/10 shadow-none flex flex-col h-full relative overflow-hidden group"
+  class="bg-brand-black rounded-3xl p-6 border border-white/10 shadow-none flex flex-col h-full relative overflow-hidden group"
 >
-  <!-- Header -->
+  <!-- Encabezado -->
   <div class="flex justify-between items-start mb-6 z-10">
     <div>
       <h3 class="text-white text-lg font-semibold flex items-center gap-2">
         Transferir
         <span
-          class="text-[10px] bg-[#d7fd48]/10 text-[#d7fd48] px-2 py-0.5 rounded-full border border-[#d7fd48]/30"
+          class="text-[10px] bg-brand-lime/10 text-brand-lime px-2 py-0.5 rounded-full border border-brand-lime/30"
           >Rápido</span
         >
       </h3>
@@ -37,47 +37,47 @@
     </button>
   </div>
 
-  <!-- Tabs -->
+  <!-- Pestañas -->
   <div
-    class="flex p-1 bg-black/40 rounded-xl border border-[#d7fd48]/20 mb-6 z-10"
+    class="flex p-1 bg-black/40 rounded-xl border border-brand-lime/20 mb-6 z-10"
     id="transferTabs"
   >
     <button
-      class="flex-1 py-2 rounded-lg text-xs font-bold text-black bg-[#d7fd48] shadow-sm transition-all"
+      class="flex-1 py-2 rounded-lg text-xs font-bold text-black bg-brand-lime shadow-sm transition-all"
       data-tab="contact"
     >
       Mis Contactos
     </button>
     <button
-      class="flex-1 py-2 rounded-lg text-xs font-bold text-neutral-400 hover:text-[#d7fd48] transition-all"
+      class="flex-1 py-2 rounded-lg text-xs font-bold text-neutral-400 hover:text-brand-lime transition-all"
       data-tab="external"
     >
       Usuario Externo
     </button>
   </div>
 
-  <!-- Content: Contact Mode -->
+  <!-- Contenido: Modo Contacto -->
   <div
     id="tabContact"
-    class="flex flex-col gap-4 flex-1 z-10 transition-all duration-300"
+    class="flex flex-col gap-4 flex-1 z-10 transition-all duration-300 relative"
   >
-    <div class="space-y-1">
+    <div class="space-y-1 relative" id="contact-select-wrapper">
       <label class="text-xs text-slate-400 font-medium ml-1">Destinatario</label
       >
+      <!-- Select Personalizado -->
       <div class="relative">
-        <select
-          class="w-full bg-[#0f101f] text-white text-sm rounded-xl border border-white/10 p-3 outline-none focus:border-[#d7fd48] focus:ring-1 focus:ring-[#d7fd48] appearance-none cursor-pointer"
+        <button
+          id="custom-select-trigger"
+          class="w-full bg-[#0f101f] text-white text-sm rounded-xl border border-white/10 p-3 flex justify-between items-center hover:border-brand-lime/50 transition-colors focus:outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime"
+          type="button"
         >
-          <option value="" disabled selected>Selecciona un contacto...</option>
-          <option value="1">Angu</option>
-          <option value="2">Reptiliano</option>
-          <option value="3">AngelaGozo</option>
-          <option value="4">DGCIM</option>
-        </select>
-        <div class="absolute right-3 top-3 pointer-events-none text-slate-400">
+          <span class="text-slate-400" id="selected-contact-text"
+            >Selecciona un contacto...</span
+          >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4"
+            class="h-4 w-4 text-slate-400 transition-transform duration-200"
+            id="select-arrow"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -88,7 +88,81 @@
               stroke-width="2"
               d="M19 9l-7 7-7-7"></path>
           </svg>
+        </button>
+
+        <!-- Opciones del Dropdown -->
+        <div
+          id="custom-select-options"
+          class="absolute top-full left-0 w-full mt-2 bg-[#1a1b2e] border border-white/10 rounded-xl overflow-hidden shadow-2xl z-50 hidden opacity-0 translate-y-2 transition-all duration-200 max-h-48 overflow-y-auto custom-scrollbar"
+        >
+          <div
+            class="p-2 cursor-pointer hover:bg-white/5 flex items-center gap-3 transition-colors contact-option"
+            data-value="1"
+            data-label="Angu"
+            data-image="AG"
+          >
+            <div
+              class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs font-bold border border-purple-500/30"
+            >
+              AG
+            </div>
+            <div class="flex flex-col">
+              <span class="text-white text-sm font-medium">Angu</span>
+              <span class="text-[10px] text-slate-400">@angu_pro</span>
+            </div>
+          </div>
+          <div
+            class="p-2 cursor-pointer hover:bg-white/5 flex items-center gap-3 transition-colors contact-option"
+            data-value="2"
+            data-label="Reptiliano"
+            data-image="RP"
+          >
+            <div
+              class="w-8 h-8 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-xs font-bold border border-green-500/30"
+            >
+              RP
+            </div>
+            <div class="flex flex-col">
+              <span class="text-white text-sm font-medium">Reptiliano</span>
+              <span class="text-[10px] text-slate-400">@reptile_king</span>
+            </div>
+          </div>
+          <div
+            class="p-2 cursor-pointer hover:bg-white/5 flex items-center gap-3 transition-colors contact-option"
+            data-value="3"
+            data-label="AngelaGozo"
+            data-image="AZ"
+          >
+            <div
+              class="w-8 h-8 rounded-full bg-pink-500/20 text-pink-400 flex items-center justify-center text-xs font-bold border border-pink-500/30"
+            >
+              AZ
+            </div>
+            <div class="flex flex-col">
+              <span class="text-white text-sm font-medium">AngelaGozo</span>
+              <span class="text-[10px] text-slate-400">@angela_g</span>
+            </div>
+          </div>
+          <div
+            class="p-2 cursor-pointer hover:bg-white/5 flex items-center gap-3 transition-colors contact-option"
+            data-value="4"
+            data-label="DGCIM"
+            data-image="DG"
+          >
+            <div
+              class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold border border-blue-500/30"
+            >
+              DG
+            </div>
+            <div class="flex flex-col">
+              <span class="text-white text-sm font-medium">DGCIM</span>
+              <span class="text-[10px] text-slate-400">@seguridad_ley</span>
+            </div>
+          </div>
         </div>
+
+        <!-- Input oculto para almacenar el valor -->
+        <input type="hidden" name="contact" id="contact-input" />
       </div>
     </div>
 
@@ -102,13 +176,13 @@
         <input
           type="number"
           placeholder="0.00"
-          class="w-full bg-[#0f101f] text-white text-lg font-bold rounded-xl border border-white/10 py-3 pl-8 pr-4 outline-none focus:border-[#d7fd48] focus:ring-1 focus:ring-[#d7fd48] placeholder:text-slate-600"
+          class="w-full bg-[#0f101f] text-white text-lg font-bold rounded-xl border border-white/10 py-3 pl-8 pr-4 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime placeholder:text-slate-600"
         />
       </div>
     </div>
   </div>
 
-  <!-- Content: External Mode (Hidden by default) -->
+  <!-- Contenido: Modo Externo (Oculto por defecto) -->
   <div
     id="tabExternal"
     class="hidden flex-col gap-4 flex-1 z-10 transition-all duration-300"
@@ -121,12 +195,12 @@
         <input
           type="text"
           placeholder="@usuario o correo"
-          class="w-full bg-[#0f101f] text-white text-sm rounded-xl border border-white/10 p-3 outline-none focus:border-[#d7fd48] focus:ring-1 focus:ring-[#d7fd48]"
+          class="w-full bg-[#0f101f] text-white text-sm rounded-xl border border-white/10 p-3 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime"
         />
         <div
           class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500 hidden"
         >
-          <!-- Success Icon Placeholder -->
+          <!-- Marcador de Icono de Éxito -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-4 w-4"
@@ -157,15 +231,15 @@
         <input
           type="number"
           placeholder="0.00"
-          class="w-full bg-[#0f101f] text-white text-lg font-bold rounded-xl border border-white/10 py-3 pl-8 pr-4 outline-none focus:border-[#d7fd48] focus:ring-1 focus:ring-[#d7fd48] placeholder:text-slate-600"
+          class="w-full bg-[#0f101f] text-white text-lg font-bold rounded-xl border border-white/10 py-3 pl-8 pr-4 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime placeholder:text-slate-600"
         />
       </div>
     </div>
   </div>
 
-  <!-- Send Button -->
+  <!-- Botón de Enviar -->
   <button
-    class="w-full mt-6 bg-[#d7fd48] hover:bg-[#c1e63e] text-black font-bold py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(215,253,72,0.3)] hover:shadow-[0_0_25px_rgba(215,253,72,0.5)] active:scale-95 flex justify-center items-center gap-2 group/btn z-10"
+    class="w-full mt-6 bg-brand-lime hover:bg-[#c1e63e] text-black font-bold py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(215,253,72,0.3)] hover:shadow-[0_0_25px_rgba(215,253,72,0.5)] active:scale-95 flex justify-center items-center gap-2 group/btn z-10"
   >
     <span>Enviar Ahora</span>
     <svg
@@ -185,25 +259,113 @@
 </div>
 
 <script>
-  const buttons = document.querySelectorAll("#transferTabs button");
+  const buttons = document.querySelectorAll(
+    "#transferTabs button",
+  ) as NodeListOf<HTMLButtonElement>;
   const tabContact = document.getElementById("tabContact");
   const tabExternal = document.getElementById("tabExternal");
 
+  // Lógica del Select Personalizado (Dropdown)
+  const selectTrigger = document.getElementById("custom-select-trigger");
+  const selectOptions = document.getElementById("custom-select-options");
+  const selectArrow = document.getElementById("select-arrow");
+  const selectedText = document.getElementById("selected-contact-text");
+  const contactInput = document.getElementById(
+    "contact-input",
+  ) as HTMLInputElement;
+  const options = document.querySelectorAll(".contact-option");
+  const wrapper = document.getElementById("contact-select-wrapper");
+
+  if (selectTrigger && selectOptions && selectArrow) {
+    selectTrigger.addEventListener("click", () => {
+      // Alternar visibilidad
+      const isHidden = selectOptions.classList.contains("hidden");
+
+      if (isHidden) {
+        selectOptions.classList.remove("hidden");
+        // Pequeño retraso para permitir la transición CSS
+        setTimeout(() => {
+          selectOptions.classList.remove("opacity-0", "translate-y-2");
+        }, 10);
+        selectArrow.classList.add("rotate-180");
+        selectTrigger.classList.add("border-brand-lime");
+      } else {
+        closeSelect();
+      }
+    });
+
+    // Cerrar al hacer clic fuera del componente
+    document.addEventListener("click", (e) => {
+      if (wrapper && !wrapper.contains(e.target as Node)) {
+        closeSelect();
+      }
+    });
+
+    options.forEach((opt) => {
+      opt.addEventListener("click", () => {
+        const val = opt.getAttribute("data-value");
+        const label = opt.getAttribute("data-label");
+        const image = opt.getAttribute("data-image");
+        // Extraer clases de estilo del HTML existente
+        const imageClass =
+          opt.querySelector("div:first-child")?.className || "";
+        const bgClass = imageClass.match(/bg-[a-z]+-500\/20/)?.[0] || "";
+        const textClass = imageClass.match(/text-[a-z]+-400/)?.[0] || "";
+        const borderClass =
+          imageClass.match(/border-[a-z]+-500\/30/)?.[0] || "";
+
+        if (val && label && selectedText && contactInput) {
+          // Actualizar el contenido del disparador con el estilo del usuario seleccionado
+          selectedText.innerHTML = `
+            <div class="flex items-center gap-2">
+                 <div class="w-5 h-5 rounded-full ${bgClass} ${textClass} ${borderClass} flex items-center justify-center text-[8px] font-bold border">
+                  ${image}
+                 </div>
+                 <span class="text-white font-medium">${label}</span>
+            </div>
+          `;
+
+          contactInput.value = val;
+          closeSelect();
+        }
+      });
+    });
+
+    function closeSelect() {
+      if (!selectOptions) return;
+      selectOptions.classList.add("opacity-0", "translate-y-2");
+      selectArrow?.classList.remove("rotate-180");
+      selectTrigger?.classList.remove("border-brand-lime");
+
+      setTimeout(() => {
+        selectOptions.classList.add("hidden");
+      }, 200);
+    }
+  }
+
+  // Manejo de Pestañas (Tabs)
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const target = btn.getAttribute("data-tab");
 
-      // Reset Buttons
+      if (!tabContact || !tabExternal) return;
+
+      // Reiniciar estado visual de los botones
       buttons.forEach((b) => {
-        b.classList.remove("bg-[#d7fd48]", "text-black", "shadow-sm");
-        b.classList.add("text-neutral-400");
+        b.classList.remove(
+          "bg-brand-lime",
+          "text-black",
+          "shadow-sm",
+          "hover:text-brand-lime",
+        );
+        b.classList.add("text-neutral-400", "hover:text-brand-lime");
       });
 
-      // Activate Button
-      btn.classList.add("bg-[#d7fd48]", "text-black", "shadow-sm");
-      btn.classList.remove("text-neutral-400");
+      // Activar botón seleccionado
+      btn.classList.add("bg-brand-lime", "text-black", "shadow-sm");
+      btn.classList.remove("text-neutral-400", "hover:text-brand-lime");
 
-      // Switch Content
+      // Cambiar de vista (Contenido)
       if (target === "contact") {
         tabContact.classList.remove("hidden");
         tabContact.classList.add("flex");

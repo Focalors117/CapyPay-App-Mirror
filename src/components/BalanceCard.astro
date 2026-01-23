@@ -7,7 +7,7 @@ const { amount } = Astro.props;
 >
   <!-- Background Decoration -->
   <div
-    class="absolute top-0 right-0 -mr-8 -mt-8 w-64 h-64 rounded-full bg-[#d7fd48] opacity-20 blur-3xl pointer-events-none mix-blend-overlay"
+    class="absolute top-0 right-0 -mr-8 -mt-8 w-64 h-64 rounded-full bg-brand-lime opacity-20 blur-3xl pointer-events-none mix-blend-overlay"
   >
   </div>
   <div
@@ -39,7 +39,7 @@ const { amount } = Astro.props;
       <div
         class="flex items-center gap-2 px-3 py-1 bg-black/20 rounded-full border border-white/10 backdrop-blur-sm"
       >
-        <span class="w-2 h-2 rounded-full bg-[#d7fd48] animate-pulse"></span>
+        <span class="w-2 h-2 rounded-full bg-brand-lime animate-pulse"></span>
         <span class="text-xs font-medium text-white/90">Active Card</span>
       </div>
     </div>
@@ -59,12 +59,13 @@ const { amount } = Astro.props;
     <!-- Actions -->
     <div class="pt-2 flex gap-3">
       <!-- Recargar Button -->
-      <button
+      <a
+        href="/recarga"
         class="flex-1 bg-black/20 hover:bg-black/30 text-white border border-white/10 py-2.5 px-4 rounded-xl text-sm font-bold transition-all flex justify-center items-center gap-2 backdrop-blur-md group"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5 group-hover:rotate-90 transition-transform duration-300 text-[#d7fd48]"
+          class="h-5 w-5 group-hover:rotate-90 transition-transform duration-300 text-brand-lime"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -76,7 +77,7 @@ const { amount } = Astro.props;
             d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
         </svg>
         <span>Recargar</span>
-      </button>
+      </a>
 
       <!-- Bloquear Button (Icon Only) -->
       <button

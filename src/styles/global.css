@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* Colores de la marca predeterminados */
+@theme {
+  --color-brand-lime: #D7FD49;
+  --color-brand-black: #292929;
+  --color-brand-purple: #8362E8;
+  --color-brand-white: #F8F5FF;
+}
+
 @layer components {
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
@@ -21,4 +29,17 @@
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.05) transparent; /* Match defaults */
   }
+}
+
+/* Hide arrow/spinners in input number */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

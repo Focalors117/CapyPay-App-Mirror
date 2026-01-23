@@ -1,107 +1,94 @@
 # 💸 CapyPay App - Dashboard Financiero
 
-Hey 👋 Aquí les dejo la documentación de lo que llevamos montado en **CapyPay**. Se esta usando full **Astro** y **Tailwind**, Aun ninguna librerías. 🚀
+Documentación técnica y funcional del proyecto **CapyPay**. Aplicación web de billetera digital desarrollada con **Astro** y **Tailwind CSS**.
 
-## 🚧 ¿Qué llevamos hasta ahora?
+## 🚀 Estado del Proyecto
 
-Hemos estado realizando la Interfaz principal. Ahorita tenemos un **Dashboard de 3 Columnas** bastante fineshyt (Dark Mode con glow de fondo). (Morales pasa los putos colores hijoputa).
+Actualmente se encuentra desarrollada la interfaz principal (Frontend) con lógica de cliente interactiva mediante JavaScript (Vanilla).
 
-### 1. Sidebar (La barra de al lado)
-Está fija a la izquierda:
-- **Colapsable**: Le das al botoncito y se hace pequeña, escondiendo el texto pero dejando los iconos centrados.
-- **Perfil**: Ahí sale el Usuario con su nivel.
-- **Contactos**: Lista rápida de los contactos agregados (Angu, Reptiliano, AngelaGozo...).
-- **Navegación**: Tiene buscador y un link directo a la página de **Contactos**.
+### Características Implementadas
 
-### 2. Dashboard Principal
-Lo organize en 3 bloques para que todo quede simetrico:
+#### 1. Panel Principal (Dashboard)
 
-#### ⬅️ Izquierda (Widgets Clave)
-- **BalanceCard**: Muestra la plata. Le metí un botón de "Recargar" y el de "Bloquear" (solo el candado).
-- **QuickPay**: Botones rápidos para los apartados Ticket, la Cantina y el Comedor.
-- **FinanceChart**: Una gráfica hecha con DIVs y CSS (tipo velas) (voy a matarme), Muestra ingresos vs gastos.
+Diseño de 3 columnas optimizado para monitores anchos y dispositivos móviles:
 
-#### ⏺️ Centro (Operaciones)
-- **TransferWidget**: Aquí se mueve el dinero. Tienes dos pestañas:
-  - *Mis Contactos*: Seleccionas a uno de la lista.
-  - *Externo*: Para meter un usuario desconocido que no tengas agregado.
-- **ExchangeRateWidget (Tasa del Día)**:Es un widget peqeño que te dice cuánto está el CapyCash en Bolívares (ej. 350 Bs). Se actualiza con la fecha y hora de aquí (formato VE).
+- **BalanceCard**: Visualización de saldo actual con opciones rápidas de recarga y seguridad.
+- **QuickPay**: Accesos directos para pagos frecuentes (Ticket, Cantina, Comedor).
+- **FinanceChart**: Gráfica de ingresos vs gastos responsive, adaptable usando Flexbox (Velas CSS).
+- **Widgets de Actividad**: Feeds de transacciones recientes y valor de la tasa de cambio.
 
-#### ➡️ Derecha
-- **Activity Feed**: Lista de todo lo que has gastado.
+#### 2. Módulo de Transferencias
 
-### 3. Página de Contactos (`/contacts`)
-Hice una página aparte para ver a toda la gente en cuadritos. Ahí es donde vamos a agregarlos a futuro.
+Widget interactivo (`TransferWidget`) con experiencia de usuario mejorada:
+
+- **Pestañas**: Cambio fluido entre "Mis Contactos" y "Usuarios Externos".
+- **Dropdown Personalizado**: Componente de selección desarrollado desde cero para permitir avatares y estilos personalizados en la lista de contactos.
+- **Validaciones Visuales**: Estados de foco y selección claros.
+
+#### 3. Página de Recarga (`/recarga`)
+
+Flujo completo de recarga de saldo dividido en pasos (Wizard):
+
+- **Calculadora de Conversión**: Conversión tiempo real entre Bolívares (Bs) y Capys (C) con tasa fija referencial.
+- **Quick Chips**: Botones de montos predefinidos (5, 10, 20, 50 Capys) disponibles tanto en PC como en Móvil.
+- **Teclado Numérico Móvil**: Implementación de teclado virtual en pantalla para dispositivos táctiles, previniendo el teclado nativo del sistema.
+- **Interfaz de Pasos**:
+  1. Definición del monto.
+  2. Selección de método de pago (Pago Móvil / Transferencia) con datos bancarios copiables.
+  3. Confirmación y reporte de pago.
+
+#### 4. UI/UX Global
+
+- **Sidebar Responsivo w/ Collapsible**: Barra lateral que se contrae conservando la accesibilidad de los iconos.
+- **Estilos de Formularios**: Inputs numéricos saneados (sin flechas/spinners nativos) para una estética limpia.
+- **Modo Oscuro**: Paleta de colores consistente "Dark Glow" usando variables de Tailwind.
 
 ## 🛠️ Stack Tecnológico
-- **Astro**: Porque es rápido como nosotros cuando pagan.
-- **Tailwind CSS**: Para los estilos (amo las classes)
-- **Vanilla JS**: Scripts pequeñitos para la lógica del Sidebar y los Tabs.
- 
-## 🏃‍♂️ ¿Cómo correr esta vaina?
 
-No es tan complicado:
+- **[Astro](https://astro.build/)**: Framework principal para generación de estática y componentes.
+- **[Tailwind CSS](https://tailwindcss.com/)**: Framework de utilidades para el diseño y sistema de colores.
+- **Vanilla JavaScript**: Lógica del lado del cliente para interactividad (Calculadoras, Wizards, Tabs) sin dependencia de frameworks pesados.
 
-1. Instalar las dependencias (si no lo has hecho):
+## 📂 Estructura del Proyecto
+
+```text
+/
+├── public/                 # Archivos estáticos
+├── src/
+│   ├── components/         # Componentes reutilizables UI
+│   │   ├── BalanceCard.astro
+│   │   ├── FinanceChart.astro
+│   │   ├── Sidebar.astro
+│   │   ├── TransferWidget.astro
+│   │   └── ...
+│   ├── layouts/            # Plantillas maestras (MainLayout)
+│   ├── pages/              # Rutas de la aplicación
+│   │   ├── dashboard.astro # Panel principal
+│   │   ├── recarga.astro   # Página de Recarga (Wizard)
+│   │   ├── index.astro     # Landing / Login
+│   │   └── ...
+│   └── styles/             # CSS Global (overrides)
+└── package.json
+```
+
+## 🏃‍♂️ Configuración y Ejecución
+
+Para levantar el entorno de desarrollo localmente:
+
+1. **Instalar dependencias**:
+
 ```bash
 npm install
 ```
 
-2. Prender el servidor local:
+2. **Iniciar servidor de desarrollo**:
+
 ```bash
 npm run dev
 ```
 
-Y listo, abre `localhost:4321` y podras ver la pagina en tiempo real.
+El sitio estará disponible en `http://localhost:4321`.
 
 ---
-*angel mamalo z3*
 
-
-
-# Info de astro adicional.
-
-
-# Astro Starter Kit: Minimal
-
-```sh
-npm create astro@latest -- --template minimal
-```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+© 2026 CapyPay Team.
