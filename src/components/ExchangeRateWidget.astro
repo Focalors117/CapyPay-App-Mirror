@@ -64,7 +64,9 @@ const timeString = currentDate.toLocaleTimeString("es-VE", {
 
     <!-- Bs Side -->
     <div class="flex flex-col items-end">
-      <span class="text-xl font-bold text-brand-lime">350.00</span>
+      <span id="widget-rate-display" class="text-xl font-bold text-brand-lime"
+        >--.--</span
+      >
       <span class="text-[10px] text-slate-400 font-medium">Bolívares</span>
     </div>
   </div>
@@ -99,3 +101,21 @@ const timeString = currentDate.toLocaleTimeString("es-VE", {
     </p>
   </div>
 </div>
+
+<script>
+  import { transactionService } from "../services/api.js";
+
+  const rateDisplay = document.getElementById("widget-rate-display");
+
+  (async () => {
+    try {
+      const data = await transactionService.getRate();
+      if (data && data.tasa && rateDisplay) {
+        rateDisplay.innerText = data.tasa.toFixed(2);
+      }
+    } catch (e) {
+      console.error("Widget: Error obteniendo tasa", e);
+      if (rateDisplay) rateDisplay.innerText = "Error";
+    }
+  })();
+</script>

@@ -31,7 +31,9 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
           <span class="text-brand-lime font-bold text-sm">12</span>
         </div>
         <!-- Saludo -->
-        <h1 class="text-lg font-bold text-white">Hola, Cormex</h1>
+        <h1 class="text-lg font-bold text-white">
+          Hola, <span id="header-username">Cormex</span>
+        </h1>
       </div>
       <!-- Campanita de Notificaciones y Cerrar Sesion -->
       <div class="flex items-center gap-2">
@@ -55,9 +57,9 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
           </svg>
         </div>
         <!-- Boton de Cerrar Sesion (Movil) -->
-        <a
-          href="/"
-          class="w-8 h-8 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400"
+        <button
+          id="mobile-logout-btn"
+          class="w-8 h-8 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 cursor-pointer"
           aria-label="Cerrar Sesión"
         >
           <svg
@@ -74,7 +76,7 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
             ></path>
           </svg>
-        </a>
+        </button>
       </div>
     </div>
 
@@ -339,4 +341,91 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
       animation: wave 1.5s infinite;
     }
   </style>
+
+  <script>
+    import { authService, userService } from "../services/api";
+
+    async function initDashboard() {
+      console.log("Iniciando Dashboard..."); // Debug
+      const user = authService.getCurrentUser();
+      console.log("Usuario en Storage:", user); // Debug
+
+      if (!user) {
+        console.warn(
+          "No hay usuario, redireccionando a login en 3s para depurar...",
+        );
+        // Comentamos la redirección inmediata para ver el log
+        // window.location.href = '/login';
+        return;
+      }
+
+      // Actualizar nombre desde localStorage (rápido)
+      const nameDisplay = document.getElementById("header-username");
+      if (nameDisplay && user.nombre) {
+        nameDisplay.innerText = user.nombre.split(" ")[0]; // Solo primer nombre
+      }
+
+      // Logout Mobile
+      const mobileLogout = document.getElementById("mobile-logout-btn");
+      if (mobileLogout) {
+        mobileLogout.addEventListener("click", (e) => {
+          e.preventDefault();
+          authService.logout();
+        });
+      }
+
+      // Obtener datos frescos del backend
+      try {
+        // En tu backend devuelve 'usuarioId', no id. Pero api.js lo mapea a id. Revisamos ambas.
+        const userId = user.id || user.usuarioId || user._id;
+        console.log("Intentando obtener perfil para ID:", userId);
+
+        if (userId) {
+          const profileData = await userService.getProfile(userId);
+          console.log("Datos del perfil frescos:", profileData);
+
+          // Adaptamos según venga la respuesta del backend
+          const realUser =
+            profileData.usuario || profileData.user || profileData;
+
+          // Actualizar Saldo
+          if (realUser.balance !== undefined) {
+            // Tu backend devuelve 'balance', no 'saldo'
+            const balanceEl = document.getElementById("user-balance-display");
+            if (balanceEl) {
+              balanceEl.innerText = new Intl.NumberFormat("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(realUser.balance);
+            }
+          } else if (realUser.saldo !== undefined) {
+            const balanceEl = document.getElementById("user-balance-display");
+            if (balanceEl) {
+              balanceEl.innerText = new Intl.NumberFormat("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(realUser.saldo);
+            }
+          }
+
+          // Actualizar Nombre si cambió
+          if ((realUser.nombre || realUser.name) && nameDisplay) {
+            nameDisplay.innerText = (realUser.nombre || realUser.name).split(
+              " ",
+            )[0];
+          }
+        } else {
+          console.error("No se encontró un ID válido en el usuario local");
+        }
+      } catch (e) {
+        console.error("Error cargando perfil", e);
+        // Desactivamos auto-logout para debuggear
+        // if (e.message.includes('401') || e.message.includes('token')) {
+        //    authService.logout();
+        // }
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", initDashboard);
+  </script>
 </CapyPay>

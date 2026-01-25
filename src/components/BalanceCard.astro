@@ -51,8 +51,8 @@ const { amount } = Astro.props;
       >
         Saldo Total
       </h2>
-      <p class="text-4xl font-bold tracking-tight text-white">
-        ${amount}
+      <p class="text-4xl font-bold tracking-tight text-white flex gap-1">
+        $<span id="user-balance-display">{amount}</span>
       </p>
     </div>
 
