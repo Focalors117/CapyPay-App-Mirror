@@ -1,0 +1,136 @@
+---
+import "../styles/global.css";
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Test | CapyPay</title>
+  </head>
+  <body
+    class="bg-[#0a0a0a] text-white flex items-center justify-center min-h-screen p-4"
+  >
+    <div
+      class="bg-[#1a1a1a] p-8 rounded-2xl shadow-2xl w-full max-w-sm border border-white/10"
+    >
+      <h1 class="text-3xl font-bold mb-2 text-center text-[#bef264]">
+        CapyPay
+      </h1>
+      <p class="text-gray-400 text-center mb-8 text-sm">
+        Ingreso de prueba (Dev Mode)
+      </p>
+
+      <div id="login-container" class="space-y-5">
+        <div>
+          <label
+            class="block text-xs font-medium text-gray-400 mb-1 uppercase tracking-wider"
+            >Email</label
+          >
+          <input
+            type="email"
+            id="email"
+            class="w-full bg-black/50 p-3 rounded-lg border border-white/10 focus:border-[#bef264] outline-none transition-colors text-white"
+            placeholder="usuario@ejemplo.com"
+          />
+        </div>
+
+        <div>
+          <label
+            class="block text-xs font-medium text-gray-400 mb-1 uppercase tracking-wider"
+            >Contraseña</label
+          >
+          <input
+            type="password"
+            id="password"
+            class="w-full bg-black/50 p-3 rounded-lg border border-white/10 focus:border-[#bef264] outline-none transition-colors text-white"
+            placeholder="••••••••"
+          />
+        </div>
+
+        <div
+          id="error-msg"
+          class="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-200 text-sm hidden text-center"
+        >
+        </div>
+
+        <button
+          id="login-btn"
+          type="button"
+          class="w-full bg-[#bef264] hover:bg-[#a3d94c] text-black font-bold py-3 rounded-xl transition-all shadow-lg shadow-[#bef264]/20 mt-2"
+        >
+          INGRESAR AL DASHBOARD
+        </button>
+      </div>
+
+      <div class="mt-6 text-center">
+        <a
+          href="/"
+          class="text-xs text-gray-500 hover:text-white transition-colors"
+          >Volver al inicio</a
+        >
+      </div>
+    </div>
+
+    <script>
+      import { authService } from "../services/api";
+
+      const btn = document.getElementById("login-btn");
+      const emailInput = document.getElementById("email") as HTMLInputElement;
+      const passInput = document.getElementById("password") as HTMLInputElement;
+      const errorMsg = document.getElementById("error-msg");
+
+      btn?.addEventListener("click", async () => {
+        // UI Update
+        const originalText = btn.innerText;
+        btn.disabled = true;
+        btn.innerText = "Conectando...";
+        btn.classList.add("opacity-70");
+
+        if (errorMsg) errorMsg.classList.add("hidden");
+        if (errorMsg) errorMsg.innerText = "";
+
+        const email = emailInput?.value;
+        const password = passInput?.value;
+
+        if (!email || !password) {
+          if (errorMsg)
+            errorMsg.innerText = "Por favor completa todos los campos";
+          if (errorMsg) errorMsg.classList.remove("hidden");
+          btn.disabled = false;
+          btn.innerText = originalText;
+          btn.classList.remove("opacity-70");
+          return;
+        }
+
+        try {
+          // Intentamos login
+          console.log("Iniciando login con:", email);
+          const response = await authService.login(email, password);
+          console.log("Respuesta login:", response);
+
+          // Éxito
+          btn.innerText = "¡Éxito! Redirigiendo...";
+          btn.classList.replace("bg-[#bef264]", "bg-green-500");
+
+          setTimeout(() => {
+            window.location.href = "/dashboard";
+          }, 500);
+        } catch (error) {
+          console.error(error);
+          if (errorMsg) {
+            // @ts-ignore
+            errorMsg.innerText =
+              error.message || "Error al conectar con el servidor";
+            errorMsg.classList.remove("hidden");
+          }
+
+          // Reset botón
+          btn.disabled = false;
+          btn.innerText = originalText;
+          btn.classList.remove("opacity-70");
+        }
+      });
+    </script>
+  </body>
+</html>

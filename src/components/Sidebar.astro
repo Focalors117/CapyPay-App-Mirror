@@ -260,7 +260,8 @@
 
     <!-- Logout Button -->
     <a
-      href="/"
+      href="#"
+      id="desktop-logout-btn"
       class="flex items-center gap-3 text-red-400 hover:text-red-300 hover:bg-white/5 p-2 rounded-lg transition-all group/logout w-full"
     >
       <svg
@@ -286,6 +287,8 @@
 </aside>
 
 <script>
+  import { authService } from "../services/api";
+
   const sidebar = document.getElementById("sidebar");
   const toggleBtn = document.getElementById("sidebarToggle");
   const toggleIcon = document.getElementById("toggleIcon");
@@ -296,6 +299,15 @@
 
   // Header Elements
   const headerSection = document.getElementById("headerSection");
+  // Logout Logic
+  const logoutBtn = document.getElementById("desktop-logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      authService.logout();
+    });
+  }
+
   const toggleContainer = document.getElementById("toggleContainer");
 
   let isCollapsed = false;
