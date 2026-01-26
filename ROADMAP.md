@@ -20,6 +20,10 @@ This document outlines the current status of the project, pending tasks, and cre
   ✅ **Perfil**:
 - Página de configuración con datos reales precargados.
 
+### Correcciones Visuales (CSS)
+- **Input Autocomplete:** Se forzó el background oscuro (`#0f101f`) y el color de texto blanco para evitar que los navegadores (Chrome) apliquen el estilo blanco por defecto en campos autocompletables.
+- **Placeholder:** Se forzó el color gris (`#475569`) para evitar que herede el color blanco del estilo de autocompletado en algunos estados del navegador.
+
 ---
 
 ## 📋 To-Do (Pendiente Inmediato)

@@ -117,7 +117,8 @@
           id="contact-amount"
           type="number"
           placeholder="0.00"
-          class="w-full bg-[#0f101f] text-white text-lg font-bold rounded-xl border border-white/10 py-3 pl-8 pr-4 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime placeholder:text-slate-600"
+          autocomplete="off"
+          class="w-full bg-[#0f101f]! text-white text-lg font-bold rounded-xl border border-white/10 py-3 pl-8 pr-4 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime placeholder:text-slate-600"
         />
       </div>
     </div>
@@ -174,7 +175,7 @@
           id="external-amount"
           type="number"
           placeholder="0.00"
-          class="w-full bg-[#0f101f] text-white text-lg font-bold rounded-xl border border-white/10 py-3 pl-8 pr-4 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime placeholder:text-slate-600"
+          class="w-full bg-[#0f101f]! text-white text-lg font-bold rounded-xl border border-white/10 py-3 pl-8 pr-4 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime placeholder:text-slate-600"
         />
       </div>
     </div>
@@ -203,15 +204,14 @@
 </div>
 
 <script>
+  // @ts-nocheck
   import {
     authService,
     transactionService,
     userService,
   } from "../services/api.js";
 
-  const buttons = document.querySelectorAll(
-    "#transferTabs button",
-  ) as NodeListOf<HTMLButtonElement>;
+  const buttons = document.querySelectorAll("#transferTabs button");
   const tabContact = document.getElementById("tabContact");
   const tabExternal = document.getElementById("tabExternal");
 
@@ -220,16 +220,15 @@
   const selectOptions = document.getElementById("custom-select-options");
   const selectArrow = document.getElementById("select-arrow");
   const selectedText = document.getElementById("selected-contact-text");
-  const contactInput = document.getElementById(
-    "contact-input",
-  ) as HTMLInputElement;
+  const contactInput = document.getElementById("contact-input");
   const wrapper = document.getElementById("contact-select-wrapper");
 
   // --- CARGAR CONTACTOS REALES ---
   async function loadContacts() {
     if (!selectOptions) return;
     try {
-      const { contactos } = await userService.getContacts();
+      const result = await userService.getContacts();
+      const contactos = result.contactos || [];
 
       if (!contactos || contactos.length === 0) {
         selectOptions.innerHTML =
@@ -263,7 +262,6 @@
 
       contactos.forEach((c, index) => {
         const style = colors[index % colors.length];
-        // IMPORTANTE: data-value será la CÉDULA para que el backend funcione directo
         html += `
             <div
                 class="p-2 cursor-pointer hover:bg-white/5 flex items-center gap-3 transition-colors contact-option"
@@ -287,6 +285,21 @@
 
       selectOptions.innerHTML = html;
       bindContactOptions(); // Re-asignar eventos clicks
+
+      // --- AUTO-SELECT FROM URL ---
+      const urlParams = new URLSearchParams(window.location.search);
+      const targetCedula = urlParams.get("transferTo");
+
+      if (targetCedula) {
+        // Buscar la opción con esa cédula
+        const targetOption = document.querySelector(
+          `.contact-option[data-value="${targetCedula}"]`,
+        );
+        if (targetOption) {
+          targetOption.click(); // Simular click para seleccionar
+          document.getElementById("contact-amount")?.focus();
+        }
+      }
     } catch (e) {
       console.error(e);
       selectOptions.innerHTML =
@@ -360,12 +373,10 @@
 
     // Cerrar al hacer clic fuera del componente
     document.addEventListener("click", (e) => {
-      if (wrapper && !wrapper.contains(e.target as Node)) {
+      if (wrapper && !wrapper.contains(e.target)) {
         closeSelect();
       }
     });
-
-    // NOTA: El binding de options se hace en bindContactOptions()
   }
 
   // Manejo de Pestañas (Tabs)
@@ -425,65 +436,119 @@
       let monto = 0;
 
       if (isContactTab) {
-        const contactInputVal = (
-          document.getElementById("contact-input") as HTMLInputElement
-        )?.value;
+        const contactInputVal = document.getElementById("contact-input")?.value;
         if (!contactInputVal) {
           alert("Selecciona un contacto");
           return;
         }
         cedulaDestino = contactInputVal; // El valor ahora es la cédula
 
-        const amtInput = document.getElementById(
-          "contact-amount",
-        ) as HTMLInputElement;
+        const amtInput = document.getElementById("contact-amount");
         monto = parseFloat(amtInput?.value || "0");
       } else {
         // Tab Externa
-        const extInput = document.getElementById(
-          "external-identifier",
-        ) as HTMLInputElement;
+        const extInput = document.getElementById("external-identifier");
         cedulaDestino = extInput?.value;
-        const extAmount = document.getElementById(
-          "external-amount",
-        ) as HTMLInputElement;
+        const extAmount = document.getElementById("external-amount");
         monto = parseFloat(extAmount?.value || "0");
       }
 
       // 4. Validar
       if (!cedulaDestino) {
-        alert("Ingresa la Cédula del destinatario");
+        if (window.showToast)
+          window.showToast("Ingresa la Cédula del destinatario", "error");
+        else alert("Ingresa la Cédula del destinatario");
         return;
       }
       if (!monto || monto <= 0) {
-        alert("Ingresa un monto válido");
+        if (window.showToast)
+          window.showToast("Ingresa un monto válido", "error");
+        else alert("Ingresa un monto válido");
         return;
       }
 
-      // 5. Enviar
-      const originalText = btnSend.innerHTML;
-      btnSend.innerHTML = "Enviando...";
-      // @ts-ignore
-      btnSend.disabled = true;
+      // 5. Enviar (CON PIN)
+      if (window.requestPin) {
+        window.requestPin(async (pin) => {
+          const originalText = btnSend.innerHTML;
+          btnSend.innerHTML = "Enviando...";
+          btnSend.disabled = true;
 
-      try {
-        const userId = user.id || user.usuarioId || user._id;
-        await transactionService.transfer({
-          emisor_id: userId,
-          cedula_receptor: cedulaDestino,
-          monto: monto,
-          concepto: "Transferencia Web",
+          try {
+            const userId = user.id || user.usuarioId || user._id;
+            await transactionService.transfer({
+              emisor_id: userId,
+              cedula_receptor: cedulaDestino,
+              monto: monto,
+              concepto: "Transferencia Web",
+              pin: pin,
+            });
+
+            if (window.showToast)
+              window.showToast(
+                "Transferencia realizada con éxito",
+                "success",
+                "Pago enviado",
+              );
+
+            // Refrescar datos sin recargar
+            document.dispatchEvent(new CustomEvent("capypay:refresh-data"));
+
+            // Reset UI
+            if (isContactTab) {
+              const amtInput = document.getElementById("contact-amount");
+              if (amtInput) amtInput.value = "";
+            } else {
+              const idInput = document.getElementById("external-identifier");
+              const amtInput = document.getElementById("external-amount");
+              if (idInput) idInput.value = "";
+              if (amtInput) amtInput.value = "";
+            }
+
+            btnSend.innerHTML = originalText;
+            btnSend.disabled = false;
+          } catch (error) {
+            console.error(error);
+            if (window.showToast)
+              window.showToast(
+                error.message || "Falló la transferencia",
+                "error",
+                "Error",
+              );
+            btnSend.innerHTML = originalText;
+            btnSend.disabled = false;
+          }
         });
-
-        alert("¡Transferencia Exitosa!");
-        window.location.reload(); // Recargar para actualizar saldo
-      } catch (error) {
-        console.error(error);
-        alert("Error: " + (error.message || "Falló la transferencia"));
-        btnSend.innerHTML = originalText;
-        // @ts-ignore
-        btnSend.disabled = false;
+      } else {
+        alert("Error: sistema de PIN no cargado.");
       }
     });
   }
+
+  // Escuchar evento de transferencia rápida desde Sidebar
+  window.addEventListener("quick-transfer-selected", (e) => {
+    const customEvent = e;
+    if (!customEvent.detail) return;
+
+    const { cedula } = customEvent.detail;
+    if (!cedula) return;
+
+    // 1. Cambiar a tab de Contactos
+    const contactBtn = document.querySelector('button[data-tab="contact"]');
+    if (contactBtn) contactBtn.click();
+
+    // 2. Seleccionar el contacto
+    setTimeout(() => {
+      // Buscar la opción en la lista generada
+      const targetOption = document.querySelector(
+        `.contact-option[data-value="${cedula}"]`,
+      );
+
+      if (targetOption) {
+        targetOption.click();
+        const amountInput = document.getElementById("contact-amount");
+        if (amountInput) amountInput.focus();
+      }
+    }, 100);
+  });
 </script>

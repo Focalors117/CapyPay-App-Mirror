@@ -673,19 +673,16 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
   </div>
 
   <script>
+    // @ts-nocheck
     import { authService, transactionService } from "../services/api.js";
 
     let exchangeRate = 0; // Inicializar en 0 para evitar cálculos erróneos antes de cargar
 
-    const inputBs = document.getElementById(
-      "input-bs",
-    ) as HTMLInputElement | null; // Input de Bolívares
-    const inputCapy = document.getElementById(
-      "input-capy",
-    ) as HTMLInputElement | null; // Input de Capys
+    const inputBs = document.getElementById("input-bs"); // Input de Bolívares
+    const inputCapy = document.getElementById("input-capy"); // Input de Capys
     const summaryBs = document.getElementById("summary-bs"); // Elemento de resumen de Bs
     const summaryCapys = document.getElementById("summary-capys"); // Elemento de resumen de Capys
-    let activeInput: "capy" | "bs" = "capy"; // Controla qué input tiene el foco (bs o capy)
+    let activeInput = "capy"; // Controla qué input tiene el foco (bs o capy)
 
     // Auxiliar: Determinar si es vista móvil
     const isMobile = window.innerWidth < 1024;
@@ -738,7 +735,7 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
         const targetInput = activeInput === "bs" ? inputBs : inputCapy;
         if (!targetInput) return;
 
-        const digit = (btn as HTMLElement).innerText;
+        const digit = btn.innerText;
         // Evitar múltiples puntos decimales
         if (digit === "." && targetInput.value.includes(".")) return;
         // Limitar la longitud de la entrada
@@ -767,7 +764,7 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
     }
 
     // Lógica de Cálculo
-    function triggerUpdate(source: "capy" | "bs") {
+    function triggerUpdate(source) {
       if (!inputBs || !inputCapy) return;
 
       if (source === "bs") {
@@ -791,7 +788,7 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
       }
     }
 
-    function updateSummary(bs: number, capys: number) {
+    function updateSummary(bs, capys) {
       if (summaryBs)
         summaryBs.innerText = bs.toLocaleString("es-VE", {
           minimumFractionDigits: 2,
@@ -950,9 +947,7 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
         const montoCapy = parseFloat(inputCapy?.value || "0");
         const montoBs = parseFloat(inputBs?.value || "0"); // Usar el input de Bs
 
-        const refInput = document.getElementById(
-          "input-referencia",
-        ) as HTMLInputElement;
+        const refInput = document.getElementById("input-referencia");
         const referencia = refInput ? refInput.value : "";
 
         if (!montoCapy || montoCapy <= 0) {
@@ -976,7 +971,6 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
         const originalText = btnFinalizarRecarga.innerHTML;
         btnFinalizarRecarga.innerHTML =
           "<span class='text-lg'>Procesando...</span>";
-        // @ts-ignore
         btnFinalizarRecarga.disabled = true;
 
         try {

@@ -4,7 +4,7 @@
 
 <aside
   id="sidebar"
-  class="group flex flex-col h-screen sticky top-0 z-50 transition-all duration-300 w-72 bg-[#0a0a0a] border-r border-brand-lime/20 shrink-0"
+  class="group flex flex-col h-screen sticky top-0 z-50 transition-all duration-300 w-20 bg-[#0a0a0a] border-r border-brand-lime/20 shrink-0"
 >
   <!-- Header: Logo, Collapse -->
   <div
@@ -15,13 +15,15 @@
     <div
       class="h-16 flex items-center px-6 transition-all duration-300 w-full overflow-hidden whitespace-nowrap"
     >
-      <div class="flex items-center gap-3 transition-all duration-300">
+      <div class="flex items-center transition-all duration-300">
         <div
           class="w-8 h-8 bg-brand-lime rounded-lg flex items-center justify-center text-black font-bold shadow-[0_0_15px_rgba(215,253,73,0.3)] shrink-0"
         >
           C
         </div>
-        <span class="text-xl font-bold text-white sidebar-content">
+        <span
+          class="text-xl font-bold text-white sidebar-content opacity-0 pointer-events-none max-w-0 overflow-hidden ml-0 transition-all duration-500 ease-in-out"
+        >
           CapyPay
         </span>
       </div>
@@ -29,7 +31,7 @@
 
     <!-- Toggle Buttons -->
     <div
-      class="w-full flex justify-end px-4 transition-all duration-300"
+      class="w-full flex justify-center px-0 transition-all duration-300"
       id="toggleContainer"
     >
       <!-- Collapse Button -->
@@ -40,7 +42,7 @@
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5 transition-transform duration-300"
+          class="h-5 w-5 transition-transform duration-300 rotate-180"
           id="toggleIcon"
           fill="none"
           viewBox="0 0 24 24"
@@ -58,11 +60,11 @@
 
   <!-- User Profile Section -->
   <div
-    class="flex flex-col items-center p-6 border-b border-white/5 overflow-hidden whitespace-nowrap transition-all duration-300 origin-top"
+    class="flex flex-col items-center p-2 py-6 border-b border-white/5 overflow-hidden whitespace-nowrap transition-all duration-300 origin-top"
   >
     <!-- Profile Photo -->
     <div
-      class="w-12 h-12 lg:w-20 lg:h-20 rounded-full p-1 bg-brand-lime/20 mb-3 shadow-[0_0_15px_rgba(215,253,72,0.1)] transition-all duration-300 sidebar-photo border border-brand-lime/30"
+      class="w-10 h-10 rounded-full p-1 bg-brand-lime/20 mb-3 shadow-[0_0_15px_rgba(215,253,72,0.1)] transition-all duration-300 sidebar-photo border border-brand-lime/30"
     >
       <img
         src="https://api.dicebear.com/9.x/lorelei/svg?seed=Aneka"
@@ -70,27 +72,106 @@
         class="w-full h-full rounded-full bg-black object-cover"
       />
     </div>
-    <!-- Name -->
-    <h3
-      id="sidebar-username"
-      class="text-white font-semibold text-lg mb-1 sidebar-content"
-    >
-      Cargando...
-    </h3>
 
-    <!-- Level Bar -->
-    <div class="w-full mt-2 sidebar-content">
-      <div class="flex justify-between text-xs text-slate-400 mb-1">
-        <span>Nivel Actual</span>
-        <span class="text-brand-lime font-bold">12</span>
-      </div>
-      <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-        <div
-          class="bg-brand-lime h-full rounded-full w-[65%] shadow-[0_0_10px_rgba(215,253,72,0.5)]"
-        >
+    <!-- Profile Info Wrapper (Name & Level) -->
+    <div
+      class="w-full flex flex-col items-center overflow-hidden transition-all duration-300 profile-content max-h-0 opacity-0"
+    >
+      <!-- Name -->
+      <h3 id="sidebar-username" class="text-white font-semibold text-lg mb-1">
+        Cargando...
+      </h3>
+
+      <!-- Level Bar -->
+      <div class="w-full mt-2">
+        <div class="flex justify-between text-xs text-slate-400 mb-1">
+          <span>Nivel Actual</span>
+          <span class="text-brand-lime font-bold">12</span>
+        </div>
+        <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+          <div
+            class="bg-brand-lime h-full rounded-full w-[65%] shadow-[0_0_10px_rgba(215,253,72,0.5)]"
+          >
+          </div>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- MAIN NAVIGATION (Dashboard + Notifs) -->
+  <div class="flex flex-col gap-1 px-3 mt-4 border-b border-white/5 pb-4">
+    <!-- Dashboard Link -->
+    <a
+      href="/dashboard"
+      class="group/nav flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left"
+      title="Ir al Dashboard"
+    >
+      <div class="relative shrink-0">
+        <div
+          class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 group-hover/nav:text-brand-lime transition-colors"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+            ></path>
+          </svg>
+        </div>
+      </div>
+      <div
+        class="overflow-hidden whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 transition-all duration-500 ease-in-out"
+      >
+        <p class="text-sm text-slate-200 font-medium truncate">Dashboard</p>
+      </div>
+    </a>
+
+    <!-- Notifications Toggle -->
+    <button
+      id="btn-notifs-sidebar"
+      class="group/nav flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left"
+      title="Notificaciones"
+    >
+      <div class="relative shrink-0">
+        <div
+          class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 group-hover/nav:text-brand-lime transition-colors"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+            ></path>
+          </svg>
+          <!-- Badge -->
+          <span
+            id="notif-badge"
+            class="hidden absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-[#0a0a0a]"
+          ></span>
+        </div>
+      </div>
+      <div
+        class="overflow-hidden whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 transition-all duration-500 ease-in-out"
+      >
+        <p class="text-sm text-slate-200 font-medium truncate">
+          Notificaciones
+        </p>
+      </div>
+    </button>
   </div>
 
   <!-- Contacts Section -->
@@ -98,15 +179,16 @@
     class="flex-1 overflow-hidden hover:overflow-y-auto custom-scrollbar flex flex-col py-4"
   >
     <!-- Search Bar -->
-    <div class="px-4 mb-4">
+    <div class="px-3 mb-4">
       <div class="relative group/search">
         <input
+          id="sidebar-search-input"
           type="text"
           placeholder="Buscar..."
-          class="w-full bg-slate-800/50 text-slate-200 text-sm rounded-lg pl-9 pr-3 py-2 border border-white/5 focus:outline-none focus:border-brand-lime/50 focus:bg-slate-800 transition-all placeholder:text-slate-500 sidebar-content"
+          class="bg-slate-800/50 text-slate-200 text-sm rounded-lg border-white/5 focus:outline-none focus:border-brand-lime/50 focus:bg-slate-800 transition-all placeholder:text-slate-500 w-0 p-0 opacity-0 pointer-events-none border-0"
         />
         <div
-          class="absolute left-0 top-0 h-full w-9 flex items-center justify-center text-slate-500 pointer-events-none group-focus-within/search:text-brand-lime sidebar-search-icon"
+          class="w-full h-10 relative mx-auto cursor-pointer bg-slate-800/50 rounded-lg hover:bg-white/5 transition-colors flex items-center justify-center text-slate-500 sidebar-search-icon"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +208,9 @@
     </div>
 
     <!-- Contacts Title -->
-    <div class="px-6 mb-2 sidebar-content transition-opacity duration-300">
+    <div
+      class="px-3 mb-2 sidebar-content opacity-0 pointer-events-none max-w-0 overflow-hidden ml-3 transition-all duration-500 ease-in-out"
+    >
       <h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest">
         Frecuentes
       </h4>
@@ -134,14 +218,16 @@
 
     <div id="sidebar-contacts-list" class="flex flex-col gap-1 px-3">
       <!-- Contactos se cargarán aquí -->
-      <div class="p-2 text-xs text-slate-500 text-center sidebar-content">
+      <div
+        class="p-2 text-xs text-slate-500 text-center sidebar-content opacity-0 pointer-events-none max-w-0 overflow-hidden ml-0 transition-all duration-500"
+      >
         Cargando...
       </div>
 
       <!-- Add Contact Button -->
       <a
         href="/contacts"
-        class="group/add flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left mt-1"
+        class="group/add flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left mt-1"
       >
         <div class="relative shrink-0">
           <div
@@ -164,7 +250,7 @@
         </div>
 
         <div
-          class="overflow-hidden whitespace-nowrap sidebar-content transition-opacity duration-300"
+          class="overflow-hidden whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 transition-all duration-500 ease-in-out"
         >
           <p
             class="text-sm text-slate-400 group-hover/add:text-brand-lime font-medium truncate transition-colors"
@@ -182,7 +268,7 @@
   >
     <!-- Share Button -->
     <button
-      class="flex items-center gap-3 text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-lg transition-all group/share w-full text-left"
+      class="flex items-center text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-lg transition-all group/share w-full text-left"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -199,7 +285,7 @@
         ></path>
       </svg>
       <span
-        class="font-medium whitespace-nowrap sidebar-content transition-opacity duration-300"
+        class="font-medium whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 overflow-hidden transition-all duration-500 ease-in-out"
         >Compartir</span
       >
     </button>
@@ -207,7 +293,7 @@
     <!-- Settings Button -->
     <a
       href="/settings"
-      class="flex items-center gap-3 text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-lg transition-all group/settings w-full"
+      class="flex items-center text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-lg transition-all group/settings w-full"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -229,7 +315,7 @@
           d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
       </svg>
       <span
-        class="font-medium whitespace-nowrap sidebar-content transition-opacity duration-300"
+        class="font-medium whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 overflow-hidden transition-all duration-500 ease-in-out"
         >Ajustes</span
       >
     </a>
@@ -238,7 +324,7 @@
     <a
       href="#"
       id="desktop-logout-btn"
-      class="flex items-center gap-3 text-red-400 hover:text-red-300 hover:bg-white/5 p-2 rounded-lg transition-all group/logout w-full"
+      class="flex items-center text-red-400 hover:text-red-300 hover:bg-white/5 p-2 rounded-lg transition-all group/logout w-full"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -255,15 +341,158 @@
         ></path>
       </svg>
       <span
-        class="font-medium whitespace-nowrap sidebar-content transition-opacity duration-300"
+        class="font-medium whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 overflow-hidden transition-all duration-500 ease-in-out"
         >Cerrar Sesión</span
       >
     </a>
   </div>
 </aside>
 
+<!-- PORTAL FLOTANTE PARA MENUS CONTEXTUALES -->
+<div
+  id="sidebar-floating-menu"
+  class="hidden fixed w-48 bg-[#1a1a1a] border border-white/10 rounded-xl shadow-[0_0_30px_rgba(0,0,0,0.5)] z-9999 overflow-hidden animate-fade-in backdrop-blur-xl"
+>
+  <div id="floating-menu-content" class="p-1 flex flex-col gap-0.5">
+    <!-- Dynamic content -->
+  </div>
+</div>
+
+<!-- PANEL DE NOTIFICACIONES -->
+<div
+  id="notification-panel"
+  class="hidden fixed w-80 bg-[#1a1a1a] border border-white/10 rounded-xl shadow-[0_0_30px_rgba(0,0,0,0.5)] z-9999 overflow-hidden animate-fade-in backdrop-blur-xl"
+>
+  <!-- Header -->
+  <div
+    class="px-4 py-3 border-b border-white/5 flex justify-between items-center bg-black/20"
+  >
+    <h4 class="text-sm font-bold text-white">Notificaciones</h4>
+    <button id="close-notif-panel" class="text-slate-400 hover:text-white">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-4 w-4"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        ><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"></path></svg
+      >
+    </button>
+  </div>
+  <!-- List -->
+  <div id="notif-list" class="max-h-75 overflow-y-auto custom-scrollbar p-1">
+    <!-- Content -->
+    <div class="p-6 text-center text-xs text-slate-500">Cargando...</div>
+  </div>
+</div>
+
 <script>
-  import { authService, userService } from "../services/api.js";
+  // @ts-nocheck
+  import {
+    authService,
+    userService,
+    notificationService,
+  } from "../services/api.js";
+
+  // --- Quick Transfer Handler ---
+  window.handleQuickTransfer = (cedula) => {
+    const currentPath = window.location.pathname;
+    // Check if we are on dashboard (agnostic of trailing slash)
+    if (currentPath.includes("/dashboard")) {
+      // Dispatch event for TransferWidget
+      const event = new CustomEvent("quick-transfer-selected", {
+        detail: { cedula },
+      });
+      window.dispatchEvent(event);
+
+      // Close Floating Menu
+      const floatingMenu = document.getElementById("sidebar-floating-menu");
+      if (floatingMenu) {
+        floatingMenu.classList.add("hidden");
+        floatingMenu.dataset.activeId = "";
+      }
+    } else {
+      // Navigate to dashboard with param
+      window.location.href = `/dashboard?transferTo=${cedula}`;
+    }
+  };
+
+  // --- LOGICA DEL MENU LATERAL ---
+  window.toggleSidebarContactMenu = (event, id) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const btn = event.currentTarget;
+    const name = btn.dataset.name;
+    const cedula = btn.dataset.cedula;
+    const floatingMenu = document.getElementById("sidebar-floating-menu");
+    const floatingContent = document.getElementById("floating-menu-content");
+
+    if (!floatingMenu || !floatingContent) return;
+
+    // If clicking the same button and menu is open, close it
+    if (
+      !floatingMenu.classList.contains("hidden") &&
+      floatingMenu.dataset.activeId === id
+    ) {
+      floatingMenu.classList.add("hidden");
+      floatingMenu.dataset.activeId = "";
+      return;
+    }
+
+    // Populate Content
+    floatingContent.innerHTML = `
+        <div class="px-3 py-2 border-b border-white/5 mb-1">
+            <p class="text-xs font-bold text-white">${name}</p>
+            <p class="text-[10px] text-slate-500">${cedula}</p>
+        </div>
+        <button onclick="window.handleQuickTransfer('${cedula}')" class="w-full text-left px-3 py-2 text-xs font-medium text-white hover:bg-brand-lime hover:text-black rounded-lg transition-colors flex items-center gap-2">
+            <span>⚡</span> Transferencia Rápida
+        </button>
+        <button onclick="alert('Historial con ${name}')" class="w-full text-left px-3 py-2 text-xs font-medium text-slate-400 hover:bg-white/5 hover:text-white rounded-lg transition-colors">
+            Ver Historial
+        </button>
+      `;
+
+    // Position logic
+    const rect = btn.getBoundingClientRect();
+
+    // Calculate specific positions
+    let top = rect.top;
+    const left = rect.right + 12; // 12px gap
+
+    // Adjust if bottom overflow (menu height approx 150px)
+    const menuHeight = 150;
+    if (top + menuHeight > window.innerHeight) {
+      top = window.innerHeight - menuHeight - 20;
+    }
+
+    floatingMenu.style.top = `${top}px`;
+    floatingMenu.style.left = `${left}px`;
+
+    floatingMenu.classList.remove("hidden");
+    floatingMenu.dataset.activeId = id;
+  };
+
+  // Close menus on click outside
+  document.addEventListener("click", (e) => {
+    const floatingMenu = document.getElementById("sidebar-floating-menu");
+    if (floatingMenu && !floatingMenu.classList.contains("hidden")) {
+      const target = e.target;
+      // Close if clicking outside the menu and outside the toggle buttons
+      if (
+        !target.closest("#sidebar-floating-menu") &&
+        !target.closest('button[onclick*="toggleSidebarContactMenu"]')
+      ) {
+        floatingMenu.classList.add("hidden");
+        floatingMenu.dataset.activeId = "";
+      }
+    }
+  });
 
   // --- LOGICA DE DATOS ----
   async function initSidebar() {
@@ -278,13 +507,12 @@
     const listEl = document.getElementById("sidebar-contacts-list");
     if (listEl && user) {
       try {
-        const { contactos } = await userService.getContacts(
-          user.id || user.usuarioId,
-        );
+        const result = await userService.getContacts(user.id || user.usuarioId);
+        const contactos = result.contactos || [];
 
         // Boton Añadir (reutilizable)
         const addBtnHtml = `
-            <a href="/contacts" class="group/add flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left mt-1">
+            <a href="/contacts" class="group/add flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left mt-1">
                 <div class="relative shrink-0">
                 <div class="w-9 h-9 rounded-full bg-slate-800 border-2 border-dashed border-slate-600 flex items-center justify-center text-slate-400 group-hover/add:text-brand-lime group-hover/add:border-brand-lime transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -292,33 +520,73 @@
                     </svg>
                 </div>
                 </div>
-                <div class="overflow-hidden whitespace-nowrap sidebar-content transition-opacity duration-300">
+                <div class="overflow-hidden whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 transition-all duration-500 ease-in-out">
                 <p class="text-sm text-slate-400 group-hover/add:text-brand-lime font-medium truncate transition-colors">Ver todos / Añadir</p>
                 </div>
             </a>`;
 
         if (!contactos || contactos.length === 0) {
-          listEl.innerHTML = `<div class="p-2 text-xs text-slate-500 text-center sidebar-content">No hay contactos frecuentes</div>${addBtnHtml}`;
+          listEl.innerHTML = `<div class="p-2 text-xs text-slate-500 text-center sidebar-content opacity-0 pointer-events-none max-w-0 overflow-hidden ml-0 transition-all duration-500">No hay contactos frecuentes</div>${addBtnHtml}`;
         } else {
+          contactos.sort((a, b) =>
+            b.is_favorite === a.is_favorite ? 0 : b.is_favorite ? 1 : -1,
+          );
+
           let html = "";
           contactos.slice(0, 5).forEach((c) => {
+            const star = c.is_favorite
+              ? '<span class="text-brand-lime text-[10px] ml-1">★</span>'
+              : "";
+
+            // New Dropdown Logic (Floating)
             html += `
-                    <div class="group/item flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors relative cursor-pointer">
-                        <div class="relative shrink-0">
-                        <div class="w-9 h-9 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-300 border border-white/5">
-                            ${c.iniciales}
-                        </div>
-                        <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-brand-black bg-emerald-500"></span>
-                        </div>
-                        <div class="flex-1 overflow-hidden whitespace-nowrap sidebar-content transition-opacity duration-300 flex justify-between items-center min-w-0 gap-2">
-                            <div class="overflow-hidden min-w-0">
-                                <p class="text-sm text-slate-200 font-medium truncate">${c.nombre}</p>
-                                <p class="text-xs text-slate-500 truncate capitalize">Amigo</p>
+                    <div class="group/item relative">
+                        <button 
+                            class="w-full flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors relative cursor-pointer text-left focus:outline-none"
+                            onclick="window.toggleSidebarContactMenu(event, '${c.id}')"
+                            data-name="${c.nombre}"
+                            data-cedula="${c.cedula}"
+                            title="${c.nombre}"
+                        >
+                            <div class="relative shrink-0">
+                                <div class="w-9 h-9 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-300 border border-white/5">
+                                    ${c.iniciales}
+                                </div>
+                                <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-brand-black bg-emerald-500"></span>
                             </div>
-                        </div>
+                            <!-- Content -->
+                            <div class="flex-1 overflow-hidden whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 transition-all duration-500 ease-in-out min-w-0">
+                                <div class="flex justify-between items-center w-full">
+                                    <div class="overflow-hidden min-w-0">
+                                        <p class="text-sm text-slate-200 font-medium truncate flex items-center">
+                                            ${c.nombre} ${star}
+                                        </p>
+                                        <p class="text-xs text-slate-500 truncate capitalize">Amigo</p>
+                                    </div>
+                                    <div class="text-slate-500 group-hover/item:text-brand-lime transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" /></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
                     </div>`;
           });
           listEl.innerHTML = html + addBtnHtml;
+
+          // RE-CHECK COLLAPSE STATE to show/hide content
+          if (!isCollapsed) {
+            document
+              .querySelectorAll("#sidebar-contacts-list .sidebar-content")
+              .forEach((el) => {
+                el.classList.remove(
+                  "opacity-0",
+                  "pointer-events-none",
+                  "max-w-0",
+                  "ml-0",
+                );
+                el.classList.add("max-w-xs", "ml-3");
+              });
+          }
         }
       } catch (e) {
         console.error("Sidebar error:", e);
@@ -331,13 +599,13 @@
   const sidebar = document.getElementById("sidebar");
   const toggleBtn = document.getElementById("sidebarToggle");
   const toggleIcon = document.getElementById("toggleIcon");
-  const contents = document.querySelectorAll(".sidebar-content");
 
   const photo = document.querySelector(".sidebar-photo");
   const profileSection = photo?.parentElement;
 
   // Header Elements
-  const headerSection = document.getElementById("headerSection");
+  // const headerSection = document.getElementById("headerSection"); // unused
+
   // Logout Logic
   const logoutBtn = document.getElementById("desktop-logout-btn");
   if (logoutBtn) {
@@ -347,34 +615,221 @@
     });
   }
 
+  // --- NOTIFICATION LOGIC ---
+  const notifBtn = document.getElementById("btn-notifs-sidebar");
+  const notifPanel = document.getElementById("notification-panel");
+  const notifList = document.getElementById("notif-list");
+  const closeNotifBtn = document.getElementById("close-notif-panel");
+  const notifBadge = document.getElementById("notif-badge");
+
+  let showedNotifIds = new Set(); // To avoid toasting the same notif twice per session
+
+  // 1. Polling System
+  async function checkNotifications() {
+    const user = authService.getCurrentUser();
+    const userId = user?.id || user?.usuarioId || user?._id;
+    if (!userId) return;
+
+    try {
+      const { notifications } =
+        await notificationService.getNotifications(userId);
+
+      if (notifications && notifications.length > 0) {
+        const unreadCount = notifications.filter((n) => !n.is_read).length;
+
+        // Handle Badge
+        if (unreadCount > 0) {
+          if (notifBadge) {
+            notifBadge.classList.remove("hidden");
+          }
+        } else {
+          if (notifBadge) notifBadge.classList.add("hidden");
+        }
+
+        // Handle Toasts (New Unread Notifications)
+        notifications.forEach((n) => {
+          if (!n.is_read && !showedNotifIds.has(n.id)) {
+            // Show Toast
+            if (n.type === "payment_received") {
+              window.showToast(n.message, "success", "Pago Recibido");
+            } else {
+              window.showToast(n.message, "info", "Nueva Notificación");
+            }
+            showedNotifIds.add(n.id);
+          }
+          if (n.is_read) showedNotifIds.add(n.id);
+        });
+      }
+    } catch (e) {
+      console.error("Polling error", e);
+    }
+  }
+
+  // Poll every 10 seconds
+  setInterval(checkNotifications, 10000);
+  // Initial check
+  setTimeout(checkNotifications, 2000);
+
+  // 2. UI Logic
+  async function openNotifPanel() {
+    if (!notifPanel || !notifList) return;
+
+    // Position logic (next to button)
+    if (notifBtn) {
+      const rect = notifBtn.getBoundingClientRect();
+      notifPanel.style.top = `${rect.top}px`;
+      notifPanel.style.left = `${rect.right + 12}px`;
+      notifPanel.classList.remove("hidden");
+    }
+
+    // Fetch fresh list
+    const user = authService.getCurrentUser();
+    const userId = user?.id || user?.usuarioId || user?._id;
+    if (!userId) return;
+
+    notifList.innerHTML =
+      '<div class="p-6 text-center text-xs text-slate-500">Cargando...</div>';
+
+    try {
+      const { notifications } =
+        await notificationService.getNotifications(userId);
+
+      if (!notifications || notifications.length === 0) {
+        notifList.innerHTML =
+          '<div class="p-6 text-center text-xs text-slate-500">No tienes notificaciones</div>';
+        return;
+      }
+
+      // Match HTML element for clicking
+      let html = "";
+      notifications.forEach((n) => {
+        const icon = n.type === "payment_received" ? "💰" : "📢";
+        const bg = n.is_read ? "opacity-50" : "bg-white/5";
+        const isNew = !n.is_read;
+
+        html += `
+                <div class="px-3 py-3 border-b border-white/5 hover:bg-white/10 transition-colors cursor-pointer flex gap-3 ${bg}" onclick="window.markNotifRead('${n.id}', this)">
+                    <div class="relative shrink-0">
+                        <div class="w-8 h-8 rounded-full bg-brand-lime/10 flex items-center justify-center text-sm border border-brand-lime/20">
+                            ${icon}
+                        </div>
+                        ${isNew ? '<span class="absolute top-0 right-0 w-2 h-2 bg-brand-lime rounded-full shadow-[0_0_5px_theme(colors.brand.lime)]"></span>' : ""}
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-300 font-medium leading-relaxed">${n.message}</p>
+                        <p class="text-[10px] text-slate-500 mt-1">${new Date(n.created_at).toLocaleString()}</p>
+                    </div>
+                </div>
+              `;
+      });
+      notifList.innerHTML = html;
+    } catch (error) {
+      notifList.innerHTML =
+        '<div class="p-6 text-center text-xs text-red-500">Error al cargar</div>';
+    }
+  }
+
+  // Global handler for clicking a notification
+  window.markNotifRead = async (id, el) => {
+    // Visually mark read
+    el.classList.add("opacity-50");
+    el.classList.remove("bg-white/5");
+    const dot = el.querySelector(".absolute.bg-brand-lime");
+    if (dot) dot.remove();
+
+    try {
+      await notificationService.markAsRead(id);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  if (notifBtn) {
+    notifBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (!notifPanel) return;
+      if (notifPanel.classList.contains("hidden")) {
+        openNotifPanel();
+      } else {
+        notifPanel.classList.add("hidden");
+      }
+    });
+  }
+
+  if (closeNotifBtn && notifPanel) {
+    closeNotifBtn.addEventListener("click", () => {
+      notifPanel.classList.add("hidden");
+    });
+  }
+
+  // Close on outside click
+  document.addEventListener("click", (e) => {
+    if (notifPanel && !notifPanel.classList.contains("hidden")) {
+      const target = e.target;
+      if (
+        !notifPanel.contains(target) &&
+        notifBtn &&
+        !notifBtn.contains(target)
+      ) {
+        notifPanel.classList.add("hidden");
+      }
+    }
+  });
+
   const toggleContainer = document.getElementById("toggleContainer");
 
-  let isCollapsed = false;
+  // Default to true (Collapsed)
+  let isCollapsed = true;
+  let toggleTimeout; // Type 'any' for timeout handle
 
   toggleBtn?.addEventListener("click", () => {
     isCollapsed = !isCollapsed;
+    if (toggleTimeout) clearTimeout(toggleTimeout);
+
+    // RE-SELECT CONTENTS dynamically
+    const currentContents = document.querySelectorAll(".sidebar-content");
+    const profileContent = document.querySelector(".profile-content"); // Select the wrapper
+    const searchInput = document.getElementById("sidebar-search-input");
 
     if (isCollapsed) {
-      // Collapse
+      // Collapse Actions
       sidebar?.classList.remove("w-72");
       sidebar?.classList.add("w-20");
 
-      // Header Adjustments for Center Alignment
       toggleContainer?.classList.remove("justify-end", "px-4");
       toggleContainer?.classList.add("justify-center", "px-0");
 
-      // Resize Photo
       photo?.classList.remove("lg:w-20", "lg:h-20");
       photo?.classList.add("w-10", "h-10");
       profileSection?.classList.remove("p-6");
       profileSection?.classList.add("p-2", "py-6");
 
-      // Hide text/large content
-      contents.forEach((el) => {
-        el.classList.add("opacity-0", "pointer-events-none", "hidden");
+      // Collapsing Profile Info (Immediate sync with sidebar)
+      profileContent?.classList.remove("max-h-40", "opacity-100");
+      profileContent?.classList.add("max-h-0", "opacity-0");
+
+      // Collapse Search Input
+      searchInput?.classList.remove(
+        "w-full",
+        "pl-9",
+        "pr-3",
+        "py-2",
+        "border",
+        "opacity-100",
+      );
+      searchInput?.classList.add(
+        "w-0",
+        "p-0",
+        "border-0",
+        "opacity-0",
+        "pointer-events-none",
+      );
+
+      currentContents.forEach((el) => {
+        el.classList.add("opacity-0", "pointer-events-none", "max-w-0", "ml-0");
+        el.classList.remove("max-w-xs", "ml-3");
       });
 
-      // Special handling for search icon visibility in collapsed state
       const searchIcon = document.querySelector(".sidebar-search-icon");
       searchIcon?.classList.remove(
         "absolute",
@@ -396,14 +851,12 @@
         "transition-colors",
       );
 
-      // Flip Icon
       toggleIcon?.classList.add("rotate-180");
     } else {
-      // Expand
+      // Expand Actions
       sidebar?.classList.remove("w-20");
       sidebar?.classList.add("w-72");
 
-      // Restore search icon
       const searchIcon = document.querySelector(".sidebar-search-icon");
       searchIcon?.classList.add(
         "absolute",
@@ -425,22 +878,47 @@
         "transition-colors",
       );
 
-      // Header Restoration
       toggleContainer?.classList.add("justify-end", "px-4");
       toggleContainer?.classList.remove("justify-center", "px-0");
 
-      // Restore Photo
       photo?.classList.add("lg:w-20", "lg:h-20");
       photo?.classList.remove("w-10", "h-10");
       profileSection?.classList.add("p-6");
       profileSection?.classList.remove("p-2", "py-6");
 
-      // Show content
-      contents.forEach((el) => {
-        el.classList.remove("opacity-0", "pointer-events-none", "hidden");
+      // Expand Profile Info (Sync with sidebar width animation)
+      // No delay or small delay, but concurrent with width
+      profileContent?.classList.remove("max-h-0", "opacity-0");
+      profileContent?.classList.add("max-h-40", "opacity-100");
+
+      // Expand Search Input
+      searchInput?.classList.add(
+        "w-full",
+        "pl-9",
+        "pr-3",
+        "py-2",
+        "border",
+        "opacity-100",
+      );
+      searchInput?.classList.remove(
+        "w-0",
+        "p-0",
+        "border-0",
+        "opacity-0",
+        "pointer-events-none",
+      );
+
+      // Delay only for text labels in list
+      currentContents.forEach((el) => {
+        el.classList.remove(
+          "opacity-0",
+          "pointer-events-none",
+          "max-w-0",
+          "ml-0",
+        );
+        el.classList.add("max-w-xs", "ml-3");
       });
 
-      // Reset Icon
       toggleIcon?.classList.remove("rotate-180");
     }
   });

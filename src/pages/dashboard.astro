@@ -194,17 +194,41 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
           >
             <div class="p-6 pb-4 shrink-0 border-b border-white/10">
               <div class="flex flex-col gap-2">
-                <h2 class="text-xl font-bold text-white">Actividad</h2>
+                <div class="flex items-center justify-between">
+                  <h2 class="text-xl font-bold text-white">Actividad</h2>
+                  <a
+                    href="/history"
+                    class="text-[10px] text-brand-lime hover:text-white transition-colors flex items-center gap-1 group"
+                  >
+                    Ver historial
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-3 w-3 group-hover:translate-x-0.5 transition-transform"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"></path>
+                    </svg>
+                  </a>
+                </div>
                 <div class="flex gap-1 overflow-x-auto pb-1 no-scrollbar">
                   <button
+                    id="filter-all"
                     class="text-[10px] bg-brand-lime hover:bg-[#ccf044] text-black font-bold px-3 py-1 rounded-full transition-colors whitespace-nowrap shadow-[0_0_10px_rgba(215,253,73,0.2)]"
                     >Todos</button
                   >
                   <button
+                    id="filter-income"
                     class="text-[10px] text-slate-400 hover:text-brand-lime px-3 py-1 rounded-full transition-colors whitespace-nowrap"
                     >Ingresos</button
                   >
                   <button
+                    id="filter-expenses"
                     class="text-[10px] text-slate-400 hover:text-brand-lime px-3 py-1 rounded-full transition-colors whitespace-nowrap"
                     >Gastos</button
                   >
@@ -292,9 +316,128 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
   </style>
 
   <script>
-    import { authService, userService } from "../services/api";
+    // @ts-nocheck
+    import { authService, userService } from "../services/api.js";
+
+    let cachedMovements = [];
+    let currentFilter = "all"; // 'all' | 'income' | 'expense'
+
+    function setupFilters() {
+      const btnAll = document.getElementById("filter-all");
+      const btnIncome = document.getElementById("filter-income");
+      const btnExpense = document.getElementById("filter-expenses");
+
+      const updateStyles = (activeId) => {
+        [btnAll, btnIncome, btnExpense].forEach((btn) => {
+          if (!btn) return;
+          if (btn.id === activeId) {
+            btn.classList.remove("text-slate-400", "hover:text-brand-lime");
+            btn.classList.add(
+              "bg-brand-lime",
+              "text-black",
+              "shadow-[0_0_10px_rgba(215,253,73,0.2)]",
+            );
+          } else {
+            btn.classList.add("text-slate-400", "hover:text-brand-lime");
+            btn.classList.remove(
+              "bg-brand-lime",
+              "text-black",
+              "shadow-[0_0_10px_rgba(215,253,73,0.2)]",
+            );
+          }
+        });
+      };
+
+      if (btnAll)
+        btnAll.onclick = () => {
+          currentFilter = "all";
+          updateStyles("filter-all");
+          renderHistoryList();
+        };
+      if (btnIncome)
+        btnIncome.onclick = () => {
+          currentFilter = "income";
+          updateStyles("filter-income");
+          renderHistoryList();
+        };
+      if (btnExpense)
+        btnExpense.onclick = () => {
+          currentFilter = "expense";
+          updateStyles("filter-expenses");
+          renderHistoryList();
+        };
+    }
+
+    function renderHistoryList() {
+      const container = document.getElementById("history-list-container");
+      if (!container) return;
+
+      // Filtrar
+      let moves = cachedMovements;
+      if (currentFilter === "income") {
+        moves = moves.filter((m) => !m.es_negativo);
+      } else if (currentFilter === "expense") {
+        moves = moves.filter((m) => m.es_negativo);
+      }
+
+      if (moves.length === 0) {
+        container.innerHTML =
+          '<p class="text-center text-slate-500 text-sm mt-10">No hay movimientos.</p>';
+        return;
+      }
+
+      let html = '<div class="space-y-4"><div class="grid grid-cols-1 gap-2">';
+
+      // Show max 7 items of the filtered list
+      const recentMoves = moves.slice(0, 7);
+
+      recentMoves.forEach((mov) => {
+        const isNegative = mov.es_negativo;
+        const amount = mov.monto;
+        const displayAmount = isNegative ? `-$${amount}` : `+$${amount}`;
+        const amountColor = isNegative ? "text-purple-400" : "text-[#d7fd48]";
+        const iconBg = isNegative ? "bg-purple-500/10" : "bg-[#d7fd48]/10";
+        const iconColor = isNegative ? "text-purple-400" : "text-[#d7fd48]";
+        const dateObj = new Date(mov.fecha);
+        const dateStr = adjustDate(dateObj); // Using helper if needed, or simple local
+        // const dateStr = dateObj.toLocaleTimeString([], {
+        const dateTime = dateObj.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        const dateFull = dateObj.toLocaleDateString();
+
+        const iconSvg = isNegative
+          ? '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>'
+          : '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>';
+
+        html += `
+                    <div class="group flex items-center justify-between p-4 rounded-xl bg-neutral-900 border border-white/5 transition-all duration-300 cursor-pointer w-[calc(100%-8px)] mx-auto hover:bg-neutral-800 hover:border-[#d7fd48]/30 hover:scale-[1.01] overflow-hidden">
+                      <div class="flex items-center gap-4 min-w-0">
+                        <div class="w-12 h-12 rounded-full ${iconBg} flex items-center justify-center ${iconColor} shrink-0">
+                           ${iconSvg}
+                        </div>
+                        <div class="flex flex-col min-w-0">
+                          <h4 class="text-sm font-bold text-white truncate">${mov.descripcion || mov.concept || mov.tipo}</h4>
+                          <p class="text-[10px] text-slate-500">${dateFull} ${dateTime}</p>
+                        </div>
+                      </div>
+                      <div class="text-sm font-bold ${amountColor} whitespace-nowrap">
+                        ${displayAmount}
+                      </div>
+                    </div>`;
+      });
+
+      container.innerHTML = html + "</div></div>";
+    }
+
+    // Helper just in case
+    function adjustDate(d) {
+      return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    }
 
     async function initDashboard() {
+      setupFilters();
       console.log("Iniciando Dashboard..."); // Debug
       const user = authService.getCurrentUser();
       console.log("Usuario en Storage:", user); // Debug
@@ -380,51 +523,8 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
       try {
         const response = await userService.getHistory(cedula);
         if (response && response.movimientos) {
-          if (response.movimientos.length === 0) {
-            container.innerHTML =
-              '<p class="text-center text-slate-500 text-sm mt-10">No hay movimientos recientes.</p>';
-            return;
-          }
-
-          let html =
-            '<div class="space-y-4"><div class="grid grid-cols-1 gap-2">';
-          response.movimientos.forEach((mov) => {
-            const isNegative = mov.es_negativo;
-            const amount = mov.monto;
-            const displayAmount = isNegative ? `-$${amount}` : `+$${amount}`;
-            const amountColor = isNegative
-              ? "text-purple-400"
-              : "text-[#d7fd48]";
-            const iconBg = isNegative ? "bg-purple-500/10" : "bg-[#d7fd48]/10";
-            const iconColor = isNegative ? "text-purple-400" : "text-[#d7fd48]";
-            const dateObj = new Date(mov.fecha);
-            const dateStr = dateObj.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            });
-            const dateFull = dateObj.toLocaleDateString();
-
-            const iconSvg = isNegative
-              ? '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>'
-              : '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>';
-
-            html += `
-                    <div class="group flex items-center justify-between p-4 rounded-xl bg-neutral-900 border border-white/5 transition-all duration-300 cursor-pointer w-[calc(100%-8px)] mx-auto hover:bg-neutral-800 hover:border-[#d7fd48]/30 hover:scale-[1.01] overflow-hidden">
-                      <div class="flex items-center gap-4 min-w-0">
-                        <div class="w-12 h-12 rounded-full ${iconBg} flex items-center justify-center ${iconColor} shrink-0">
-                           ${iconSvg}
-                        </div>
-                        <div class="flex flex-col min-w-0">
-                          <h4 class="text-sm font-bold text-white truncate">${mov.descripcion || mov.concept || mov.tipo}</h4>
-                          <p class="text-[10px] text-slate-500">${dateFull} ${dateStr}</p>
-                        </div>
-                      </div>
-                      <div class="text-sm font-bold ${amountColor} whitespace-nowrap">
-                        ${displayAmount}
-                      </div>
-                    </div>`;
-          });
-          container.innerHTML = html + "</div></div>";
+          cachedMovements = response.movimientos;
+          renderHistoryList();
         }
       } catch (e) {
         console.error(e);
@@ -434,5 +534,7 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
     }
 
     document.addEventListener("DOMContentLoaded", initDashboard);
+    // Escuchar evento global para refrescar datos sin recargar (ej: tras transferencia)
+    document.addEventListener("capypay:refresh-data", initDashboard);
   </script>
 </CapyPay>

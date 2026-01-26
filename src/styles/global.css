@@ -42,4 +42,28 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* PREVENT AUTOFILL WHITE BACKGROUND */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #0f101f inset !important;
+    -webkit-text-fill-color: white !important;
+    transition: background-color 5000s ease-in-out 0s;
+    caret-color: white !important; /* Fix caret color */
+}
+
+/* Fix placeholder color specifically - LESS AGGRESSIVE */
+input::placeholder {
+    color: #475569;
+    opacity: 1;
+}
+
+/* Fix for Webkit autofill specifically affecting placeholder */
+input:-webkit-autofill::placeholder {
+    color: #475569;
+    -webkit-text-fill-color: #475569;
 }

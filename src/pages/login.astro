@@ -73,64 +73,65 @@ import "../styles/global.css";
     </div>
 
     <script>
-      import { authService } from "../services/api";
+      // @ts-nocheck
+      import { authService } from "../services/api.js";
 
       const btn = document.getElementById("login-btn");
-      const emailInput = document.getElementById("email") as HTMLInputElement;
-      const passInput = document.getElementById("password") as HTMLInputElement;
+      const emailInput = document.getElementById("email");
+      const passInput = document.getElementById("password");
       const errorMsg = document.getElementById("error-msg");
 
-      btn?.addEventListener("click", async () => {
-        // UI Update
-        const originalText = btn.innerText;
-        btn.disabled = true;
-        btn.innerText = "Conectando...";
-        btn.classList.add("opacity-70");
+      if (btn)
+        btn.addEventListener("click", async () => {
+          // UI Update
+          const originalText = btn.innerText;
+          btn.disabled = true;
+          btn.innerText = "Conectando...";
+          btn.classList.add("opacity-70");
 
-        if (errorMsg) errorMsg.classList.add("hidden");
-        if (errorMsg) errorMsg.innerText = "";
+          if (errorMsg) errorMsg.classList.add("hidden");
+          if (errorMsg) errorMsg.innerText = "";
 
-        const email = emailInput?.value;
-        const password = passInput?.value;
+          const email = emailInput?.value;
+          const password = passInput?.value;
 
-        if (!email || !password) {
-          if (errorMsg)
-            errorMsg.innerText = "Por favor completa todos los campos";
-          if (errorMsg) errorMsg.classList.remove("hidden");
-          btn.disabled = false;
-          btn.innerText = originalText;
-          btn.classList.remove("opacity-70");
-          return;
-        }
-
-        try {
-          // Intentamos login
-          console.log("Iniciando login con:", email);
-          const response = await authService.login(email, password);
-          console.log("Respuesta login:", response);
-
-          // Éxito
-          btn.innerText = "¡Éxito! Redirigiendo...";
-          btn.classList.replace("bg-[#bef264]", "bg-green-500");
-
-          setTimeout(() => {
-            window.location.href = "/dashboard";
-          }, 500);
-        } catch (error) {
-          console.error(error);
-          if (errorMsg) {
-            // @ts-ignore
-            errorMsg.innerText =
-              error.message || "Error al conectar con el servidor";
-            errorMsg.classList.remove("hidden");
+          if (!email || !password) {
+            if (errorMsg)
+              errorMsg.innerText = "Por favor completa todos los campos";
+            if (errorMsg) errorMsg.classList.remove("hidden");
+            btn.disabled = false;
+            btn.innerText = originalText;
+            btn.classList.remove("opacity-70");
+            return;
           }
 
-          // Reset botón
-          btn.disabled = false;
-          btn.innerText = originalText;
-          btn.classList.remove("opacity-70");
-        }
-      });
+          try {
+            // Intentamos login
+            console.log("Iniciando login con:", email);
+            const response = await authService.login(email, password);
+            console.log("Respuesta login:", response);
+
+            // Éxito
+            btn.innerText = "¡Éxito! Redirigiendo...";
+            btn.classList.replace("bg-[#bef264]", "bg-green-500");
+
+            setTimeout(() => {
+              window.location.href = "/dashboard";
+            }, 500);
+          } catch (error) {
+            console.error(error);
+            if (errorMsg) {
+              errorMsg.innerText =
+                error.message || "Error al conectar con el servidor";
+              errorMsg.classList.remove("hidden");
+            }
+
+            // Reset botón
+            btn.disabled = false;
+            btn.innerText = originalText;
+            btn.classList.remove("opacity-70");
+          }
+        });
     </script>
   </body>
 </html>

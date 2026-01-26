@@ -143,6 +143,39 @@ export const userService = {
      }
      if(!userId) return { contactos: [] };
      return fetchAPI(`/contactos?usuario_id=${userId}`);
+  },
+
+  addContact: async (cedula, alias) => {
+      const u = authService.getCurrentUser();
+      if(!u?.id) throw new Error("Usuario no autenticado");
+      
+      return fetchAPI('/contactos', {
+          method: 'POST',
+          body: JSON.stringify({
+              usuario_id: u.id,
+              cedula,
+              alias
+          })
+      });
+  },
+
+  deleteContact: async (contactId) => {
+      return fetchAPI(`/contactos/${contactId}`, {
+          method: 'DELETE'
+      });
+  },
+
+  searchUsers: async (query) => {
+      // ?q=...
+      const data = await fetchAPI(`/buscar?q=${query}`);
+      return data?.resultados || [];
+  },
+
+  toggleFavorite: async (contactId, isFavorite) => {
+      return fetchAPI(`/contactos/${contactId}/favorite`, {
+          method: 'PUT',
+          body: JSON.stringify({ is_favorite: isFavorite })
+      });
   }
 };
 
@@ -166,5 +199,22 @@ export const transactionService = {
   // Backend route: GET /api/tasa
   getRate: async () => {
       return fetchAPI('/tasa');
+  }
+};
+
+export const notificationService = {
+  getNotifications: async (userId) => {
+    if(!userId) {
+       const u = authService.getCurrentUser();
+       userId = u?.id;
+    }
+    if(!userId) return { notifications: [] };
+    return fetchAPI(`/notifications/${userId}`);
+  },
+
+  markAsRead: async (notifId) => {
+    return fetchAPI(`/notifications/${notifId}/read`, {
+       method: 'PATCH'
+    });
   }
 };

@@ -87,7 +87,7 @@ import MainLayout from "../layouts/MainLayout.astro";
         </form>
       </section>
 
-      <!-- App Settings -->
+      <!-- Security Settings -->
       <section
         class="bg-brand-black border border-white/5 rounded-3xl p-6 h-fit"
       >
@@ -103,55 +103,46 @@ import MainLayout from "../layouts/MainLayout.astro";
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
-              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
             ></path>
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
           </svg>
-          Preferencias
+          Seguridad
         </h2>
+
         <div class="space-y-4">
-          <div
-            class="flex items-center justify-between p-3 bg-black/30 rounded-xl border border-white/5"
-          >
-            <span class="text-white">Modo Oscuro</span>
-            <div
-              class="w-12 h-6 bg-brand-lime rounded-full relative cursor-pointer"
-            >
-              <div
-                class="absolute right-1 top-1 w-4 h-4 bg-black rounded-full shadow-sm"
-              >
-              </div>
+          <div class="bg-white/5 p-4 rounded-xl border border-white/5">
+            <h3 class="text-white font-bold text-sm mb-1">
+              PIN de Transacciones
+            </h3>
+            <p class="text-slate-400 text-xs mb-4">
+              Establece un código de 4 o 6 dígitos para autorizar pagos.
+            </p>
+
+            <div class="flex gap-2 mb-4">
+              <input
+                type="password"
+                id="pin-input"
+                maxlength="6"
+                placeholder="0000"
+                class="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white text-center tracking-[0.5em] font-bold focus:outline-none focus:border-brand-lime/50 transition-colors placeholder:tracking-normal placeholder:font-normal"
+              />
             </div>
+
+            <button
+              id="btn-save-pin"
+              class="w-full bg-white/10 hover:bg-white/20 text-brand-lime font-bold py-2 rounded-lg text-sm transition-colors border border-brand-lime/20 hover:border-brand-lime/50"
+            >
+              Actualizar PIN
+            </button>
           </div>
+
           <div
-            class="flex items-center justify-between p-3 bg-black/30 rounded-xl border border-white/5"
+            class="bg-white/5 p-4 rounded-xl border border-white/5 opacity-50 cursor-not-allowed"
           >
-            <span class="text-white">Notificaciones Push</span>
-            <div
-              class="w-12 h-6 bg-slate-700 rounded-full relative cursor-pointer"
-            >
-              <div
-                class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-sm"
-              >
-              </div>
-            </div>
-          </div>
-          <div
-            class="flex items-center justify-between p-3 bg-black/30 rounded-xl border border-white/5"
-          >
-            <span class="text-white">Autenticación Biométrica</span>
-            <div
-              class="w-12 h-6 bg-brand-lime rounded-full relative cursor-pointer"
-            >
-              <div
-                class="absolute right-1 top-1 w-4 h-4 bg-black rounded-full shadow-sm"
-              >
-              </div>
-            </div>
+            <h3 class="text-white font-bold text-sm mb-1">
+              Cambiar Contraseña
+            </h3>
+            <p class="text-slate-400 text-xs">Próximamente disponible.</p>
           </div>
         </div>
       </section>
@@ -160,6 +151,7 @@ import MainLayout from "../layouts/MainLayout.astro";
 </MainLayout>
 
 <script>
+  // @ts-nocheck
   import { authService, userService } from "../services/api.js";
 
   const nameInput = document.getElementById("profile-name");
@@ -173,7 +165,10 @@ import MainLayout from "../layouts/MainLayout.astro";
       if (!user) return; // No logueado
 
       // Intentar obtener datos frescos del backend
-      const profile = await userService.getProfile(user.id || user.usuarioId);
+      const userId = user.id || user.usuarioId;
+      if (!userId) return;
+
+      const profile = await userService.getProfile(userId);
 
       if (profile) {
         if (nameInput) nameInput.value = profile.nombre || profile.name || "";
@@ -191,6 +186,56 @@ import MainLayout from "../layouts/MainLayout.astro";
     btnSave.addEventListener("click", async () => {
       // TODO: Implementar Update en Backend
       alert("La función de actualizar perfil estará disponible pronto.");
+    });
+  }
+
+  // --- PIN UPDATE LOGIC ---
+  const btnSavePin = document.getElementById("btn-save-pin");
+  if (btnSavePin) {
+    btnSavePin.addEventListener("click", async () => {
+      const pinInput = document.getElementById("pin-input");
+      const pin = pinInput ? pinInput.value : "";
+
+      if ((pin.length !== 4 && pin.length !== 6) || isNaN(Number(pin))) {
+        alert("El PIN debe ser de 4 o 6 números.");
+        return;
+      }
+
+      const user = authService.getCurrentUser();
+      if (!user) return;
+
+      const userId = user.id || user.usuarioId || user._id;
+
+      const originalText = btnSavePin.innerText;
+      btnSavePin.innerText = "Guardando...";
+      btnSavePin.disabled = true;
+
+      try {
+        // TODO: Mover esto a userService en api.js
+        const response = await fetch(
+          `http://localhost:3000/api/usuario/${userId}/pin`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ pin }),
+          },
+        );
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert("PIN actualizado con éxito.");
+          pinInput.value = "";
+        } else {
+          alert("Error: " + (data.error || "No se pudo actualizar"));
+        }
+      } catch (e) {
+        console.error(e);
+        alert("Error de conexión");
+      } finally {
+        btnSavePin.innerText = originalText;
+        btnSavePin.disabled = false;
+      }
     });
   }
 </script>
