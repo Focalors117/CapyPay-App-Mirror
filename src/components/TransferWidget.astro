@@ -95,69 +95,9 @@
           id="custom-select-options"
           class="absolute top-full left-0 w-full mt-2 bg-[#1a1b2e] border border-white/10 rounded-xl overflow-hidden shadow-2xl z-50 hidden opacity-0 translate-y-2 transition-all duration-200 max-h-48 overflow-y-auto custom-scrollbar"
         >
-          <div
-            class="p-2 cursor-pointer hover:bg-white/5 flex items-center gap-3 transition-colors contact-option"
-            data-value="1"
-            data-label="Angu"
-            data-image="AG"
-          >
-            <div
-              class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs font-bold border border-purple-500/30"
-            >
-              AG
-            </div>
-            <div class="flex flex-col">
-              <span class="text-white text-sm font-medium">Angu</span>
-              <span class="text-[10px] text-slate-400">@angu_pro</span>
-            </div>
-          </div>
-          <div
-            class="p-2 cursor-pointer hover:bg-white/5 flex items-center gap-3 transition-colors contact-option"
-            data-value="2"
-            data-label="Reptiliano"
-            data-image="RP"
-          >
-            <div
-              class="w-8 h-8 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-xs font-bold border border-green-500/30"
-            >
-              RP
-            </div>
-            <div class="flex flex-col">
-              <span class="text-white text-sm font-medium">Reptiliano</span>
-              <span class="text-[10px] text-slate-400">@reptile_king</span>
-            </div>
-          </div>
-          <div
-            class="p-2 cursor-pointer hover:bg-white/5 flex items-center gap-3 transition-colors contact-option"
-            data-value="3"
-            data-label="AngelaGozo"
-            data-image="AZ"
-          >
-            <div
-              class="w-8 h-8 rounded-full bg-pink-500/20 text-pink-400 flex items-center justify-center text-xs font-bold border border-pink-500/30"
-            >
-              AZ
-            </div>
-            <div class="flex flex-col">
-              <span class="text-white text-sm font-medium">AngelaGozo</span>
-              <span class="text-[10px] text-slate-400">@angela_g</span>
-            </div>
-          </div>
-          <div
-            class="p-2 cursor-pointer hover:bg-white/5 flex items-center gap-3 transition-colors contact-option"
-            data-value="4"
-            data-label="DGCIM"
-            data-image="DG"
-          >
-            <div
-              class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold border border-blue-500/30"
-            >
-              DG
-            </div>
-            <div class="flex flex-col">
-              <span class="text-white text-sm font-medium">DGCIM</span>
-              <span class="text-[10px] text-slate-400">@seguridad_ley</span>
-            </div>
+          <!-- Se llenará dinámicamente con JS -->
+          <div class="p-4 text-center text-xs text-slate-500">
+            Cargando contactos...
           </div>
         </div>
 
@@ -174,6 +114,7 @@
           >$</span
         >
         <input
+          id="contact-amount"
           type="number"
           placeholder="0.00"
           class="w-full bg-[#0f101f] text-white text-lg font-bold rounded-xl border border-white/10 py-3 pl-8 pr-4 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime placeholder:text-slate-600"
@@ -189,12 +130,13 @@
   >
     <div class="space-y-1">
       <label class="text-xs text-slate-400 font-medium ml-1"
-        >ID de Usuario / Email</label
+        >Cédula del Destinatario</label
       >
       <div class="relative">
         <input
+          id="external-identifier"
           type="text"
-          placeholder="@usuario o correo"
+          placeholder="Ej: V-12345678"
           class="w-full bg-[#0f101f] text-white text-sm rounded-xl border border-white/10 p-3 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime"
         />
         <div
@@ -229,6 +171,7 @@
           >$</span
         >
         <input
+          id="external-amount"
           type="number"
           placeholder="0.00"
           class="w-full bg-[#0f101f] text-white text-lg font-bold rounded-xl border border-white/10 py-3 pl-8 pr-4 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime placeholder:text-slate-600"
@@ -239,6 +182,7 @@
 
   <!-- Botón de Enviar -->
   <button
+    id="btn-send-transfer"
     class="w-full mt-6 bg-brand-lime hover:bg-[#c1e63e] text-black font-bold py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(215,253,72,0.3)] hover:shadow-[0_0_25px_rgba(215,253,72,0.5)] active:scale-95 flex justify-center items-center gap-2 group/btn z-10"
   >
     <span>Enviar Ahora</span>
@@ -259,6 +203,12 @@
 </div>
 
 <script>
+  import {
+    authService,
+    transactionService,
+    userService,
+  } from "../services/api.js";
+
   const buttons = document.querySelectorAll(
     "#transferTabs button",
   ) as NodeListOf<HTMLButtonElement>;
@@ -273,8 +223,122 @@
   const contactInput = document.getElementById(
     "contact-input",
   ) as HTMLInputElement;
-  const options = document.querySelectorAll(".contact-option");
   const wrapper = document.getElementById("contact-select-wrapper");
+
+  // --- CARGAR CONTACTOS REALES ---
+  async function loadContacts() {
+    if (!selectOptions) return;
+    try {
+      const { contactos } = await userService.getContacts();
+
+      if (!contactos || contactos.length === 0) {
+        selectOptions.innerHTML =
+          '<div class="p-4 text-center text-xs text-slate-500">No tienes contactos guardados.</div>';
+        return;
+      }
+
+      let html = "";
+      const colors = [
+        {
+          bg: "bg-purple-500/20",
+          text: "text-purple-400",
+          border: "border-purple-500/30",
+        },
+        {
+          bg: "bg-green-500/20",
+          text: "text-green-400",
+          border: "border-green-500/30",
+        },
+        {
+          bg: "bg-pink-500/20",
+          text: "text-pink-400",
+          border: "border-pink-500/30",
+        },
+        {
+          bg: "bg-blue-500/20",
+          text: "text-blue-400",
+          border: "border-blue-500/30",
+        },
+      ];
+
+      contactos.forEach((c, index) => {
+        const style = colors[index % colors.length];
+        // IMPORTANTE: data-value será la CÉDULA para que el backend funcione directo
+        html += `
+            <div
+                class="p-2 cursor-pointer hover:bg-white/5 flex items-center gap-3 transition-colors contact-option"
+                data-value="${c.cedula}" 
+                data-label="${c.nombre}"
+                data-image="${c.iniciales}"
+                data-style-bg="${style.bg}"
+                data-style-text="${style.text}"
+                data-style-border="${style.border}"
+            >
+                <div class="w-8 h-8 rounded-full ${style.bg} ${style.text} flex items-center justify-center text-xs font-bold border ${style.border}">
+                ${c.iniciales}
+                </div>
+                <div class="flex flex-col">
+                <span class="text-white text-sm font-medium">${c.nombre}</span>
+                <span class="text-[10px] text-slate-400">${c.cedula}</span>
+                </div>
+            </div>
+            `;
+      });
+
+      selectOptions.innerHTML = html;
+      bindContactOptions(); // Re-asignar eventos clicks
+    } catch (e) {
+      console.error(e);
+      selectOptions.innerHTML =
+        '<div class="p-4 text-center text-xs text-red-500">Error cargando contactos.</div>';
+    }
+  }
+
+  // Llamar al inicio
+  loadContacts();
+
+  function closeSelect() {
+    if (!selectOptions) return;
+    selectOptions.classList.add("opacity-0", "translate-y-2");
+    selectArrow?.classList.remove("rotate-180");
+    selectTrigger?.classList.remove("border-brand-lime");
+
+    setTimeout(() => {
+      selectOptions.classList.add("hidden");
+    }, 200);
+  }
+
+  // Función para bindear el click en las opciones dinámicas
+  function bindContactOptions() {
+    const newOptions = document.querySelectorAll(".contact-option");
+    newOptions.forEach((opt) => {
+      opt.addEventListener("click", () => {
+        const val = opt.getAttribute("data-value"); // Esto es la CEDULA
+        const label = opt.getAttribute("data-label");
+        const image = opt.getAttribute("data-image");
+
+        // Estilos guardados en data-attributes
+        const bgClass = opt.getAttribute("data-style-bg");
+        const textClass = opt.getAttribute("data-style-text");
+        const borderClass = opt.getAttribute("data-style-border");
+
+        if (val && label && selectedText && contactInput) {
+          // Actualizar el contenido del disparador
+          selectedText.innerHTML = `
+                <div class="flex items-center gap-2">
+                    <div class="w-5 h-5 rounded-full ${bgClass} ${textClass} ${borderClass} flex items-center justify-center text-[8px] font-bold border">
+                    ${image}
+                    </div>
+                    <span class="text-white font-medium">${label}</span>
+                </div>
+            `;
+
+          contactInput.value = val;
+          closeSelect();
+        }
+      });
+    });
+  }
 
   if (selectTrigger && selectOptions && selectArrow) {
     selectTrigger.addEventListener("click", () => {
@@ -301,46 +365,7 @@
       }
     });
 
-    options.forEach((opt) => {
-      opt.addEventListener("click", () => {
-        const val = opt.getAttribute("data-value");
-        const label = opt.getAttribute("data-label");
-        const image = opt.getAttribute("data-image");
-        // Extraer clases de estilo del HTML existente
-        const imageClass =
-          opt.querySelector("div:first-child")?.className || "";
-        const bgClass = imageClass.match(/bg-[a-z]+-500\/20/)?.[0] || "";
-        const textClass = imageClass.match(/text-[a-z]+-400/)?.[0] || "";
-        const borderClass =
-          imageClass.match(/border-[a-z]+-500\/30/)?.[0] || "";
-
-        if (val && label && selectedText && contactInput) {
-          // Actualizar el contenido del disparador con el estilo del usuario seleccionado
-          selectedText.innerHTML = `
-            <div class="flex items-center gap-2">
-                 <div class="w-5 h-5 rounded-full ${bgClass} ${textClass} ${borderClass} flex items-center justify-center text-[8px] font-bold border">
-                  ${image}
-                 </div>
-                 <span class="text-white font-medium">${label}</span>
-            </div>
-          `;
-
-          contactInput.value = val;
-          closeSelect();
-        }
-      });
-    });
-
-    function closeSelect() {
-      if (!selectOptions) return;
-      selectOptions.classList.add("opacity-0", "translate-y-2");
-      selectArrow?.classList.remove("rotate-180");
-      selectTrigger?.classList.remove("border-brand-lime");
-
-      setTimeout(() => {
-        selectOptions.classList.add("hidden");
-      }, 200);
-    }
+    // NOTA: El binding de options se hace en bindContactOptions()
   }
 
   // Manejo de Pestañas (Tabs)
@@ -379,4 +404,86 @@
       }
     });
   });
+
+  const btnSend = document.getElementById("btn-send-transfer");
+
+  if (btnSend) {
+    btnSend.addEventListener("click", async () => {
+      // 1. Validar Usuario y Auth
+      const user = authService.getCurrentUser();
+      if (!user) {
+        alert("Debes iniciar sesión");
+        window.location.href = "/login";
+        return;
+      }
+
+      // 2. Determinar Tab Activa
+      const isContactTab = !tabContact?.classList.contains("hidden");
+
+      // 3. Obtener Datos
+      let cedulaDestino = "";
+      let monto = 0;
+
+      if (isContactTab) {
+        const contactInputVal = (
+          document.getElementById("contact-input") as HTMLInputElement
+        )?.value;
+        if (!contactInputVal) {
+          alert("Selecciona un contacto");
+          return;
+        }
+        cedulaDestino = contactInputVal; // El valor ahora es la cédula
+
+        const amtInput = document.getElementById(
+          "contact-amount",
+        ) as HTMLInputElement;
+        monto = parseFloat(amtInput?.value || "0");
+      } else {
+        // Tab Externa
+        const extInput = document.getElementById(
+          "external-identifier",
+        ) as HTMLInputElement;
+        cedulaDestino = extInput?.value;
+        const extAmount = document.getElementById(
+          "external-amount",
+        ) as HTMLInputElement;
+        monto = parseFloat(extAmount?.value || "0");
+      }
+
+      // 4. Validar
+      if (!cedulaDestino) {
+        alert("Ingresa la Cédula del destinatario");
+        return;
+      }
+      if (!monto || monto <= 0) {
+        alert("Ingresa un monto válido");
+        return;
+      }
+
+      // 5. Enviar
+      const originalText = btnSend.innerHTML;
+      btnSend.innerHTML = "Enviando...";
+      // @ts-ignore
+      btnSend.disabled = true;
+
+      try {
+        const userId = user.id || user.usuarioId || user._id;
+        await transactionService.transfer({
+          emisor_id: userId,
+          cedula_receptor: cedulaDestino,
+          monto: monto,
+          concepto: "Transferencia Web",
+        });
+
+        alert("¡Transferencia Exitosa!");
+        window.location.reload(); // Recargar para actualizar saldo
+      } catch (error) {
+        console.error(error);
+        alert("Error: " + (error.message || "Falló la transferencia"));
+        btnSend.innerHTML = originalText;
+        // @ts-ignore
+        btnSend.disabled = false;
+      }
+    });
+  }
 </script>

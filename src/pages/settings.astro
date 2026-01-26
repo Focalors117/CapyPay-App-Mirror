@@ -52,8 +52,8 @@ import MainLayout from "../layouts/MainLayout.astro";
               >Nombre de Usuario</label
             >
             <input
+              id="profile-name"
               type="text"
-              value="Cormex"
               class="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-lime/50 transition-colors"
             />
           </div>
@@ -62,14 +62,25 @@ import MainLayout from "../layouts/MainLayout.astro";
               >Correo Electrónico</label
             >
             <input
+              id="profile-email"
               type="email"
-              value="cormex@capypay.com"
               class="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-lime/50 transition-colors"
             />
           </div>
+          <div>
+            <label class="block text-slate-400 text-sm mb-2">Cédula</label>
+            <input
+              id="profile-cedula"
+              type="text"
+              readonly
+              class="w-full bg-black/30 border border-white/5 rounded-xl px-4 py-3 text-slate-500 cursor-not-allowed focus:outline-none"
+            />
+          </div>
+
           <button
+            id="btn-save-profile"
             type="button"
-            class="mt-2 bg-brand-lime text-black font-bold py-3 px-6 rounded-xl hover:bg-[#ccf044] transition-colors w-full sm:w-auto"
+            class="mt-2 bg-brand-lime text-black font-bold py-3 px-6 rounded-xl hover:bg-[#ccf044] transition-colors w-full sm:w-auto flex items-center justify-center gap-2"
           >
             Guardar Cambios
           </button>
@@ -147,3 +158,39 @@ import MainLayout from "../layouts/MainLayout.astro";
     </div>
   </div>
 </MainLayout>
+
+<script>
+  import { authService, userService } from "../services/api.js";
+
+  const nameInput = document.getElementById("profile-name");
+  const emailInput = document.getElementById("profile-email");
+  const cedulaInput = document.getElementById("profile-cedula");
+  const btnSave = document.getElementById("btn-save-profile");
+
+  async function loadProfile() {
+    try {
+      const user = authService.getCurrentUser();
+      if (!user) return; // No logueado
+
+      // Intentar obtener datos frescos del backend
+      const profile = await userService.getProfile(user.id || user.usuarioId);
+
+      if (profile) {
+        if (nameInput) nameInput.value = profile.nombre || profile.name || "";
+        if (emailInput) emailInput.value = profile.email || "";
+        if (cedulaInput) cedulaInput.value = profile.cedula || "";
+      }
+    } catch (e) {
+      console.error("Error loading settings:", e);
+    }
+  }
+
+  loadProfile();
+
+  if (btnSave) {
+    btnSave.addEventListener("click", async () => {
+      // TODO: Implementar Update en Backend
+      alert("La función de actualizar perfil estará disponible pronto.");
+    });
+  }
+</script>

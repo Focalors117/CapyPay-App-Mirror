@@ -126,8 +126,23 @@ export const userService = {
   },
   
   // Backend route: GET /api/historial
-  getHistory: async () => {
-    return fetchAPI('/historial');
+  getHistory: async (cedula) => {
+    if (!cedula) {
+        const user = authService.getCurrentUser();
+        cedula = user?.cedula;
+    }
+    if (!cedula) throw new Error("Cédula requerida para historial");
+    
+    return fetchAPI(`/historial?cedula=${cedula}`);
+  },
+
+  getContacts: async (userId) => {
+     if(!userId) {
+         const u = authService.getCurrentUser();
+         userId = u?.id;
+     }
+     if(!userId) return { contactos: [] };
+     return fetchAPI(`/contactos?usuario_id=${userId}`);
   }
 };
 

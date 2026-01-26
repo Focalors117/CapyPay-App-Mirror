@@ -1,91 +1,258 @@
 ---
+
 ---
-<div class="bg-brand-black rounded-3xl p-6 border border-white/10 shadow-none w-full h-full flex flex-col isolate relative overflow-hidden group">
-  
+
+<div
+  class="bg-brand-black rounded-3xl p-6 border border-white/10 shadow-none w-full h-full flex flex-col isolate relative overflow-hidden group"
+>
   <!-- Sección de Encabezado -->
-  <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-6 gap-4 relative z-10">
+  <div
+    class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-6 gap-4 relative z-10"
+  >
     <!-- Totales -->
     <div class="flex flex-wrap gap-x-4 gap-y-2">
-        <div>
-            <p class="text-[10px] sm:text-xs text-slate-400 mb-0.5">Ingresos Totales</p>
-            <p class="text-lg sm:text-xl font-bold text-brand-lime flex items-center gap-2">
-                $5,240.50
-                <span class="text-[10px] bg-brand-lime/10 text-brand-lime px-1.5 py-0.5 rounded-full">+12%</span>
-            </p>
-        </div>
-        <div>
-            <p class="text-[10px] sm:text-xs text-slate-400 mb-0.5">Pagos Totales</p>
-            <p class="text-lg sm:text-xl font-bold text-purple-400 flex items-center gap-2">
-                $2,120.00
-                <span class="text-[10px] bg-purple-500/20 text-purple-400 px-1.5 py-0.5 rounded-full">-5%</span>
-            </p>
-        </div>
+      <div>
+        <p class="text-[10px] sm:text-xs text-slate-400 mb-0.5">
+          Ingresos Totales
+        </p>
+        <p
+          id="total-income-display"
+          class="text-lg sm:text-xl font-bold text-brand-lime flex items-center gap-2"
+        >
+          Loading...
+        </p>
+      </div>
+      <div>
+        <p class="text-[10px] sm:text-xs text-slate-400 mb-0.5">
+          Pagos Totales
+        </p>
+        <p
+          id="total-expense-display"
+          class="text-lg sm:text-xl font-bold text-purple-400 flex items-center gap-2"
+        >
+          Loading...
+        </p>
+      </div>
     </div>
 
     <!-- Selector de Período -->
-    <div class="bg-black/40 p-1 rounded-xl flex items-center border border-white/5 self-end xl:self-auto shrink-0 max-w-full overflow-x-auto no-scrollbar">
-        <button class="px-2 py-1 rounded-lg text-[10px] font-bold bg-brand-lime text-black shadow-sm transition-all text-nowrap">Semanal</button>
-        <button class="px-2 py-1 rounded-lg text-[10px] font-medium text-slate-400 hover:text-white transition-all text-nowrap">Mensual</button>
-        <button class="px-2 py-1 rounded-lg text-[10px] font-medium text-slate-400 hover:text-white transition-all text-nowrap">3 Meses</button>
+    <div
+      class="bg-black/40 p-1 rounded-xl flex items-center border border-white/5 self-end xl:self-auto shrink-0 max-w-full overflow-x-auto no-scrollbar"
+    >
+      <button
+        class="px-2 py-1 rounded-lg text-[10px] font-bold bg-brand-lime text-black shadow-sm transition-all text-nowrap"
+        >Semanal</button
+      >
+      <button
+        class="px-2 py-1 rounded-lg text-[10px] font-medium text-slate-400 hover:text-white transition-all text-nowrap"
+        >Mensual</button
+      >
+      <button
+        class="px-2 py-1 rounded-lg text-[10px] font-medium text-slate-400 hover:text-white transition-all text-nowrap"
+        >3 Meses</button
+      >
     </div>
   </div>
 
   <!-- Representación Visual del Gráfico -->
-  <div class="flex-1 w-full bg-brand-black/30 rounded-2xl p-2 sm:p-4 border border-white/5 relative flex gap-2">
-      
-      <!-- Etiquetas Eje Y (Escala de Dinero) -->
-      <div class="flex flex-col justify-between text-[9px] sm:text-[10px] text-slate-400 font-mono py-6 shrink-0 text-right pr-2 select-none h-full">
-          <span>$100</span>
-          <span>$80</span>
-          <span>$60</span>
-          <span>$40</span>
-          <span>$20</span>
-          <span>$0</span>
+  <div
+    class="flex-1 w-full bg-brand-black/30 rounded-2xl p-2 sm:p-4 border border-white/5 relative flex gap-2"
+  >
+    <!-- Etiquetas Eje Y (Escala de Dinero) -->
+    <div
+      id="chart-y-axis"
+      class="flex flex-col justify-between text-[9px] sm:text-[10px] text-slate-400 font-mono py-6 shrink-0 text-right pr-2 select-none h-full"
+    >
+      <span>--</span>
+      <span>--</span>
+      <span>--</span>
+      <span>--</span>
+      <span>--</span>
+      <span>0</span>
+    </div>
+
+    <!-- Área del Gráfico -->
+    <div
+      id="chart-bars-container"
+      class="flex-1 relative flex items-end justify-between gap-1 sm:gap-2 h-full pl-2 border-l border-white/5 border-dashed"
+    >
+      <!-- Líneas de Cuadrícula de Fondo -->
+      <div
+        class="absolute inset-x-0 inset-y-6 flex flex-col justify-between pointer-events-none opacity-10 w-full z-0 px-1"
+      >
+        <div
+          class="w-full h-px bg-white border-t border-dashed border-slate-500"
+        >
+        </div>
+        <div
+          class="w-full h-px bg-white border-t border-dashed border-slate-500"
+        >
+        </div>
+        <div
+          class="w-full h-px bg-white border-t border-dashed border-slate-500"
+        >
+        </div>
+        <div
+          class="w-full h-px bg-white border-t border-dashed border-slate-500"
+        >
+        </div>
+        <div
+          class="w-full h-px bg-white border-t border-dashed border-slate-500"
+        >
+        </div>
       </div>
 
-      <!-- Área del Gráfico -->
-      <div class="flex-1 relative flex items-end justify-between gap-1 sm:gap-2 h-full pl-2 border-l border-white/5 border-dashed">
-          <!-- Líneas de Cuadrícula de Fondo -->
-          <div class="absolute inset-x-0 inset-y-6 flex flex-col justify-between pointer-events-none opacity-10 w-full z-0 px-1">
-              <div class="w-full h-px bg-white border-t border-dashed border-slate-500"></div>
-              <div class="w-full h-px bg-white border-t border-dashed border-slate-500"></div>
-              <div class="w-full h-px bg-white border-t border-dashed border-slate-500"></div>
-              <div class="w-full h-px bg-white border-t border-dashed border-slate-500"></div>
-              <div class="w-full h-px bg-white border-t border-dashed border-slate-500"></div>
-          </div>
-
-          <!-- Bars -->
-          {[
-            { day: 'Lun', income: 60, expense: 40 },
-            { day: 'Mar', income: 45, expense: 30 },
-            { day: 'Mie', income: 80, expense: 60 },
-            { day: 'Jue', income: 55, expense: 70 },
-            { day: 'Vie', income: 90, expense: 50 },
-            { day: 'Sab', income: 70, expense: 40 },
-            { day: 'Dom', income: 30, expense: 20 },
-          ].map((item, index) => (
-              <div class="flex flex-col justify-end items-center h-full flex-1 gap-2 z-10 group/bar cursor-pointer pb-6"> <!-- pb-6 to accommodate x-axis labels below -->
-                
-                 <!-- Tooltip (Información emergente) -->
-                 <div class="opacity-0 group-hover/bar:opacity-100 absolute top-0 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] p-2 rounded transform -translate-y-full transition-opacity border border-white/10 pointer-events-none whitespace-nowrap z-50 shadow-xl">
-                     <span class="text-emerald-400">Inc: ${item.income}</span> <br/> 
-                     <span class="text-rose-400">Exp: ${item.expense}</span>
-                 </div>
-
-                 <!-- Contenedor de Barras Duales -->
-                 <div class="w-full max-w-3 sm:max-w-5 md:max-w-7.5 h-full flex items-end justify-center relative space-x-0.5">
-                     <!-- Barra de Ingresos -->
-                     <div style={`height: ${item.income}%`} class="w-full bg-brand-lime rounded-t-sm opacity-90 group-hover/bar:opacity-100 transition-all"></div>
-                     <!-- Barra de Gastos -->
-                     <div style={`height: ${item.expense}%`} class="w-full bg-purple-600 rounded-t-sm opacity-90 group-hover/bar:opacity-100 transition-all"></div>
-                 </div>
-                 
-                 <!-- Etiqueta Eje X -->
-                 <span class="absolute bottom-1 text-[9px] sm:text-[10px] text-slate-400 font-medium">{item.day}</span>
-              </div>
-          ))}
+      <!-- Loading State -->
+      <div
+        class="absolute inset-0 flex items-center justify-center text-xs text-slate-500"
+      >
+        Calculando...
       </div>
-
+    </div>
   </div>
-
 </div>
+<script>
+  import { authService, userService } from "../services/api.js";
+
+  const totalIncomeEl = document.getElementById("total-income-display");
+  const totalExpenseEl = document.getElementById("total-expense-display");
+  const chartContainer = document.getElementById("chart-bars-container");
+  const yAxisContainer = document.getElementById("chart-y-axis");
+
+  async function initChart() {
+    const user = authService.getCurrentUser();
+    if (!user || (!user.cedula && !user.usuarioId)) return;
+
+    try {
+      // Obtener historial completo (usamos la cédula si está, o el ID)
+      const cedula = user.cedula || user.id; // La API maneja esto internamente en getHistory si le pasas algo
+      const data = await userService.getHistory(cedula);
+
+      if (!data || !data.movimientos) {
+        if (chartContainer)
+          chartContainer.innerHTML =
+            '<div class="absolute inset-0 flex items-center justify-center text-xs text-slate-500">Sin datos</div>';
+        return;
+      }
+
+      processData(data.movimientos);
+    } catch (e) {
+      console.error("Error cargando gráfico:", e);
+      if (chartContainer)
+        chartContainer.innerHTML =
+          '<div class="absolute inset-0 flex items-center justify-center text-xs text-red-500">Error</div>';
+    }
+  }
+
+  function processData(movimientos) {
+    // 1. Inicializar semana (Lunes a Domingo)
+    // Usaremos un array de 7 objetos.
+    const days = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"];
+    const weeklyStats = days.map((day) => ({ day, income: 0, expense: 0 }));
+
+    // 2. Variables para totales globales
+    let globalIncome = 0;
+    let globalExpense = 0;
+
+    // 3. Recorrer movimientos
+    movimientos.forEach((mov) => {
+      const amount = parseFloat(mov.monto);
+      const date = new Date(mov.fecha);
+      const dayIndex = date.getDay(); // 0 = Domingo, 1 = Lunes...
+
+      // Determinar si es Ingreso o Egreso
+      // RECARGA o PAGO RECIBIDO -> Ingreso (es_negativo: false)
+      // PAGO ENVIADO -> Egreso (es_negativo: true)
+
+      if (mov.es_negativo) {
+        // Gasto
+        weeklyStats[dayIndex].expense += amount;
+        globalExpense += amount;
+      } else {
+        // Ingreso
+        weeklyStats[dayIndex].income += amount;
+        globalIncome += amount;
+      }
+    });
+
+    // 4. Reordenar para empezar en Lunes (Opcional, pero común)
+    // Mover Domingo (0) al final
+    const sunday = weeklyStats.shift();
+    weeklyStats.push(sunday);
+
+    // 5. Actualizar UI Totales
+    if (totalIncomeEl) totalIncomeEl.innerHTML = `$${globalIncome.toFixed(2)}`;
+    if (totalExpenseEl)
+      totalExpenseEl.innerHTML = `$${globalExpense.toFixed(2)}`;
+
+    // 6. Calcular Escalas para el Gráfico
+    const allValues = weeklyStats.flatMap((d) => [d.income, d.expense]);
+    const maxValue = Math.max(...allValues, 10); // Minimo escala de 10 para no romper
+    const ceiling = Math.ceil(maxValue / 10) * 10; // Redondear a la decena superior
+
+    // Actualizar Eje Y
+    if (yAxisContainer) {
+      yAxisContainer.innerHTML = `
+                <span>$${ceiling}</span>
+                <span>$${(ceiling * 0.8).toFixed(0)}</span>
+                <span>$${(ceiling * 0.6).toFixed(0)}</span>
+                <span>$${(ceiling * 0.4).toFixed(0)}</span>
+                <span>$${(ceiling * 0.2).toFixed(0)}</span>
+                <span>$0</span>
+            `;
+    }
+
+    // 7. Renderizar Barras
+    if (chartContainer) {
+      // Limpiar todo menos el grid (que son los primeros hijos absolute)
+      // Mejor reconstruir el HTML interno manteniendo el grid.
+      const grid = `
+            <div class="absolute inset-x-0 inset-y-6 flex flex-col justify-between pointer-events-none opacity-10 w-full z-0 px-1">
+                <div class="w-full h-px bg-white border-t border-dashed border-slate-500"></div>
+                <div class="w-full h-px bg-white border-t border-dashed border-slate-500"></div>
+                <div class="w-full h-px bg-white border-t border-dashed border-slate-500"></div>
+                <div class="w-full h-px bg-white border-t border-dashed border-slate-500"></div>
+                <div class="w-full h-px bg-white border-t border-dashed border-slate-500"></div>
+            </div>`;
+
+      let barsHtml = "";
+
+      // Reordenar dias para que visualmente se vea bien (ya lo hicimos con shift)
+
+      weeklyStats.forEach((stat) => {
+        // Calcular porcentajes relativos al techo
+        const incomePct = (stat.income / ceiling) * 100;
+        const expensePct = (stat.expense / ceiling) * 100;
+
+        // Evitar barras de 0px que se vean mal, minimo 2% si hay valor pero es muy bajo
+        const incomeH = stat.income > 0 ? Math.max(incomePct, 2) : 0;
+        const expenseH = stat.expense > 0 ? Math.max(expensePct, 2) : 0;
+
+        barsHtml += `
+                  <div class="flex flex-col justify-end items-center h-full flex-1 gap-2 z-10 group/bar cursor-pointer pb-6">
+                    
+                     <!-- Tooltip -->
+                     <div class="opacity-0 group-hover/bar:opacity-100 absolute top-0 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] p-2 rounded transform -translate-y-full transition-opacity border border-white/10 pointer-events-none whitespace-nowrap z-50 shadow-xl">
+                         <span class="text-emerald-400">Ing: $${stat.income.toFixed(2)}</span> <br/> 
+                         <span class="text-rose-400">Gas: $${stat.expense.toFixed(2)}</span>
+                     </div>
+    
+                     <!-- Barras -->
+                     <div class="w-full max-w-3 sm:max-w-5 md:max-w-7.5 h-full flex items-end justify-center relative space-x-0.5">
+                         <div style="height: ${incomeH}%" class="w-full bg-brand-lime rounded-t-sm opacity-90 group-hover/bar:opacity-100 transition-all"></div>
+                         <div style="height: ${expenseH}%" class="w-full bg-purple-600 rounded-t-sm opacity-90 group-hover/bar:opacity-100 transition-all"></div>
+                     </div>
+                     
+                     <!-- Etiqueta -->
+                     <span class="absolute bottom-1 text-[9px] sm:text-[10px] text-slate-400 font-medium">${stat.day}</span>
+                  </div>
+                `;
+      });
+
+      chartContainer.innerHTML = grid + barsHtml;
+    }
+  }
+
+  // Iniciar
+  initChart();
+</script>

@@ -144,8 +144,8 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
       >
         <div>
           <h1 class="text-2xl font-bold text-white flex gap-2 items-center">
-            Hola, Cormex <span
-              class="animate-wave origin-bottom-right inline-block">👋</span
+            Hola, <span id="desktop-username">Cormex</span>
+            <span class="animate-wave origin-bottom-right inline-block">👋</span
             >
           </h1>
           <p class="text-slate-400 text-xs mt-1 flex items-center gap-1">
@@ -212,64 +212,13 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
               </div>
             </div>
 
-            <div class="p-4 overflow-y-auto custom-scrollbar flex-1">
-              <div class="space-y-4">
-                <div class="relative">
-                  <div
-                    class="sticky top-0 bg-neutral-900 z-10 mb-2 border-b border-white/10"
-                  >
-                    <span
-                      class="p-2 inline-block text-[10px] font-bold text-brand-lime uppercase tracking-widest"
-                      >Hoy</span
-                    >
-                  </div>
-                  <div class="grid grid-cols-1 gap-2">
-                    <HistoryCard
-                      date="09:42 AM"
-                      description="Gatorade Rojo"
-                      amount="-15.99"
-                    />
-                    <HistoryCard
-                      date="08:30 AM"
-                      description="Donacion a hambarbar"
-                      amount="-8.50"
-                    />
-                    <HistoryCard
-                      date="07:15 AM"
-                      description="Furina C6R5"
-                      amount="-2400.00"
-                    />
-                  </div>
-                </div>
-
-                <div class="relative mt-4">
-                  <div
-                    class="sticky top-0 bg-neutral-900 z-10 mb-2 border-b border-white/10"
-                  >
-                    <span
-                      class="p-2 inline-block text-[10px] font-bold text-brand-lime uppercase tracking-widest"
-                      >Ayer</span
-                    >
-                  </div>
-                  <div class="grid grid-cols-1 gap-2">
-                    <HistoryCard
-                      date="19:20 PM"
-                      description="Bono de Guerra"
-                      amount="250.00"
-                    />
-                    <HistoryCard
-                      date="14:15 PM"
-                      description="Robo del colector del bus"
-                      amount="-12.40"
-                    />
-                    <HistoryCard
-                      date="12:00 PM"
-                      description="Pago de Alquiler (puente)"
-                      amount="-850.00"
-                    />
-                  </div>
-                </div>
-              </div>
+            <div
+              id="history-list-container"
+              class="p-4 overflow-y-auto custom-scrollbar flex-1"
+            >
+              <p class="text-center text-slate-500 text-sm mt-10">
+                Cargando movimientos...
+              </p>
             </div>
           </div>
         </div>
@@ -360,9 +309,17 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
       }
 
       // Actualizar nombre desde localStorage (rápido)
-      const nameDisplay = document.getElementById("header-username");
-      if (nameDisplay && user.nombre) {
-        nameDisplay.innerText = user.nombre.split(" ")[0]; // Solo primer nombre
+      const mobileName = document.getElementById("header-username");
+      const desktopName = document.getElementById("desktop-username");
+
+      const updateName = (name) => {
+        const firstName = name.split(" ")[0];
+        if (mobileName) mobileName.innerText = firstName;
+        if (desktopName) desktopName.innerText = firstName;
+      };
+
+      if (user.nombre || user.name) {
+        updateName(user.nombre || user.name);
       }
 
       // Logout Mobile
@@ -390,7 +347,6 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
 
           // Actualizar Saldo
           if (realUser.balance !== undefined) {
-            // Tu backend devuelve 'balance', no 'saldo'
             const balanceEl = document.getElementById("user-balance-display");
             if (balanceEl) {
               balanceEl.innerText = new Intl.NumberFormat("en-US", {
@@ -398,31 +354,82 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
                 maximumFractionDigits: 2,
               }).format(realUser.balance);
             }
-          } else if (realUser.saldo !== undefined) {
-            const balanceEl = document.getElementById("user-balance-display");
-            if (balanceEl) {
-              balanceEl.innerText = new Intl.NumberFormat("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }).format(realUser.saldo);
-            }
           }
 
           // Actualizar Nombre si cambió
-          if ((realUser.nombre || realUser.name) && nameDisplay) {
-            nameDisplay.innerText = (realUser.nombre || realUser.name).split(
-              " ",
-            )[0];
+          if (realUser.nombre || realUser.name) {
+            updateName(realUser.nombre || realUser.name);
+          }
+
+          // Cargar Historial
+          if (realUser.cedula) {
+            loadHistory(realUser.cedula);
           }
         } else {
           console.error("No se encontró un ID válido en el usuario local");
         }
       } catch (e) {
         console.error("Error cargando perfil", e);
-        // Desactivamos auto-logout para debuggear
-        // if (e.message.includes('401') || e.message.includes('token')) {
-        //    authService.logout();
-        // }
+      }
+    }
+
+    async function loadHistory(cedula) {
+      const container = document.getElementById("history-list-container");
+      if (!container) return;
+
+      try {
+        const response = await userService.getHistory(cedula);
+        if (response && response.movimientos) {
+          if (response.movimientos.length === 0) {
+            container.innerHTML =
+              '<p class="text-center text-slate-500 text-sm mt-10">No hay movimientos recientes.</p>';
+            return;
+          }
+
+          let html =
+            '<div class="space-y-4"><div class="grid grid-cols-1 gap-2">';
+          response.movimientos.forEach((mov) => {
+            const isNegative = mov.es_negativo;
+            const amount = mov.monto;
+            const displayAmount = isNegative ? `-$${amount}` : `+$${amount}`;
+            const amountColor = isNegative
+              ? "text-purple-400"
+              : "text-[#d7fd48]";
+            const iconBg = isNegative ? "bg-purple-500/10" : "bg-[#d7fd48]/10";
+            const iconColor = isNegative ? "text-purple-400" : "text-[#d7fd48]";
+            const dateObj = new Date(mov.fecha);
+            const dateStr = dateObj.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+            const dateFull = dateObj.toLocaleDateString();
+
+            const iconSvg = isNegative
+              ? '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>'
+              : '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>';
+
+            html += `
+                    <div class="group flex items-center justify-between p-4 rounded-xl bg-neutral-900 border border-white/5 transition-all duration-300 cursor-pointer w-[calc(100%-8px)] mx-auto hover:bg-neutral-800 hover:border-[#d7fd48]/30 hover:scale-[1.01] overflow-hidden">
+                      <div class="flex items-center gap-4 min-w-0">
+                        <div class="w-12 h-12 rounded-full ${iconBg} flex items-center justify-center ${iconColor} shrink-0">
+                           ${iconSvg}
+                        </div>
+                        <div class="flex flex-col min-w-0">
+                          <h4 class="text-sm font-bold text-white truncate">${mov.descripcion || mov.concept || mov.tipo}</h4>
+                          <p class="text-[10px] text-slate-500">${dateFull} ${dateStr}</p>
+                        </div>
+                      </div>
+                      <div class="text-sm font-bold ${amountColor} whitespace-nowrap">
+                        ${displayAmount}
+                      </div>
+                    </div>`;
+          });
+          container.innerHTML = html + "</div></div>";
+        }
+      } catch (e) {
+        console.error(e);
+        container.innerHTML =
+          '<p class="text-center text-red-500/50 text-xs mt-10">Error al cargar historial</p>';
       }
     }
 

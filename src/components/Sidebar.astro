@@ -71,8 +71,11 @@
       />
     </div>
     <!-- Name -->
-    <h3 class="text-white font-semibold text-lg mb-1 sidebar-content">
-      Cormex
+    <h3
+      id="sidebar-username"
+      class="text-white font-semibold text-lg mb-1 sidebar-content"
+    >
+      Cargando...
     </h3>
 
     <!-- Level Bar -->
@@ -129,38 +132,11 @@
       </h4>
     </div>
 
-    <div class="flex flex-col gap-1 px-3">
-      {/* Placeholder Contacts */}
-      {
-        [
-          { name: "Angu", status: "online" },
-          { name: "Reptiliano", status: "offline" },
-          { name: "AngelaGozo", status: "online" },
-          { name: "DGCIM", status: "busy" },
-        ].map((contact, i) => (
-          <div class="group/item flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors relative cursor-pointer">
-            <div class="relative shrink-0">
-              <div class="w-9 h-9 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-300 border border-white/5">
-                {contact.name.charAt(0)}
-              </div>
-              <span
-                class={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-brand-black ${contact.status === "online" ? "bg-emerald-500" : contact.status === "busy" ? "bg-amber-500" : "bg-slate-500"}`}
-              />
-            </div>
-
-            <div class="flex-1 overflow-hidden whitespace-nowrap sidebar-content transition-opacity duration-300 flex justify-between items-center min-w-0 gap-2">
-              <div class="overflow-hidden min-w-0">
-                <p class="text-sm text-slate-200 font-medium truncate">
-                  {contact.name}
-                </p>
-                <p class="text-xs text-slate-500 truncate capitalize">
-                  {contact.status}
-                </p>
-              </div>
-            </div>
-          </div>
-        ))
-      }
+    <div id="sidebar-contacts-list" class="flex flex-col gap-1 px-3">
+      <!-- Contactos se cargarán aquí -->
+      <div class="p-2 text-xs text-slate-500 text-center sidebar-content">
+        Cargando...
+      </div>
 
       <!-- Add Contact Button -->
       <a
@@ -287,7 +263,70 @@
 </aside>
 
 <script>
-  import { authService } from "../services/api";
+  import { authService, userService } from "../services/api.js";
+
+  // --- LOGICA DE DATOS ----
+  async function initSidebar() {
+    const user = authService.getCurrentUser();
+
+    // 1. Nombre
+    const nameEl = document.getElementById("sidebar-username");
+    if (user && nameEl)
+      nameEl.textContent = user.nombre || user.name || "Usuario";
+
+    // 2. Contactos
+    const listEl = document.getElementById("sidebar-contacts-list");
+    if (listEl && user) {
+      try {
+        const { contactos } = await userService.getContacts(
+          user.id || user.usuarioId,
+        );
+
+        // Boton Añadir (reutilizable)
+        const addBtnHtml = `
+            <a href="/contacts" class="group/add flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left mt-1">
+                <div class="relative shrink-0">
+                <div class="w-9 h-9 rounded-full bg-slate-800 border-2 border-dashed border-slate-600 flex items-center justify-center text-slate-400 group-hover/add:text-brand-lime group-hover/add:border-brand-lime transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                </div>
+                </div>
+                <div class="overflow-hidden whitespace-nowrap sidebar-content transition-opacity duration-300">
+                <p class="text-sm text-slate-400 group-hover/add:text-brand-lime font-medium truncate transition-colors">Ver todos / Añadir</p>
+                </div>
+            </a>`;
+
+        if (!contactos || contactos.length === 0) {
+          listEl.innerHTML = `<div class="p-2 text-xs text-slate-500 text-center sidebar-content">No hay contactos frecuentes</div>${addBtnHtml}`;
+        } else {
+          let html = "";
+          contactos.slice(0, 5).forEach((c) => {
+            html += `
+                    <div class="group/item flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors relative cursor-pointer">
+                        <div class="relative shrink-0">
+                        <div class="w-9 h-9 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-300 border border-white/5">
+                            ${c.iniciales}
+                        </div>
+                        <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-brand-black bg-emerald-500"></span>
+                        </div>
+                        <div class="flex-1 overflow-hidden whitespace-nowrap sidebar-content transition-opacity duration-300 flex justify-between items-center min-w-0 gap-2">
+                            <div class="overflow-hidden min-w-0">
+                                <p class="text-sm text-slate-200 font-medium truncate">${c.nombre}</p>
+                                <p class="text-xs text-slate-500 truncate capitalize">Amigo</p>
+                            </div>
+                        </div>
+                    </div>`;
+          });
+          listEl.innerHTML = html + addBtnHtml;
+        }
+      } catch (e) {
+        console.error("Sidebar error:", e);
+      }
+    }
+  }
+
+  initSidebar();
 
   const sidebar = document.getElementById("sidebar");
   const toggleBtn = document.getElementById("sidebarToggle");
