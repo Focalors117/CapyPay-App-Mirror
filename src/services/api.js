@@ -69,6 +69,7 @@ export const authService = {
     if (response.token) {
       localStorage.setItem('capypay_token', response.token);
     }
+    
     // IMPORTANTE: Tu backend devuelve 'usuarioId', no 'user' o 'id' suelto
     if (response.usuarioId) {
         // Construimos un objeto de usuario local para guardar
@@ -99,7 +100,7 @@ export const authService = {
   logout: () => {
     localStorage.removeItem('capypay_token');
     localStorage.removeItem('capypay_user');
-    window.location.href = '/index'; 
+    window.location.replace('/login'); // Replace para que no pueda volver atrás
   },
 
   // Helper para obtener el usuario guardado

@@ -12,6 +12,41 @@ const { title = "CapyPay", showSidebar = false } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <!-- Auth Guard Anti-Flash (Improved) -->
+    <script is:inline>
+      // 1. Ocultar el contenido inmediatamente
+      document.write(
+        "<style>body { visibility: hidden; opacity: 0; transition: opacity 0.5s ease; }</style>",
+      );
+
+      (function () {
+        try {
+          const token = localStorage.getItem("capypay_token");
+          // Quitamos slash final y usamos fallback a '/'
+          const path = window.location.pathname.replace(/\/+$/, "") || "/";
+          const publicPaths = ["/", "/login", "/index", "/register"];
+
+          // Verificamos si la ruta actual está en la lista de permitidas
+          const isPublic = publicPaths.includes(path);
+
+          if (!token && !isPublic) {
+            // NO Logueado y ruta privada -> Echar fuera
+            window.location.replace("/login");
+          } else {
+            // Logueado o ruta publica -> Permitir entrada
+            document.addEventListener("DOMContentLoaded", () => {
+              document.body.style.visibility = "visible";
+              document.body.style.opacity = "1";
+            });
+          }
+        } catch (e) {
+          /* Si falla algo, por seguridad mandamos al login */
+          console.error(e);
+          window.location.replace("/login");
+        }
+      })();
+    </script>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
