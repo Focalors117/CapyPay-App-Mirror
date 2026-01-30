@@ -12,7 +12,28 @@ import MainLayout from "../layouts/MainLayout.astro";
       >
       </div>
 
-      <div class="relative z-10 flex gap-4 items-center">
+      <div class="relative z-10 flex gap-4 items-center w-full">
+        <!-- Botón de regresar -->
+        <a
+          href="/dashboard"
+          class="flex items-center justify-center w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-all hover:border-brand-lime/30 group"
+          aria-label="Regresar al dashboard"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 transition-transform group-hover:-translate-x-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            ></path>
+          </svg>
+        </a>
         <div
           class="w-16 h-16 rounded-full bg-brand-purple/20 flex items-center justify-center text-brand-purple border border-brand-purple/30"
         >
