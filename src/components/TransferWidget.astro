@@ -68,7 +68,7 @@
       <div class="relative">
          <button
            id="custom-select-trigger"
-           class="w-full bg-[#0f101f]! text-white text-xs sm:text-sm rounded-xl border border-white/10 py-2.5 sm:py-3 pl-4 sm:pl-4 pr-4 flex justify-between items-center hover:border-brand-lime/50 transition-colors focus:outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime"
+           class="w-full bg-black/30 text-white text-xs sm:text-sm rounded-xl border border-white/10 py-2.5 sm:py-3 pl-4 sm:pl-4 pr-4 flex justify-between items-center hover:border-brand-lime/50 transition-colors focus:outline-none focus:border-brand-lime/50 transition-all"
            type="button"
          >
           <span class="text-slate-400 text-xs sm:text-sm" id="selected-contact-text"
@@ -113,13 +113,13 @@
           class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-semibold"
           >$</span
         >
-        <input
-          id="contact-amount"
-          type="number"
-          placeholder="0.00"
-          autocomplete="off"
-          class="w-full bg-[#0f101f]! text-white text-base sm:text-lg font-bold rounded-xl border border-white/10 py-2.5 sm:py-3 pl-8 pr-4 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime placeholder:text-slate-600"
-        />
+         <input
+           id="contact-amount"
+           type="number"
+           placeholder="0.00"
+           autocomplete="off"
+           class="w-full bg-black/30 text-white text-base sm:text-lg font-bold rounded-xl border border-white/10 py-2.5 sm:py-3 pl-8 pr-4 outline-none focus:border-brand-lime/50 transition-all placeholder:text-slate-600"
+         />
       </div>
       <p class="text-[9px] sm:text-[10px] text-slate-500 text-right italic">
         * Aplica comisión del servicio
@@ -141,7 +141,7 @@
            id="external-identifier"
            type="text"
            placeholder="Ej: V-12345678"
-           class="w-full bg-[#0f101f]! text-white text-xs sm:text-sm rounded-xl border border-white/10 py-2.5 sm:py-3 pl-4 sm:pl-4 pr-4 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime"
+           class="w-full bg-black/30 text-white text-xs sm:text-sm rounded-xl border border-white/10 py-2.5 sm:py-3 pl-4 sm:pl-4 pr-4 outline-none focus:border-brand-lime/50 transition-all"
          />
         <div
           class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500 hidden"
@@ -174,12 +174,12 @@
           class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-semibold"
           >$</span
         >
-        <input
-          id="external-amount"
-          type="number"
-          placeholder="0.00"
-          class="w-full bg-[#0f101f]! text-white text-base sm:text-lg font-bold rounded-xl border border-white/10 py-2.5 sm:py-3 pl-8 pr-4 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime placeholder:text-slate-600"
-        />
+         <input
+           id="external-amount"
+           type="number"
+           placeholder="0.00"
+           class="w-full bg-black/30 text-white text-base sm:text-lg font-bold rounded-xl border border-white/10 py-2.5 sm:py-3 pl-8 pr-4 outline-none focus:border-brand-lime/50 transition-all placeholder:text-slate-600"
+         />
       </div>
       <p class="text-[9px] sm:text-[10px] text-slate-500 text-right italic">
         * Aplica comisión del servicio
@@ -190,7 +190,7 @@
   <!-- Botón de Enviar -->
   <button
     id="btn-send-transfer"
-    class="w-full mt-4 sm:mt-6 bg-brand-lime hover:bg-[#c1e63e] text-black font-bold py-2.5 sm:py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(215,253,73,0.3)] hover:shadow-[0_0_25px_rgba(215,253,73,0.5)] active:scale-95 flex justify-center items-center gap-2 group/btn z-10 text-sm sm:text-base"
+    class="w-full mt-4 sm:mt-6 bg-brand-lime hover:bg-[#c1e63e] text-black font-bold py-2.5 sm:py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(215,253,73,0.3)] hover:shadow-[0_0_25px_rgba(215,253,73,0.5)] active:scale-95 flex justify-center items-center gap-2 group/btn z-10 text-base sm:text-lg lg:text-xl"
   >
     <span>Enviar Ahora</span>
     <svg
