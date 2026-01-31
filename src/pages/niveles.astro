@@ -1,0 +1,85 @@
+---
+import CapyPay from "../layouts/MainLayout.astro";
+import ModuloNiveles from "../components/ModuloNiveles.astro";
+const url = new URL(Astro.request.url);
+const xpParam = url.searchParams.get("xp");
+const puntosActuales = xpParam ? parseInt(xpParam) : 1500;
+---
+
+<CapyPay title="Niveles | CapyPay" showSidebar={true}>
+  <div class="w-full max-w-2xl mx-auto">
+    <!-- Encabezado Móvil -->
+    <div class="flex items-center gap-3 mb-6 lg:hidden">
+      <a href="/dashboard" class="w-10 h-10 rounded-xl bg-brand-black border border-white/10 flex items-center justify-center text-slate-400 hover:text-brand-lime hover:border-brand-lime/50 transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </a>
+      <h1 class="text-2xl font-bold text-white">Mis Niveles</h1>
+    </div>
+
+    <!-- Controles de Demo -->
+    <div class="bg-brand-black/60 backdrop-blur-lg border border-white/10 rounded-3xl p-4 mb-6">
+      <h3 class="text-white text-sm font-bold mb-3 flex items-center gap-2">
+        <svg class="w-4 h-4 text-brand-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+        </svg>
+        Panel de Control (Demo)
+      </h3>
+      <div class="flex flex-wrap gap-2">
+        <button onclick="window.actualizarXPModulo(200)" class="xp-demo-btn px-3 py-1.5 bg-white/5 hover:bg-white/10 text-white text-xs font-bold rounded-lg transition-colors border border-white/10 hover:border-brand-lime/30" data-xp="200">
+          Novato (200 XP)
+        </button>
+        <button onclick="window.actualizarXPModulo(1500)" class="xp-demo-btn px-3 py-1.5 bg-white/5 hover:bg-white/10 text-white text-xs font-bold rounded-lg transition-colors border border-white/10 hover:border-brand-lime/30" data-xp="1500">
+          Bachiller (1,500 XP)
+        </button>
+        <button onclick="window.actualizarXPModulo(3500)" class="xp-demo-btn px-3 py-1.5 bg-white/5 hover:bg-white/10 text-white text-xs font-bold rounded-lg transition-colors border border-white/10 hover:border-brand-lime/30" data-xp="3500">
+          Licenciado (3,500 XP)
+        </button>
+        <button onclick="window.actualizarXPModulo(7500)" class="xp-demo-btn px-3 py-1.5 bg-white/5 hover:bg-white/10 text-white text-xs font-bold rounded-lg transition-colors border border-white/10 hover:border-brand-lime/30" data-xp="7500">
+          Magíster (7,500 XP)
+        </button>
+        <button onclick="window.actualizarXPModulo(12000)" class="xp-demo-btn px-3 py-1.5 bg-white/5 hover:bg-white/10 text-white text-xs font-bold rounded-lg transition-colors border border-white/10 hover:border-brand-lime/30" data-xp="12000">
+          Doctorado (12,000 XP)
+        </button>
+      </div>
+      <p class="text-slate-500 text-xs mt-2">Haz clic en los botones para ver cómo cambia el módulo visualmente</p>
+    </div>
+
+    <!-- Módulo de Niveles -->
+    <div id="modulo-niveles-wrapper">
+      <ModuloNiveles puntosActuales={puntosActuales} />
+    </div>
+
+    <!-- Espaciador para Bottom Nav en móvil -->
+    <div class="lg:hidden h-24 w-full"></div>
+  </div>
+
+  <script>
+    const container = document.getElementById('modulo-niveles-wrapper');
+    if (container) {
+      container.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const demoBtns = document.querySelectorAll('.xp-demo-btn');
+      demoBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const xpValue = parseInt((e.target as HTMLElement).getAttribute('data-xp') || '0');
+          if (window.actualizarXPModulo) {
+            // Actualizar módulo de niveles
+            window.actualizarXPModulo(xpValue);
+            
+            // Guardar XP en localStorage para actualizar dashboard
+            localStorage.setItem('capypay_user_xp', xpValue.toString());
+            
+            // Actualizar tarjeta del dashboard si existe la función
+            if (window.actualizarTarjetaDashboard) {
+              window.actualizarTarjetaDashboard(xpValue);
+            }
+          }
+        });
+      });
+    });
+  </script>
+</CapyPay>

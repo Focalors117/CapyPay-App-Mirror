@@ -1,10 +1,8 @@
 ---
-const { amount } = Astro.props;
+const { amount, xp } = Astro.props;
 ---
 
-<div
-  class="relative overflow-hidden bg-[#5833ef] rounded-3xl p-6 text-white transition-all duration-500 isolate z-10 w-full shadow-xl shadow-purple-500/20"
->
+<div id="balance-card-container" class="relative overflow-hidden rounded-3xl p-6 text-white transition-all duration-500 isolate z-10 w-full shadow-xl" style="background-color: #5833ef;">
   <!-- Background Decoration -->
   <div
     class="absolute top-0 right-0 -mr-8 -mt-8 w-64 h-64 rounded-full bg-brand-lime opacity-20 blur-3xl pointer-events-none mix-blend-overlay"
@@ -18,12 +16,12 @@ const { amount } = Astro.props;
   <div class="relative z-0 flex flex-col justify-between h-full gap-5">
     <!-- Header: Card Icon & Status -->
     <div class="flex justify-between items-center">
-      <!-- Card Info Toggle Button -->
-      <button
-        id="card-info-toggle"
-        class="w-10 h-10 bg-white/10 border border-white/20 rounded-full flex items-center justify-center hover:bg-white/20 transition-all hover:scale-110 active:scale-95"
-        title="Ver información de tarjeta"
-      >
+       <!-- Card Info Toggle Button -->
+       <button
+         id="card-info-toggle"
+         class="w-10 h-10 bg-black/20 border border-white/10 rounded-full flex items-center justify-center hover:bg-black/30 transition-all hover:scale-110 active:scale-95"
+         title="Ver información de tarjeta"
+       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-5 w-5 text-white"
@@ -48,13 +46,15 @@ const { amount } = Astro.props;
       </div>
     </div>
 
-    <!-- Balance Info (Default View) -->
-    <div id="balance-view" class="transition-all duration-500">
-      <h2
-        class="text-base sm:text-lg tracking-widest uppercase mb-2 bg-gradient-to-r from-purple-100 via-white to-purple-200 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"
-      >
-        Saldo Total
-      </h2>
+     <!-- Balance Info (Default View) -->
+     <div id="balance-view" class="transition-all duration-500">
+      <div class="inline-block px-4 py-1.5 rounded-xl bg-black/20 border border-white/10 mb-2">
+        <h2
+           class="text-base sm:text-lg tracking-widest uppercase bg-gradient-to-r from-purple-100 via-white to-purple-200 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"
+        >
+          Saldo Total
+        </h2>
+      </div>
       <p class="text-3xl sm:text-4xl font-bold tracking-tight text-white flex gap-1">
         $<span id="user-balance-display">{amount}</span>
       </p>
@@ -176,6 +176,70 @@ const { amount } = Astro.props;
   // @ts-nocheck
   import { pinService } from "../services/api.js";
 
+  // Configuración de colores por nivel (más oscuros para mejor legibilidad)
+  const nivelesColores = {
+    'novato': { primary: '#6B7280', glow: 'rgba(107, 114, 128, 0.2)', shadow: 'rgba(107, 114, 128, 0.4)' },
+    'bachiller': { primary: '#3B82F6', glow: 'rgba(59, 130, 246, 0.2)', shadow: 'rgba(59, 130, 246, 0.4)' },
+    'licenciado': { primary: '#7C3AED', glow: 'rgba(124, 58, 237, 0.2)', shadow: 'rgba(124, 58, 237, 0.4)' },
+    'master': { primary: '#DB2777', glow: 'rgba(219, 39, 119, 0.2)', shadow: 'rgba(219, 39, 119, 0.4)' },
+    'doctorado': { primary: '#A8E638', glow: 'rgba(168, 230, 56, 0.2)', shadow: 'rgba(168, 230, 56, 0.4)' }
+  };
+
+  // Función para obtener el nivel según XP
+  function obtenerNivel(xp) {
+    if (xp >= 10001) return 'doctorado';
+    if (xp >= 5001) return 'master';
+    if (xp >= 2001) return 'licenciado';
+    if (xp >= 501) return 'bachiller';
+    return 'novato';
+  }
+
+  // Función para obtener el XP del localStorage
+  function obtenerXP() {
+    // Primero intentar de capypay_user_xp (que se guarda al cambiar nivel)
+    let xp = parseInt(localStorage.getItem('capypay_user_xp'));
+    
+    // Si no existe, intentar del usuario
+    if (!xp || isNaN(xp)) {
+      try {
+        const userStr = localStorage.getItem('capypay_user');
+        if (userStr) {
+          const user = JSON.parse(userStr);
+          xp = user.xp || user.puntos || 1500;
+        }
+      } catch (e) {
+        console.error('Error al obtener XP del usuario:', e);
+        xp = 1500; // XP por defecto
+      }
+    }
+
+    return xp;
+  }
+
+  // Función para actualizar el color de la tarjeta según el nivel
+  function actualizarTarjetaPorNivel(xp) {
+    try {
+      // Determinar nivel
+      const nivel = obtenerNivel(xp);
+      const colorConfig = nivelesColores[nivel];
+
+      // Actualizar tarjeta
+      const balanceCardContainer = document.getElementById('balance-card-container');
+      if (balanceCardContainer && colorConfig) {
+        balanceCardContainer.style.backgroundColor = colorConfig.primary;
+        balanceCardContainer.style.boxShadow = `0 0 20px ${colorConfig.shadow}`;
+      }
+
+      // Actualizar glow decorativo
+      const glowDiv = balanceCardContainer?.querySelector('.absolute.top-0');
+      if (glowDiv && colorConfig) {
+        glowDiv.style.backgroundColor = colorConfig.glow;
+      }
+    } catch (e) {
+      console.error('Error al actualizar tarjeta por nivel:', e);
+    }
+  }
+
   let cardInfoTimer: number | null = null;
   let countdownInterval: number | null = null;
 
@@ -290,5 +354,17 @@ const { amount } = Astro.props;
   // Cleanup on unmount (si el componente se remueve)
   window.addEventListener('beforeunload', () => {
     hideCardInfo();
+  });
+
+  // Actualizar color de tarjeta según nivel al cargar
+  // Primero intentar de capypay_user_xp (que se guarda al cambiar nivel)
+  let xpLocalStorage = parseInt(localStorage.getItem('capypay_user_xp'));
+  actualizarTarjetaPorNivel(xpLocalStorage);
+
+  // Escuchar cambios en localStorage
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'capypay_user_xp' && e.newValue) {
+      actualizarTarjetaPorNivel(parseInt(e.newValue));
+    }
   });
 </script>

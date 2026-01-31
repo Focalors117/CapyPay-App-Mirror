@@ -1,12 +1,13 @@
----
-import CapyPay from "../layouts/MainLayout.astro";
-import BalanceCard from "../components/BalanceCard.astro";
-import HistoryCard from "../components/HistoryCard.astro";
-import QuickPay from "../components/QuickPay.astro";
-import FinanceChart from "../components/FinanceChart.astro";
-import TransferWidget from "../components/TransferWidget.astro";
-import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
----
+ ---
+ import CapyPay from "../layouts/MainLayout.astro";
+ import BalanceCard from "../components/BalanceCard.astro";
+ import HistoryCard from "../components/HistoryCard.astro";
+ import QuickPay from "../components/QuickPay.astro";
+ import FinanceChart from "../components/FinanceChart.astro";
+ import TransferWidget from "../components/TransferWidget.astro";
+ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
+ import NivelBadge from "../components/NivelBadge.astro";
+ ---
 
 <CapyPay title="Dashboard | CapyPay" showSidebar={true}>
   <!-- 
@@ -23,13 +24,7 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
     >
       <div class="flex items-center gap-2 sm:gap-3">
         <!-- Widget de Nivel -->
-        <div
-          class="bg-brand-black rounded-full px-2 sm:px-3 py-1 border border-white/10 flex items-center gap-1 sm:gap-2"
-        >
-          <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase">Nvl</span
-          >
-          <span class="text-brand-lime font-bold text-sm">12</span>
-        </div>
+        <NivelBadge nombre="Bachiller" xp={1500} icono="🎓" />
         <!-- Saludo -->
         <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
           Hola, <span id="header-username">Cormex</span>
@@ -640,6 +635,10 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
               }).format(realUser.balance);
             }
           }
+
+          // Guardar XP en localStorage para que las otras cards usen el color correcto
+          const xp = realUser.xp || realUser.puntos || 1500;
+          localStorage.setItem('capypay_user_xp', xp.toString());
 
           // Actualizar Nombre si cambió
           if (realUser.nombre || realUser.name) {
