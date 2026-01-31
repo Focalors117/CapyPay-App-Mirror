@@ -8,10 +8,10 @@
   <!-- Encabezado -->
   <div class="flex justify-between items-start mb-4 sm:mb-6 z-10">
     <div>
-      <h3 class="text-white text-base sm:text-lg font-semibold flex items-center gap-2">
+      <h3 class="text-white text-lg sm:text-xl font-semibold flex items-center gap-2">
         Transferir
         <span
-          class="text-[9px] sm:text-[10px] bg-brand-lime/10 text-brand-lime px-2 py-0.5 rounded-full border border-brand-lime/30"
+          class="text-xs sm:text-sm bg-brand-lime/10 text-brand-lime px-2.5 py-1 rounded-full border border-brand-lime/30"
           >Rápido</span
         >
       </h3>
@@ -37,19 +37,19 @@
     </button>
   </div>
 
-  <!-- Pestañas -->
+   <!-- Pestañas -->
   <div
     class="flex p-1 bg-black/40 rounded-xl border border-brand-lime/20 mb-4 sm:mb-6 z-10"
     id="transferTabs"
   >
     <button
-      class="flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold text-black bg-brand-lime shadow-sm transition-all"
+      class="flex-1 py-2 rounded-lg text-xs sm:text-sm font-bold text-black bg-brand-lime shadow-sm transition-all"
       data-tab="contact"
     >
       Mis Contactos
     </button>
     <button
-      class="flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold text-neutral-400 hover:text-brand-lime transition-all"
+      class="flex-1 py-2 rounded-lg text-xs sm:text-sm font-bold text-neutral-400 hover:text-brand-lime transition-all"
       data-tab="external"
     >
       Usuario Externo
@@ -66,11 +66,11 @@
       >
       <!-- Select Personalizado -->
       <div class="relative">
-        <button
-          id="custom-select-trigger"
-          class="w-full bg-[#0f101f] text-white text-xs sm:text-sm rounded-xl border border-white/10 p-2.5 sm:p-3 flex justify-between items-center hover:border-brand-lime/50 transition-colors focus:outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime"
-          type="button"
-        >
+         <button
+           id="custom-select-trigger"
+           class="w-full bg-[#0f101f]! text-white text-xs sm:text-sm rounded-xl border border-white/10 py-2.5 sm:py-3 pl-4 sm:pl-4 pr-4 flex justify-between items-center hover:border-brand-lime/50 transition-colors focus:outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime"
+           type="button"
+         >
           <span class="text-slate-400 text-xs sm:text-sm" id="selected-contact-text"
             >Selecciona un contacto...</span
           >
@@ -137,12 +137,12 @@
         >Cédula del Destinatario</label
       >
       <div class="relative">
-        <input
-          id="external-identifier"
-          type="text"
-          placeholder="Ej: V-12345678"
-          class="w-full bg-[#0f101f] text-white text-xs sm:text-sm rounded-xl border border-white/10 p-2.5 sm:p-3 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime"
-        />
+         <input
+           id="external-identifier"
+           type="text"
+           placeholder="Ej: V-12345678"
+           class="w-full bg-[#0f101f]! text-white text-xs sm:text-sm rounded-xl border border-white/10 py-2.5 sm:py-3 pl-4 sm:pl-4 pr-4 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime"
+         />
         <div
           class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500 hidden"
         >
