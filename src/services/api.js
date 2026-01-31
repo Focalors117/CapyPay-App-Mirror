@@ -77,7 +77,8 @@ export const authService = {
             id: response.usuarioId,
             nombre: response.nombre,
             cedula: response.cedula,
-            balance: response.balance
+            balance: response.balance,
+            xp: response.xp || 0
         };
         localStorage.setItem('capypay_user', JSON.stringify(userToSave));
     } else if (response.user || response.usuario || response.id) {
@@ -95,6 +96,31 @@ export const authService = {
       method: 'POST',
       body: JSON.stringify(userData), // nombre, email, password, etc.
     });
+  },
+
+  getProfile: async (userId) => {
+    // Si no se pasa userId, intentar leer del localStorage
+    let id = userId;
+    if (!id) {
+        const localUser = JSON.parse(localStorage.getItem('capypay_user') || '{}');
+        id = localUser.id;
+    }
+
+    if (!id) throw new Error("No hay usuario logueado");
+
+    const response = await fetchAPI(`/usuario/${id}`);
+    
+    // Actualizar caché local
+    if (response) {
+        const localUser = JSON.parse(localStorage.getItem('capypay_user') || '{}');
+        const updatedUser = { ...localUser, ...response };
+        // Aseguramos que XP esté presente si no viene (aunque debería venir)
+        if (updatedUser.xp === undefined) updatedUser.xp = 0;
+        
+        localStorage.setItem('capypay_user', JSON.stringify(updatedUser));
+    }
+    
+    return response;
   },
   
   logout: () => {
