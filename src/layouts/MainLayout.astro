@@ -10,7 +10,9 @@ const { title = "CapyPay", showSidebar = false } = Astro.props;
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>{title}</title>
     <!-- Auth Guard Anti-Flash (Improved) -->
     <script is:inline>
@@ -57,7 +59,7 @@ const { title = "CapyPay", showSidebar = false } = Astro.props;
       }
     </style>
   </head>
-  <body class="flex h-screen overflow-hidden bg-[#0a0a0a] text-brand-white">
+  <body class="flex h-screen overflow-hidden bg-[#0a0a0a] text-brand-white safe-area-all">
     <!-- 
       FONDO AMBIENTAL
       Estos círculos (divs) son los que dan esa luz de fondo borrosa.

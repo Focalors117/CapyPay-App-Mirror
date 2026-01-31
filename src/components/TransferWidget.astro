@@ -6,16 +6,16 @@
   class="bg-brand-black rounded-3xl p-6 border border-white/10 shadow-none flex flex-col h-full relative overflow-hidden group"
 >
   <!-- Encabezado -->
-  <div class="flex justify-between items-start mb-6 z-10">
+  <div class="flex justify-between items-start mb-4 sm:mb-6 z-10">
     <div>
-      <h3 class="text-white text-lg font-semibold flex items-center gap-2">
+      <h3 class="text-white text-base sm:text-lg font-semibold flex items-center gap-2">
         Transferir
         <span
-          class="text-[10px] bg-brand-lime/10 text-brand-lime px-2 py-0.5 rounded-full border border-brand-lime/30"
+          class="text-[9px] sm:text-[10px] bg-brand-lime/10 text-brand-lime px-2 py-0.5 rounded-full border border-brand-lime/30"
           >Rápido</span
         >
       </h3>
-      <p class="text-slate-400 text-xs mt-1">
+      <p class="text-slate-400 text-[10px] sm:text-xs mt-1">
         Envía dinero a contactos o usuarios
       </p>
     </div>
@@ -39,17 +39,17 @@
 
   <!-- Pestañas -->
   <div
-    class="flex p-1 bg-black/40 rounded-xl border border-brand-lime/20 mb-6 z-10"
+    class="flex p-1 bg-black/40 rounded-xl border border-brand-lime/20 mb-4 sm:mb-6 z-10"
     id="transferTabs"
   >
     <button
-      class="flex-1 py-2 rounded-lg text-xs font-bold text-black bg-brand-lime shadow-sm transition-all"
+      class="flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold text-black bg-brand-lime shadow-sm transition-all"
       data-tab="contact"
     >
       Mis Contactos
     </button>
     <button
-      class="flex-1 py-2 rounded-lg text-xs font-bold text-neutral-400 hover:text-brand-lime transition-all"
+      class="flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold text-neutral-400 hover:text-brand-lime transition-all"
       data-tab="external"
     >
       Usuario Externo
@@ -59,19 +59,19 @@
   <!-- Contenido: Modo Contacto -->
   <div
     id="tabContact"
-    class="flex flex-col gap-4 flex-1 z-10 transition-all duration-300 relative"
+    class="flex flex-col gap-3 sm:gap-4 flex-1 z-10 transition-all duration-300 relative"
   >
     <div class="space-y-1 relative" id="contact-select-wrapper">
-      <label class="text-xs text-slate-400 font-medium ml-1">Destinatario</label
+      <label class="text-[10px] sm:text-xs text-slate-400 font-medium ml-1">Destinatario</label
       >
       <!-- Select Personalizado -->
       <div class="relative">
         <button
           id="custom-select-trigger"
-          class="w-full bg-[#0f101f] text-white text-sm rounded-xl border border-white/10 p-3 flex justify-between items-center hover:border-brand-lime/50 transition-colors focus:outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime"
+          class="w-full bg-[#0f101f] text-white text-xs sm:text-sm rounded-xl border border-white/10 p-2.5 sm:p-3 flex justify-between items-center hover:border-brand-lime/50 transition-colors focus:outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime"
           type="button"
         >
-          <span class="text-slate-400" id="selected-contact-text"
+          <span class="text-slate-400 text-xs sm:text-sm" id="selected-contact-text"
             >Selecciona un contacto...</span
           >
           <svg
@@ -107,7 +107,7 @@
     </div>
 
     <div class="space-y-1">
-      <label class="text-xs text-slate-400 font-medium ml-1">Cantidad</label>
+      <label class="text-[10px] sm:text-xs text-slate-400 font-medium ml-1">Cantidad</label>
       <div class="relative">
         <span
           class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-semibold"
@@ -118,10 +118,10 @@
           type="number"
           placeholder="0.00"
           autocomplete="off"
-          class="w-full bg-[#0f101f]! text-white text-lg font-bold rounded-xl border border-white/10 py-3 pl-8 pr-4 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime placeholder:text-slate-600"
+          class="w-full bg-[#0f101f]! text-white text-base sm:text-lg font-bold rounded-xl border border-white/10 py-2.5 sm:py-3 pl-8 pr-4 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime placeholder:text-slate-600"
         />
       </div>
-      <p class="text-[10px] text-slate-500 text-right italic">
+      <p class="text-[9px] sm:text-[10px] text-slate-500 text-right italic">
         * Aplica comisión del servicio
       </p>
     </div>
@@ -130,10 +130,10 @@
   <!-- Contenido: Modo Externo (Oculto por defecto) -->
   <div
     id="tabExternal"
-    class="hidden flex-col gap-4 flex-1 z-10 transition-all duration-300"
+    class="hidden flex-col gap-3 sm:gap-4 flex-1 z-10 transition-all duration-300"
   >
     <div class="space-y-1">
-      <label class="text-xs text-slate-400 font-medium ml-1"
+      <label class="text-[10px] sm:text-xs text-slate-400 font-medium ml-1"
         >Cédula del Destinatario</label
       >
       <div class="relative">
@@ -141,7 +141,7 @@
           id="external-identifier"
           type="text"
           placeholder="Ej: V-12345678"
-          class="w-full bg-[#0f101f] text-white text-sm rounded-xl border border-white/10 p-3 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime"
+          class="w-full bg-[#0f101f] text-white text-xs sm:text-sm rounded-xl border border-white/10 p-2.5 sm:p-3 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime"
         />
         <div
           class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500 hidden"
@@ -162,13 +162,13 @@
           </svg>
         </div>
       </div>
-      <p class="text-[10px] text-slate-500 ml-1">
+      <p class="text-[9px] sm:text-[10px] text-slate-500 ml-1">
         Buscando en la base de datos global...
       </p>
     </div>
 
     <div class="space-y-1">
-      <label class="text-xs text-slate-400 font-medium ml-1">Cantidad</label>
+      <label class="text-[10px] sm:text-xs text-slate-400 font-medium ml-1">Cantidad</label>
       <div class="relative">
         <span
           class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-semibold"
@@ -178,10 +178,10 @@
           id="external-amount"
           type="number"
           placeholder="0.00"
-          class="w-full bg-[#0f101f]! text-white text-lg font-bold rounded-xl border border-white/10 py-3 pl-8 pr-4 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime placeholder:text-slate-600"
+          class="w-full bg-[#0f101f]! text-white text-base sm:text-lg font-bold rounded-xl border border-white/10 py-2.5 sm:py-3 pl-8 pr-4 outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime placeholder:text-slate-600"
         />
       </div>
-      <p class="text-[10px] text-slate-500 text-right italic">
+      <p class="text-[9px] sm:text-[10px] text-slate-500 text-right italic">
         * Aplica comisión del servicio
       </p>
     </div>
@@ -190,7 +190,7 @@
   <!-- Botón de Enviar -->
   <button
     id="btn-send-transfer"
-    class="w-full mt-6 bg-brand-lime hover:bg-[#c1e63e] text-black font-bold py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(215,253,72,0.3)] hover:shadow-[0_0_25px_rgba(215,253,72,0.5)] active:scale-95 flex justify-center items-center gap-2 group/btn z-10"
+    class="w-full mt-4 sm:mt-6 bg-brand-lime hover:bg-[#c1e63e] text-black font-bold py-2.5 sm:py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(215,253,73,0.3)] hover:shadow-[0_0_25px_rgba(215,253,73,0.5)] active:scale-95 flex justify-center items-center gap-2 group/btn z-10 text-sm sm:text-base"
   >
     <span>Enviar Ahora</span>
     <svg

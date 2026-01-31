@@ -1,4 +1,4 @@
-/// <reference path="../.astro/types.d.ts" />
+/// <reference path="../astro/types.d.ts" />
 
 interface Window {
   handleQuickTransfer: (cedula: string) => void;
@@ -10,4 +10,10 @@ interface Window {
   ) => void;
   markNotifRead: (id: string, el: HTMLElement) => void;
   requestPin: (callback: (pin: string) => void) => void;
+}
+
+declare module '../services/api.js' {
+  export const pinService: {
+    verify: (pin: string) => Promise<{ valid: boolean; success: boolean; }>;
+  };
 }

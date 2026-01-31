@@ -1,0 +1,401 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import NavBar from "../components/NavBar.astro";
+import ToastNotification from "../components/ToastNotification.astro";
+---
+
+<MainLayout title="Notificaciones | CapyPay" showSidebar={false}>
+  <div class="w-full max-w-4xl mx-auto px-4 sm:px-6">
+    <!-- Header con botón de regresar -->
+    <header
+      class="bg-brand-black border border-white/10 rounded-3xl p-4 sm:p-6 flex items-center justify-between mb-4 sm:mb-6 animate-fade-in-down shadow-none isolate relative overflow-hidden"
+    >
+      <!-- Glow FX -->
+      <div
+        class="absolute top-0 right-0 w-48 h-48 bg-brand-purple/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"
+      >
+      </div>
+
+      <!-- Botón Regresar -->
+      <button
+        onclick="window.history.back()"
+        class="relative z-10 flex items-center gap-2 text-slate-400 hover:text-brand-lime transition-colors group px-3 py-2 rounded-xl hover:bg-white/5"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 group-hover:-translate-x-1 transition-transform"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          ></path>
+        </svg>
+        <span class="text-sm font-medium hidden sm:inline">Regresar</span>
+      </button>
+
+      <!-- Título -->
+      <div class="relative z-10">
+        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+          Notificaciones
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-brand-purple"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+            ></path>
+          </svg>
+        </h1>
+      </div>
+
+      <!-- Botón Limpiar Bandeja -->
+      <button
+        id="clear-notifications-btn"
+        class="relative z-10 flex items-center gap-2 px-3 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 rounded-xl transition-all border border-red-500/20 group disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4 group-hover:rotate-180 transition-transform duration-300"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+          ></path>
+        </svg>
+        <span class="text-xs sm:text-sm font-medium hidden sm:inline">Limpiar</span>
+      </button>
+    </header>
+
+    <!-- Contador de no leídas -->
+    <div
+      id="unread-counter"
+      class="hidden bg-brand-lime/10 border border-brand-lime/30 text-brand-lime px-4 py-2.5 rounded-xl mb-4 flex items-center justify-between shadow-[0_0_10px_rgba(215,253,73,0.2)]"
+    >
+      <span class="text-sm font-medium flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-brand-lime animate-pulse"></span>
+        Tienes <span id="unread-count" class="font-bold text-base">0</span> sin leer
+      </span>
+      <button
+        id="mark-all-read-btn"
+        class="text-xs sm:text-xs font-semibold bg-brand-lime hover:bg-white text-black px-3 py-1 rounded-lg transition-colors"
+      >
+        Marcar todas
+      </button>
+    </div>
+
+    <!-- Lista de Notificaciones -->
+    <div
+      id="notifications-container"
+      class="space-y-3 pb-32 animate-fade-in-up"
+    >
+    <!-- Estado de carga -->
+    <div class="bg-brand-black border border-white/10 rounded-3xl p-8 text-center animate-fade-in-up">
+      <div class="flex flex-col items-center gap-4">
+        <div
+          class="w-16 h-16 rounded-full bg-brand-purple/10 border border-brand-purple/30 flex items-center justify-center animate-pulse shadow-[0_0_20px_rgba(131,98,232,0.2)]"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-8 w-8 text-brand-purple"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+            ></path>
+          </svg>
+        </div>
+        <p class="text-slate-400 text-base font-medium">Cargando notificaciones...</p>
+      </div>
+    </div>
+    </div>
+  </div>
+</MainLayout>
+
+<style>
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-down {
+    animation: fadeInDown 0.5s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0;
+    animation-delay: 0.1s;
+  }
+
+  /* Estilo para notificación no leída */
+  .notification-unread {
+    border-left: 3px solid #D7FD49;
+    background: linear-gradient(to right, rgba(215, 253, 73, 0.08), transparent);
+  }
+
+  .notification-read {
+    border-left: 3px solid transparent;
+    opacity: 0.6;
+  }
+</style>
+
+<script>
+  // @ts-nocheck
+  import { authService, notificationService } from "../services/api.js";
+
+  let notifications = [];
+
+  async function loadNotifications() {
+    const container = document.getElementById("notifications-container");
+    const user = authService.getCurrentUser();
+
+    if (!user || (!user.id && !user.usuarioId && !user._id)) {
+      container.innerHTML =
+        '<div class="text-center py-20"><p class="text-red-500 text-sm">Error: No hay sesión activa</p></div>';
+      return;
+    }
+
+    try {
+      const userId = user.id || user.usuarioId || user._id;
+      const { notifications: notifs } = await notificationService.getNotifications(
+        userId,
+      );
+
+      notifications = notifs || [];
+      renderNotifications();
+    } catch (e) {
+      console.error("Error cargando notificaciones:", e);
+      container.innerHTML =
+        '<div class="text-center py-20"><p class="text-red-500 text-sm">Error al cargar notificaciones</p></div>';
+    }
+  }
+
+  function renderNotifications() {
+    const container = document.getElementById("notifications-container");
+    const unreadCounter = document.getElementById("unread-counter");
+    const unreadCountEl = document.getElementById("unread-count");
+    const clearBtn = document.getElementById("clear-notifications-btn");
+
+    // Calcular no leídas
+    const unreadCount = notifications.filter((n) => !n.is_read).length;
+
+    // Mostrar/ocultar contador de no leídas
+    if (unreadCount > 0) {
+      unreadCounter.classList.remove("hidden");
+      unreadCountEl.innerText = unreadCount;
+    } else {
+      unreadCounter.classList.add("hidden");
+    }
+
+    // Habilitar/deshabilitar botón limpiar
+    if (clearBtn) {
+      clearBtn.disabled = notifications.length === 0;
+    }
+
+    // Bandeja vacía
+    if (notifications.length === 0) {
+      container.innerHTML = `
+        <div class="bg-brand-black border border-white/10 rounded-3xl p-8 text-center animate-fade-in-up shadow-none isolate relative overflow-hidden">
+          <!-- Glow FX -->
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-brand-purple/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+          <div class="relative z-10 w-24 h-24 rounded-full bg-brand-purple/10 border border-brand-purple/30 mx-auto mb-6 flex items-center justify-center shadow-[0_0_30px_rgba(131,98,232,0.2)]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-brand-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-white mb-3">Bandeja vacía</h3>
+          <p class="text-slate-400 text-base">No tienes notificaciones nuevas</p>
+        </div>
+      `;
+      return;
+    }
+
+    // Renderizar notificaciones
+    let html = '<div class="space-y-3">';
+
+    notifications.forEach((notif, index) => {
+      const icon = notif.type === "payment_received" ? "💰" : "📢";
+      const isUnread = !notif.is_read;
+      const bgClass = isUnread ? "notification-unread" : "notification-read";
+      const iconBg = isUnread
+        ? "bg-brand-lime/10 border-brand-lime/30"
+        : "bg-slate-800/50 border-white/5";
+      const iconColor = isUnread ? "text-brand-lime" : "text-slate-400";
+      const textClass = isUnread ? "text-white" : "text-slate-300";
+      const dateStr = new Date(notif.created_at).toLocaleString("es-VE", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      html += `
+        <div class="bg-brand-black border border-white/10 rounded-3xl p-4 hover:border-white/20 hover:bg-white/5 transition-all cursor-pointer ${bgClass} group shadow-none isolate relative overflow-hidden"
+             style="animation-delay: ${index * 0.05}s"
+             onclick="window.handleNotificationClick('${notif.id}', ${isUnread})">
+          <div class="flex gap-4 relative z-10">
+            <!-- Icono -->
+            <div class="shrink-0 w-14 h-14 rounded-2xl ${iconBg} border flex items-center justify-center ${iconColor} text-2xl shadow-lg">
+              ${icon}
+            </div>
+
+            <!-- Contenido -->
+            <div class="flex-1 min-w-0 flex flex-col justify-center">
+              <div class="flex items-start justify-between gap-2 mb-1">
+                <p class="text-sm sm:text-base font-medium ${textClass} line-clamp-2 leading-relaxed">
+                  ${notif.message}
+                </p>
+                ${isUnread
+                  ? '<span class="shrink-0 w-2.5 h-2.5 rounded-full bg-brand-lime shadow-[0_0_8px_rgba(215,253,73,0.6)]"></span>'
+                  : ""}
+              </div>
+              <p class="text-xs text-slate-500 font-medium">${dateStr}</p>
+            </div>
+
+            <!-- Indicador de acciones al hacer hover -->
+            <div class="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    html += "</div>";
+    container.innerHTML = html;
+  }
+
+  // Manejador para click en notificación
+  window.handleNotificationClick = async (notifId, isUnread) => {
+    if (isUnread) {
+      try {
+        await notificationService.markAsRead(notifId);
+        // Actualizar estado local
+        const notif = notifications.find((n) => n.id === notifId);
+        if (notif) notif.is_read = true;
+        renderNotifications();
+      } catch (e) {
+        console.error("Error marcando notificación como leída:", e);
+      }
+    }
+  };
+
+  // Limpiar todas las notificaciones
+  document.addEventListener("DOMContentLoaded", () => {
+    const clearBtn = document.getElementById("clear-notifications-btn");
+    const markAllReadBtn = document.getElementById("mark-all-read-btn");
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", async () => {
+        if (notifications.length === 0) return;
+
+        // Confirmación
+        if (
+          !confirm("¿Estás seguro de que quieres limpiar todas las notificaciones?")
+        ) {
+          return;
+        }
+
+        const user = authService.getCurrentUser();
+        if (!user) return;
+
+        try {
+          const userId = user.id || user.usuarioId || user._id;
+          await notificationService.clearAll(userId);
+
+          // Actualizar estado local
+          notifications = [];
+          renderNotifications();
+
+          if (window.showToast) {
+            window.showToast(
+              "Notificaciones eliminadas",
+              "success",
+              "Bandeja limpia",
+            );
+          }
+        } catch (e) {
+          console.error("Error limpiando notificaciones:", e);
+          if (window.showToast) {
+            window.showToast("Error al limpiar notificaciones", "error");
+          }
+        }
+      });
+    }
+
+    // Marcar todas como leídas
+    if (markAllReadBtn) {
+      markAllReadBtn.addEventListener("click", async () => {
+        const user = authService.getCurrentUser();
+        if (!user) return;
+
+        try {
+          const userId = user.id || user.usuarioId || user._id;
+          // Obtener no leídas
+          const unreadNotifs = notifications.filter((n) => !n.is_read);
+
+          // Marcar cada una como leída
+          for (const notif of unreadNotifs) {
+            await notificationService.markAsRead(notif.id);
+            notif.is_read = true;
+          }
+
+          renderNotifications();
+
+          if (window.showToast) {
+            window.showToast(
+              "Todas las notificaciones marcadas como leídas",
+              "success",
+            );
+          }
+        } catch (e) {
+          console.error("Error marcando como leídas:", e);
+        }
+      });
+    }
+
+    // Cargar notificaciones
+    loadNotifications();
+  });
+</script>

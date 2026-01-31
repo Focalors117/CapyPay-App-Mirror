@@ -15,35 +15,37 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
     Escritorio: Malla de 12 columnas para un diseño complejo
   -->
   <div
-    class="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full lg:h-full lg:min-h-0"
+    class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 w-full lg:h-full lg:min-h-0"
   >
     <!-- ENCABEZADO MOVIL (Orden 1) - Visible solo en pantallas pequeñas -->
     <div
-      class="flex items-center justify-between p-2 lg:hidden order-1 animate-fade-in-down"
+      class="flex items-center justify-between px-2 py-3 lg:hidden order-1 animate-fade-in-down"
     >
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 sm:gap-3">
         <!-- Widget de Nivel -->
         <div
-          class="bg-brand-black rounded-full px-3 py-1 border border-white/10 flex items-center gap-2"
+          class="bg-brand-black rounded-full px-2 sm:px-3 py-1 border border-white/10 flex items-center gap-1 sm:gap-2"
         >
-          <span class="text-[10px] text-slate-400 font-bold uppercase">Nvl</span
+          <span class="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase">Nvl</span
           >
           <span class="text-brand-lime font-bold text-sm">12</span>
         </div>
         <!-- Saludo -->
-        <h1 class="text-lg font-bold text-white">
+        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
           Hola, <span id="header-username">Cormex</span>
+          <span class="animate-wave origin-bottom-right inline-block text-2xl sm:text-3xl">👋</span>
         </h1>
       </div>
       <!-- Campanita de Notificaciones y Cerrar Sesion -->
       <div class="flex items-center gap-2">
         <!-- Notificaciones -->
-        <div
-          class="w-8 h-8 rounded-full bg-brand-black border border-white/10 flex items-center justify-center text-slate-400"
+        <a
+          href="/notifications"
+          class="w-8 h-8 rounded-full bg-brand-black border border-white/10 flex items-center justify-center text-slate-400 hover:text-brand-lime hover:border-brand-lime/50 transition-colors relative group"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4"
+            class="h-4 w-4 group-hover:scale-110 transition-transform"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -55,7 +57,12 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
               d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
             ></path>
           </svg>
-        </div>
+          <!-- Badge de notificaciones no leídas -->
+          <span
+            id="mobile-notif-badge"
+            class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-brand-black hidden shadow-[0_0_5px_rgba(239,68,68,0.5)]"
+          ></span>
+        </a>
         <!-- Boton de Cerrar Sesion (Movil) -->
         <button
           id="mobile-logout-btn"
@@ -89,7 +96,7 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
         <input
           type="text"
           placeholder="Buscar contactos..."
-          class="w-full bg-brand-black text-white text-sm rounded-xl pl-10 pr-4 py-3 border border-white/10 focus:outline-none focus:border-brand-lime/50 focus:bg-black transition-all placeholder:text-slate-500"
+          class="w-full bg-brand-black text-white text-sm rounded-xl pl-10 pr-4 py-2.5 sm:py-3 border border-white/10 focus:outline-none focus:border-brand-lime/50 focus:bg-black transition-all placeholder:text-slate-500"
         />
         <div
           class="absolute left-0 top-0 h-full w-10 flex items-center justify-center text-slate-500 pointer-events-none group-focus-within/search:text-brand-lime"
@@ -116,7 +123,7 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
       Movil: Contents (Los hijos se convierten en Orden 3, 4, 6)
     -->
     <aside
-      class="contents lg:col-span-4 lg:flex lg:flex-col lg:order-1 animate-fade-in-left gap-6 h-full min-h-0"
+      class="contents lg:col-span-4 lg:flex lg:flex-col lg:order-1 animate-fade-in-left gap-4 sm:gap-6 h-full min-h-0"
     >
       <div class="shrink-0 order-3 lg:order-0">
         <BalanceCard amount="12,450.00" />
@@ -126,7 +133,7 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
         <QuickPay />
       </div>
 
-      <div class="shrink-0 min-h-87.5 lg:flex-1 lg:min-h-0 order-6 lg:order-0">
+      <div class="shrink-0 lg:flex-1 lg:min-h-0 order-6 lg:order-0">
         <FinanceChart />
       </div>
     </aside>
@@ -136,20 +143,19 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
       Movil: Contents (Encabezado Oculto, Hijos Orden 5, 7, 8)
     -->
     <section
-      class="contents lg:col-span-8 lg:flex lg:flex-col lg:order-2 animate-fade-in-up gap-6 h-full min-h-0"
+      class="contents lg:col-span-8 lg:flex lg:flex-col lg:order-2 animate-fade-in-up gap-4 sm:gap-6 h-full min-h-0"
     >
       <!-- Encabezado (Solo Escritorio) -->
       <header
         class="hidden lg:flex justify-between items-center bg-brand-black border border-white/10 rounded-3xl p-6 w-full shrink-0 isolate shadow-none animate-fade-in-down"
       >
         <div>
-          <h1 class="text-2xl font-bold text-white flex gap-2 items-center">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white flex gap-3 items-center">
             Hola, <span id="desktop-username">Cormex</span>
-            <span class="animate-wave origin-bottom-right inline-block">👋</span
-            >
+            <span class="animate-wave origin-bottom-right inline-block text-4xl sm:text-5xl lg:text-6xl">👋</span>
           </h1>
-          <p class="text-slate-400 text-xs mt-1 flex items-center gap-1">
-            <span class="w-1.5 h-1.5 rounded-full bg-brand-lime"></span>
+          <p class="text-slate-400 text-sm sm:text-base mt-2 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-brand-lime"></span>
             Último acceso: Hoy, 09:30 AM
           </p>
         </div>
@@ -173,12 +179,12 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
         <div class="contents lg:flex lg:flex-col lg:gap-6 animate-fade-in-up">
           <!-- Widget de Transferencia (Orden 5) -->
           <div
-            class="shrink-0 min-h-95 lg:flex-1 lg:min-h-50 order-5 lg:order-0"
+            class="shrink-0 lg:flex-1 lg:min-h-50 order-5 lg:order-0"
           >
             <TransferWidget />
           </div>
           <!-- Widget de Tasa de Cambio (Orden 7) -->
-          <div class="h-40 shrink-0 order-7 lg:order-0">
+          <div class="h-32 sm:h-40 shrink-0 order-7 lg:order-0">
             <ExchangeRateWidget />
           </div>
         </div>
@@ -190,15 +196,15 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
         >
           <!-- Modulo de Actividad -->
           <div
-            class="bg-brand-black border border-white/10 rounded-3xl flex flex-col h-full isolate shadow-none w-full overflow-hidden min-h-100 lg:min-h-0"
+            class="bg-brand-black border border-white/10 rounded-3xl flex flex-col h-full isolate shadow-none w-full overflow-hidden lg:min-h-0 min-h-[300px]"
           >
-            <div class="p-6 pb-4 shrink-0 border-b border-white/10">
+            <div class="p-4 sm:p-6 pb-3 sm:pb-4 shrink-0 border-b border-white/10">
               <div class="flex flex-col gap-2">
                 <div class="flex items-center justify-between">
-                  <h2 class="text-xl font-bold text-white">Actividad</h2>
+                  <h2 class="text-base sm:text-lg lg:text-xl font-bold text-white">Actividad</h2>
                   <a
                     href="/history"
-                    class="text-[10px] text-brand-lime hover:text-white transition-colors flex items-center gap-1 group"
+                    class="text-[10px] sm:text-xs text-brand-lime hover:text-white transition-colors flex items-center gap-1 group"
                   >
                     Ver historial
                     <svg
@@ -219,17 +225,17 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
                 <div class="flex gap-1 overflow-x-auto pb-1 no-scrollbar">
                   <button
                     id="filter-all"
-                    class="text-[10px] bg-brand-lime hover:bg-[#ccf044] text-black font-bold px-3 py-1 rounded-full transition-colors whitespace-nowrap shadow-[0_0_10px_rgba(215,253,73,0.2)]"
+                    class="text-[10px] bg-brand-lime hover:bg-[#ccf044] text-black font-bold px-2 sm:px-3 py-1 rounded-full transition-colors whitespace-nowrap shadow-[0_0_10px_rgba(215,253,73,0.2)]"
                     >Todos</button
                   >
                   <button
                     id="filter-income"
-                    class="text-[10px] text-slate-400 hover:text-brand-lime px-3 py-1 rounded-full transition-colors whitespace-nowrap"
+                    class="text-[10px] text-slate-400 hover:text-brand-lime px-2 sm:px-3 py-1 rounded-full transition-colors whitespace-nowrap"
                     >Ingresos</button
                   >
                   <button
                     id="filter-expenses"
-                    class="text-[10px] text-slate-400 hover:text-brand-lime px-3 py-1 rounded-full transition-colors whitespace-nowrap"
+                    class="text-[10px] text-slate-400 hover:text-brand-lime px-2 sm:px-3 py-1 rounded-full transition-colors whitespace-nowrap"
                     >Gastos</button
                   >
                 </div>
@@ -238,7 +244,7 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
 
             <div
               id="history-list-container"
-              class="p-4 overflow-y-auto custom-scrollbar flex-1"
+              class="p-3 sm:p-4 overflow-y-auto custom-scrollbar flex-1"
             >
               <p class="text-center text-slate-500 text-sm mt-10">
                 Cargando movimientos...
@@ -250,7 +256,61 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
     </section>
 
     <!-- Espaciador para la Barra de Navegación Inferior en Movil -->
-    <div class="lg:hidden h-32 w-full order-12 shrink-0"></div>
+    <div class="lg:hidden h-24 sm:h-28 w-full order-12 shrink-0"></div>
+  </div>
+
+  <!-- MODAL DE CONFIRMACIÓN PARA CERRAR SESIÓN -->
+  <div
+    id="logout-modal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-md opacity-0 transition-opacity duration-300"
+  >
+    <div
+      class="bg-brand-black border border-white/10 rounded-3xl w-full max-w-sm p-6 m-4 transform scale-95 transition-transform duration-300 relative overflow-hidden shadow-2xl"
+    >
+      <!-- Glow FX -->
+      <div
+        class="absolute top-0 right-0 w-48 h-48 bg-red-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"
+      >
+      </div>
+
+      <div class="relative z-10 text-center">
+        <!-- Icono -->
+        <div
+          class="w-16 h-16 bg-red-500/10 rounded-full mx-auto mb-4 flex items-center justify-center text-red-400 border border-red-500/20 shadow-[0_0_15px_rgba(239,68,68,0.2)]"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-8 w-8"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 11-6 0v-1m6 0H9"
+            ></path>
+          </svg>
+        </div>
+
+        <h3 class="text-xl font-bold text-white mb-2">¿Cerrar Sesión?</h3>
+        <p class="text-slate-400 text-sm mb-6">
+          Estás a punto de salir de tu cuenta. ¿Estás seguro?
+        </p>
+
+        <div class="flex gap-3">
+          <button
+            id="cancel-logout"
+            class="flex-1 py-3 bg-white/5 hover:bg-white/10 text-white text-sm font-bold rounded-xl transition-colors"
+          >No</button>
+          <button
+            id="confirm-logout"
+            class="flex-1 py-3 bg-red-500 hover:bg-red-600 text-white text-sm font-bold rounded-xl shadow-[0_0_10px_rgba(239,68,68,0.3)] transition-colors"
+          >Sí, cerrar sesión</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <style>
@@ -317,7 +377,7 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
 
   <script>
     // @ts-nocheck
-    import { authService, userService } from "../services/api.js";
+    import { authService, userService, notificationService } from "../services/api.js";
 
     let cachedMovements = [];
     let currentFilter = "all"; // 'all' | 'income' | 'expense'
@@ -467,12 +527,94 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
 
       // Logout Mobile
       const mobileLogout = document.getElementById("mobile-logout-btn");
+      const logoutModal = document.getElementById("logout-modal");
+      const confirmLogoutBtn = document.getElementById("confirm-logout");
+      const cancelLogoutBtn = document.getElementById("cancel-logout");
+
+      // Función global para mostrar el modal de logout (accesible desde Sidebar)
+      window.showLogoutModal = () => {
+        if (!logoutModal) return;
+        logoutModal.classList.remove("hidden");
+        logoutModal.classList.add("flex");
+        // Allow render
+        requestAnimationFrame(() => {
+          logoutModal.classList.remove("opacity-0");
+          logoutModal.querySelector("div").classList.remove("scale-95");
+          logoutModal.querySelector("div").classList.add("scale-100");
+        });
+      };
+
+      // Función para cerrar el modal
+      window.closeLogoutModal = () => {
+        if (!logoutModal) return;
+        logoutModal.classList.add("opacity-0");
+        logoutModal.querySelector("div").classList.add("scale-95");
+        logoutModal.querySelector("div").classList.remove("scale-100");
+        setTimeout(() => {
+          logoutModal.classList.add("hidden");
+          logoutModal.classList.remove("flex");
+        }, 300);
+      };
+
       if (mobileLogout) {
         mobileLogout.addEventListener("click", (e) => {
           e.preventDefault();
+          window.showLogoutModal();
+        });
+      }
+
+      // Confirmar logout
+      if (confirmLogoutBtn) {
+        confirmLogoutBtn.addEventListener("click", () => {
           authService.logout();
         });
       }
+
+      // Cancelar logout
+      if (cancelLogoutBtn) {
+        cancelLogoutBtn.addEventListener("click", () => {
+          window.closeLogoutModal();
+        });
+      }
+
+      // Cerrar modal al hacer clic fuera
+      if (logoutModal) {
+        logoutModal.addEventListener("click", (e) => {
+          if (e.target === logoutModal) {
+            window.closeLogoutModal();
+          }
+        });
+      }
+
+      // Mobile notification badge
+      const mobileNotifBadge = document.getElementById("mobile-notif-badge");
+      async function checkMobileNotifications() {
+        const userId = user.id || user.usuarioId || user._id;
+        if (!userId || !mobileNotifBadge) return;
+
+        try {
+          const { notifications } =
+            await notificationService.getNotifications(userId);
+
+          if (notifications && notifications.length > 0) {
+            const unreadCount = notifications.filter((n) => !n.is_read).length;
+
+            if (unreadCount > 0) {
+              mobileNotifBadge.classList.remove("hidden");
+            } else {
+              mobileNotifBadge.classList.add("hidden");
+            }
+          } else {
+            mobileNotifBadge.classList.add("hidden");
+          }
+        } catch (e) {
+          console.error("Error checking notifications:", e);
+        }
+      }
+
+      // Check notifications immediately and every 10 seconds
+      checkMobileNotifications();
+      setInterval(checkMobileNotifications, 10000);
 
       // Obtener datos frescos del backend
       try {

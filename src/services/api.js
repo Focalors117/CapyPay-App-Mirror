@@ -217,5 +217,35 @@ export const notificationService = {
     return fetchAPI(`/notifications/${notifId}/read`, {
        method: 'PATCH'
     });
+  },
+
+  clearAll: async (userId) => {
+    if(!userId) {
+       const u = authService.getCurrentUser();
+       userId = u?.id;
+    }
+    if(!userId) return { success: false };
+    return fetchAPI(`/notifications/${userId}/clear`, {
+       method: 'DELETE'
+    });
+  }
+};
+
+// Servicio de PIN para validación
+export const pinService = {
+  verify: async (pin) => {
+    const user = authService.getCurrentUser();
+    if(!user) {
+      throw new Error('Usuario no autenticado');
+    }
+
+    const userId = user.id || user.usuarioId || user._id;
+
+    // Llamamos al backend para validar el PIN
+    // Asumiendo que el backend tiene un endpoint para validar PIN
+    return fetchAPI(`/verify-pin`, {
+      method: 'POST',
+      body: JSON.stringify({ userId, pin })
+    });
   }
 };

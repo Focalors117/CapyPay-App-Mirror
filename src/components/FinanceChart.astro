@@ -3,32 +3,32 @@
 ---
 
 <div
-  class="bg-brand-black rounded-3xl p-6 border border-white/10 shadow-none w-full h-full flex flex-col isolate relative overflow-hidden group"
+  class="bg-brand-black rounded-3xl p-4 sm:p-6 border border-white/10 shadow-none w-full h-full flex flex-col isolate relative overflow-hidden group"
 >
   <!-- Sección de Encabezado -->
   <div
-    class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-6 gap-4 relative z-10"
+    class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-4 sm:mb-6 gap-3 sm:gap-4 relative z-10"
   >
     <!-- Totales -->
-    <div class="flex flex-wrap gap-x-4 gap-y-2">
+    <div class="flex flex-wrap gap-x-3 sm:gap-x-4 gap-y-2">
       <div>
-        <p class="text-[10px] sm:text-xs text-slate-400 mb-0.5">
+        <p class="text-xs sm:text-sm text-slate-400 mb-0.5 sm:mb-1">
           Ingresos Totales
         </p>
         <p
           id="total-income-display"
-          class="text-lg sm:text-xl font-bold text-brand-lime flex items-center gap-2"
+          class="text-base sm:text-lg lg:text-xl font-bold text-brand-lime flex items-center gap-1 sm:gap-2"
         >
           Loading...
         </p>
       </div>
       <div>
-        <p class="text-[10px] sm:text-xs text-slate-400 mb-0.5">
+        <p class="text-xs sm:text-sm text-slate-400 mb-0.5 sm:mb-1">
           Pagos Totales
         </p>
         <p
           id="total-expense-display"
-          class="text-lg sm:text-xl font-bold text-purple-400 flex items-center gap-2"
+          class="text-base sm:text-lg lg:text-xl font-bold text-purple-400 flex items-center gap-1 sm:gap-2"
         >
           Loading...
         </p>
@@ -40,15 +40,15 @@
       class="bg-black/40 p-1 rounded-xl flex items-center border border-white/5 self-end xl:self-auto shrink-0 max-w-full overflow-x-auto no-scrollbar"
     >
       <button
-        class="px-2 py-1 rounded-lg text-[10px] font-bold bg-brand-lime text-black shadow-sm transition-all text-nowrap"
+        class="px-2 py-1 rounded-lg text-[10px] sm:text-xs font-bold bg-brand-lime text-black shadow-sm transition-all text-nowrap"
         >Semanal</button
       >
       <button
-        class="px-2 py-1 rounded-lg text-[10px] font-medium text-slate-400 hover:text-white transition-all text-nowrap"
+        class="px-2 py-1 rounded-lg text-[10px] sm:text-xs font-medium text-slate-400 hover:text-white transition-all text-nowrap"
         >Mensual</button
       >
       <button
-        class="px-2 py-1 rounded-lg text-[10px] font-medium text-slate-400 hover:text-white transition-all text-nowrap"
+        class="px-2 py-1 rounded-lg text-[10px] sm:text-xs font-medium text-slate-400 hover:text-white transition-all text-nowrap"
         >3 Meses</button
       >
     </div>
@@ -56,12 +56,12 @@
 
   <!-- Representación Visual del Gráfico -->
   <div
-    class="flex-1 w-full bg-brand-black/30 rounded-2xl p-2 sm:p-4 border border-white/5 relative flex gap-2"
+    class="flex-1 w-full bg-brand-black/30 rounded-2xl p-2 sm:p-3 md:p-4 border border-white/5 relative flex gap-1 sm:gap-2"
   >
     <!-- Etiquetas Eje Y (Escala de Dinero) -->
     <div
       id="chart-y-axis"
-      class="flex flex-col justify-between text-[9px] sm:text-[10px] text-slate-400 font-mono py-6 shrink-0 text-right pr-2 select-none h-full"
+      class="flex flex-col justify-between text-[10px] sm:text-xs text-slate-400 font-mono py-6 shrink-0 text-right pr-1 sm:pr-2 select-none h-full"
     >
       <span>--</span>
       <span>--</span>
@@ -74,7 +74,7 @@
     <!-- Área del Gráfico -->
     <div
       id="chart-bars-container"
-      class="flex-1 relative flex items-end justify-between gap-1 sm:gap-2 h-full pl-2 border-l border-white/5 border-dashed"
+      class="flex-1 relative flex items-end justify-between gap-1 sm:gap-1.5 md:gap-2 h-full pl-1 sm:pl-2 border-l border-white/5 border-dashed"
     >
       <!-- Líneas de Cuadrícula de Fondo -->
       <div
@@ -231,23 +231,23 @@
 
         barsHtml += `
                   <div class="flex flex-col justify-end items-center h-full flex-1 gap-2 z-10 group/bar cursor-pointer pb-6">
-                    
+                     
                      <!-- Tooltip -->
-                     <div class="opacity-0 group-hover/bar:opacity-100 absolute top-0 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] p-2 rounded transform -translate-y-full transition-opacity border border-white/10 pointer-events-none whitespace-nowrap z-50 shadow-xl">
-                         <span class="text-emerald-400">Ing: $${stat.income.toFixed(2)}</span> <br/> 
+                     <div class="opacity-0 group-hover/bar:opacity-100 absolute top-0 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] sm:text-xs p-2 sm:p-2.5 rounded transform -translate-y-full transition-opacity border border-white/10 pointer-events-none whitespace-nowrap z-50 shadow-xl">
+                         <span class="text-emerald-400">Ing: $${stat.income.toFixed(2)}</span> <br/>
                          <span class="text-rose-400">Gas: $${stat.expense.toFixed(2)}</span>
                      </div>
     
                      <!-- Barras -->
-                     <div class="w-full max-w-3 sm:max-w-5 md:max-w-7.5 h-full flex items-end justify-center relative space-x-0.5">
+                     <div class="w-full max-w-4 sm:max-w-5 md:max-w-7 h-full flex items-end justify-center relative space-x-0.5 sm:space-x-1">
                          <div style="height: ${incomeH}%" class="w-full bg-brand-lime rounded-t-sm opacity-90 group-hover/bar:opacity-100 transition-all"></div>
                          <div style="height: ${expenseH}%" class="w-full bg-purple-600 rounded-t-sm opacity-90 group-hover/bar:opacity-100 transition-all"></div>
                      </div>
                      
                      <!-- Etiqueta -->
-                     <span class="absolute bottom-1 text-[9px] sm:text-[10px] text-slate-400 font-medium">${stat.day}</span>
+                     <span class="absolute bottom-1 text-[10px] sm:text-xs text-slate-400 font-medium">${stat.day}</span>
                   </div>
-                `;
+                 `;
       });
 
       chartContainer.innerHTML = grid + barsHtml;

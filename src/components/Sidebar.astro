@@ -133,9 +133,9 @@
       </div>
     </a>
 
-    <!-- Notifications Toggle -->
-    <button
-      id="btn-notifs-sidebar"
+    <!-- Notifications Link -->
+    <a
+      href="/notifications"
       class="group/nav flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left"
       title="Notificaciones"
     >
@@ -160,7 +160,7 @@
           <!-- Badge -->
           <span
             id="notif-badge"
-            class="hidden absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-[#0a0a0a]"
+            class="hidden absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-[#0a0a0a] shadow-[0_0_5px_rgba(239,68,68,0.5)]"
           ></span>
         </div>
       </div>
@@ -171,7 +171,7 @@
           Notificaciones
         </p>
       </div>
-    </button>
+    </a>
   </div>
 
   <!-- Contacts Section -->
@@ -355,38 +355,6 @@
 >
   <div id="floating-menu-content" class="p-1 flex flex-col gap-0.5">
     <!-- Dynamic content -->
-  </div>
-</div>
-
-<!-- PANEL DE NOTIFICACIONES -->
-<div
-  id="notification-panel"
-  class="hidden fixed w-80 bg-[#1a1a1a] border border-white/10 rounded-xl shadow-[0_0_30px_rgba(0,0,0,0.5)] z-9999 overflow-hidden animate-fade-in backdrop-blur-xl"
->
-  <!-- Header -->
-  <div
-    class="px-4 py-3 border-b border-white/5 flex justify-between items-center bg-black/20"
-  >
-    <h4 class="text-sm font-bold text-white">Notificaciones</h4>
-    <button id="close-notif-panel" class="text-slate-400 hover:text-white">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-4 w-4"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M6 18L18 6M6 6l12 12"></path></svg
-      >
-    </button>
-  </div>
-  <!-- List -->
-  <div id="notif-list" class="max-h-75 overflow-y-auto custom-scrollbar p-1">
-    <!-- Content -->
-    <div class="p-6 text-center text-xs text-slate-500">Cargando...</div>
   </div>
 </div>
 
@@ -611,18 +579,19 @@
   if (logoutBtn) {
     logoutBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      authService.logout();
+      // Usar función global para mostrar el modal de confirmación
+      if (window.showLogoutModal) {
+        window.showLogoutModal();
+      } else {
+        authService.logout();
+      }
     });
   }
 
   // --- NOTIFICATION LOGIC ---
-  const notifBtn = document.getElementById("btn-notifs-sidebar");
-  const notifPanel = document.getElementById("notification-panel");
-  const notifList = document.getElementById("notif-list");
-  const closeNotifBtn = document.getElementById("close-notif-panel");
   const notifBadge = document.getElementById("notif-badge");
 
-  let showedNotifIds = new Set(); // To avoid toasting the same notif twice per session
+  let showedNotifIds = new Set(); // To avoid toasting same notif twice per session
 
   // 1. Polling System
   async function checkNotifications() {
@@ -669,112 +638,6 @@
   setInterval(checkNotifications, 10000);
   // Initial check
   setTimeout(checkNotifications, 2000);
-
-  // 2. UI Logic
-  async function openNotifPanel() {
-    if (!notifPanel || !notifList) return;
-
-    // Position logic (next to button)
-    if (notifBtn) {
-      const rect = notifBtn.getBoundingClientRect();
-      notifPanel.style.top = `${rect.top}px`;
-      notifPanel.style.left = `${rect.right + 12}px`;
-      notifPanel.classList.remove("hidden");
-    }
-
-    // Fetch fresh list
-    const user = authService.getCurrentUser();
-    const userId = user?.id || user?.usuarioId || user?._id;
-    if (!userId) return;
-
-    notifList.innerHTML =
-      '<div class="p-6 text-center text-xs text-slate-500">Cargando...</div>';
-
-    try {
-      const { notifications } =
-        await notificationService.getNotifications(userId);
-
-      if (!notifications || notifications.length === 0) {
-        notifList.innerHTML =
-          '<div class="p-6 text-center text-xs text-slate-500">No tienes notificaciones</div>';
-        return;
-      }
-
-      // Match HTML element for clicking
-      let html = "";
-      notifications.forEach((n) => {
-        const icon = n.type === "payment_received" ? "💰" : "📢";
-        const bg = n.is_read ? "opacity-50" : "bg-white/5";
-        const isNew = !n.is_read;
-
-        html += `
-                <div class="px-3 py-3 border-b border-white/5 hover:bg-white/10 transition-colors cursor-pointer flex gap-3 ${bg}" onclick="window.markNotifRead('${n.id}', this)">
-                    <div class="relative shrink-0">
-                        <div class="w-8 h-8 rounded-full bg-brand-lime/10 flex items-center justify-center text-sm border border-brand-lime/20">
-                            ${icon}
-                        </div>
-                        ${isNew ? '<span class="absolute top-0 right-0 w-2 h-2 bg-brand-lime rounded-full shadow-[0_0_5px_theme(colors.brand.lime)]"></span>' : ""}
-                    </div>
-                    <div>
-                        <p class="text-xs text-slate-300 font-medium leading-relaxed">${n.message}</p>
-                        <p class="text-[10px] text-slate-500 mt-1">${new Date(n.created_at).toLocaleString()}</p>
-                    </div>
-                </div>
-              `;
-      });
-      notifList.innerHTML = html;
-    } catch (error) {
-      notifList.innerHTML =
-        '<div class="p-6 text-center text-xs text-red-500">Error al cargar</div>';
-    }
-  }
-
-  // Global handler for clicking a notification
-  window.markNotifRead = async (id, el) => {
-    // Visually mark read
-    el.classList.add("opacity-50");
-    el.classList.remove("bg-white/5");
-    const dot = el.querySelector(".absolute.bg-brand-lime");
-    if (dot) dot.remove();
-
-    try {
-      await notificationService.markAsRead(id);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  if (notifBtn) {
-    notifBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      if (!notifPanel) return;
-      if (notifPanel.classList.contains("hidden")) {
-        openNotifPanel();
-      } else {
-        notifPanel.classList.add("hidden");
-      }
-    });
-  }
-
-  if (closeNotifBtn && notifPanel) {
-    closeNotifBtn.addEventListener("click", () => {
-      notifPanel.classList.add("hidden");
-    });
-  }
-
-  // Close on outside click
-  document.addEventListener("click", (e) => {
-    if (notifPanel && !notifPanel.classList.contains("hidden")) {
-      const target = e.target;
-      if (
-        !notifPanel.contains(target) &&
-        notifBtn &&
-        !notifBtn.contains(target)
-      ) {
-        notifPanel.classList.add("hidden");
-      }
-    }
-  });
 
   const toggleContainer = document.getElementById("toggleContainer");
 
