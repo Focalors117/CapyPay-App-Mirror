@@ -109,7 +109,11 @@ import CartSidebar from "../components/CartSidebar.astro";
         >
           <div>
             <div class="flex items-center gap-2 mb-2">
-              <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+              <div
+                id="ocupacion-dot"
+                class="w-2 h-2 rounded-full bg-gray-500 animate-pulse"
+              >
+              </div>
               <p
                 class="text-white/60 text-xs font-bold uppercase tracking-widest"
               >
@@ -117,16 +121,25 @@ import CartSidebar from "../components/CartSidebar.astro";
               </p>
             </div>
             <h3 class="text-2xl font-extrabold text-white">
-              Alta <span class="text-red-500 text-3xl leading-none">.</span>
+              <span id="ocupacion-text">Calculando...</span>
             </h3>
           </div>
           <div>
             <div
               class="mt-4 w-full bg-white/10 h-2 rounded-full overflow-hidden"
             >
-              <div class="bg-red-500 h-full w-[85%] rounded-full"></div>
+              <div
+                id="ocupacion-bar"
+                class="bg-gray-500 h-full w-[0%] rounded-full transition-all duration-1000"
+              >
+              </div>
             </div>
-            <p class="text-red-400 text-xs mt-2 font-medium">+12% vs. ayer</p>
+            <p
+              id="ocupacion-detail"
+              class="text-white/40 text-xs mt-2 font-medium"
+            >
+              ...
+            </p>
           </div>
         </div>
 
@@ -153,13 +166,18 @@ import CartSidebar from "../components/CartSidebar.astro";
                 Tiempo de Espera
               </p>
             </div>
-            <h3 class="text-3xl font-extrabold text-brand-lime">15 min</h3>
+            <h3
+              id="espera-text"
+              class="text-3xl font-extrabold text-brand-lime"
+            >
+              -- min
+            </h3>
           </div>
           <div
             class="flex items-center gap-2 mt-4 bg-brand-lime/10 px-3 py-1.5 rounded-lg w-fit"
           >
-            <span class="text-brand-lime text-xs font-bold"
-              >Siguiente turno: 13:45</span
+            <span id="turno-text" class="text-brand-lime text-xs font-bold"
+              >Consultando turno...</span
             >
           </div>
         </div>
@@ -234,99 +252,14 @@ import CartSidebar from "../components/CartSidebar.astro";
         >
       </div>
       <div
-        class="relative group overflow-hidden rounded-3xl bg-[#1c2210] border border-white/10 shadow-2xl"
+        id="plato-dia-container"
+        class="relative group overflow-hidden rounded-3xl bg-[#1c2210] border border-white/10 shadow-2xl min-h-100"
       >
-        <div class="flex flex-col lg:flex-row">
-          <div class="lg:w-3/5 h-75 lg:h-100 relative overflow-hidden">
-            <div
-              class="absolute inset-0 bg-linear-to-t lg:bg-linear-to-r from-[#0a0a0a] via-transparent to-transparent z-10 opacity-80"
-            >
-            </div>
-            <img
-              alt="Lentejas con chorizo"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLw9wLCYp3DuUTIPtjjzd3Z_2cPu39rvy9_yvDb-GSXJMLygE8jli2yvNthBOvg8sjatt-2pXOvEyASlEIGBS0zog-C_d4YHWdklhCKqVZaextJNzbayLW9AItKqzrvbEP1x2D8loLBdmhFGhcqUAA45e2EOf8XE4b7Yg-eS2vB0Os8BCJKnzsT-80yK6VbwZHFyZoBTFA1S7l8PTisoDH-IVnjfTf0VDe70_z1aJG7axMQ7bxtlF6R7AgZyrkFx3MjEBQJF3n0Yc"
-            />
-            <div class="absolute top-4 left-4 z-20">
-              <span
-                class="bg-brand-lime text-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter shadow-lg flex items-center gap-1"
-              >
-                <svg
-                  class="w-3 h-3"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  ><path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-                  ></path></svg
-                >
-                Plato del Día
-              </span>
-            </div>
-          </div>
+        <!-- JS Injected Content -->
+        <div class="absolute inset-0 flex items-center justify-center">
           <div
-            class="lg:w-2/5 p-6 md:p-8 flex flex-col justify-center bg-linear-to-b from-[#1c2210] to-[#0a0a0a] lg:bg-none"
+            class="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-lime"
           >
-            <p
-              class="text-brand-lime font-bold text-xs mb-2 uppercase tracking-widest"
-            >
-              Almuerzo Estudiantil
-            </p>
-            <h3
-              class="text-2xl md:text-3xl font-extrabold mb-4 leading-tight text-white"
-            >
-              Pabellón Criollo
-            </h3>
-            <div class="flex gap-2 mb-6">
-              <span
-                class="text-[10px] bg-white/10 text-white/70 px-2 py-1 rounded"
-                >Típico</span
-              >
-              <span
-                class="text-[10px] bg-white/10 text-white/70 px-2 py-1 rounded"
-                >Completo</span
-              >
-            </div>
-            <p class="text-white/60 text-sm md:text-base mb-8 font-medium">
-              Caraotas negras, arroz blanco, carne mechada y tajadas. Arepita
-              opcional.
-            </p>
-            <div class="flex items-center justify-between mt-auto">
-              <div>
-                <p class="text-white/40 text-[10px] font-bold uppercase">
-                  Precio
-                </p>
-                <p class="text-2xl font-black text-white">
-                  $0.00 <span class="text-xs text-white/50 font-medium"
-                    >Capys</span
-                  >
-                </p>
-              </div>
-              <button
-                class="add-to-cart-btn bg-brand-lime hover:bg-brand-lime/90 text-black font-extrabold px-6 py-3 md:px-8 md:py-4 rounded-xl shadow-[0_0_20px_rgba(215,253,73,0.3)] transition-all active:scale-95 flex items-center gap-2 group"
-                data-id="pabellon-dia"
-                data-name="Pabellón Criollo"
-                data-price="0"
-                data-image="https://lh3.googleusercontent.com/aida-public/AB6AXuBLw9wLCYp3DuUTIPtjjzd3Z_2cPu39rvy9_yvDb-GSXJMLygE8jli2yvNthBOvg8sjatt-2pXOvEyASlEIGBS0zog-C_d4YHWdklhCKqVZaextJNzbayLW9AItKqzrvbEP1x2D8loLBdmhFGhcqUAA45e2EOf8XE4b7Yg-eS2vB0Os8BCJKnzsT-80yK6VbwZHFyZoBTFA1S7l8PTisoDH-IVnjfTf0VDe70_z1aJG7axMQ7bxtlF6R7AgZyrkFx3MjEBQJF3n0Yc"
-              >
-                <svg
-                  class="w-5 h-5 group-hover:scale-110 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  ><path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg
-                >
-                <span class="hidden sm:inline">Ordenar Ahora</span>
-                <span class="sm:hidden">Pedir</span>
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -355,7 +288,10 @@ import CartSidebar from "../components/CartSidebar.astro";
         </div>
         <div>
           <h4 class="font-bold text-white">Capy-Tip</h4>
-          <p class="text-white/60 text-sm">
+          <p
+            id="capy-tip-text"
+            class="text-white/60 text-sm animate-fade-in-up"
+          >
             ¡Agrega una malta bien fría para completar tu experiencia!
           </p>
         </div>
@@ -662,55 +598,289 @@ import CartSidebar from "../components/CartSidebar.astro";
       >
     </button>
 
-    <!-- QR Scanner Button -->
-    <button
-      id="floating-qr-btn"
-      class="bg-brand-lime hover:scale-110 active:scale-95 transition-all w-16 h-16 rounded-full shadow-[0_0_30px_rgba(215,253,73,0.4)] flex items-center justify-center text-black animate-pulse"
+    <!-- Orders Button (Desktop/Mobile) - Replacement for QR -->
+    <a
+      href="/orders"
+      id="floating-orders-btn"
+      class="bg-brand-lime hover:scale-110 active:scale-95 transition-all w-16 h-16 rounded-full shadow-[0_0_30px_rgba(215,253,73,0.4)] flex items-center justify-center text-black animate-pulse relative group"
     >
-      <svg class="w-8 h-8" fill="currentColor" viewBox="0 -960 960 960"
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
         ><path
-          d="M120-120v-200h80v120h120v80H120Zm520 0v-80h120v-120h80v200H640ZM120-640v-200h200v80H200v120h-80Zm640 0v-120H640v-80h200v200h-80Zm-480 80h320v320H280v-320Zm80 80v160h160v-160H360Z"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
         ></path></svg
       >
       <span
         class="absolute right-full mr-4 bg-black/80 px-2 py-1 rounded text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
-        >Escanear QR</span
+        >Ver Pedidos</span
       >
-    </button>
+    </a>
   </div>
 
   <script>
+    // @ts-nocheck
     import { addItemToCart, isCartOpen, cartItems } from "../store/cartStore";
     import { showToast } from "../utils/toast";
+    import { fetchAPI } from "../services/api";
 
-    console.log("Comedor script loaded");
+    console.log("Comedor script loaded (API Integrated + Cached)");
 
-    // ==========================================
-    // SECCIÓN 1: Manejo del Botón del Carrito y Badge
-    // ==========================================
+    // Cache Config
+    const CACHE_KEY = "capypay_menu_cache";
+    const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 Hours
 
-    // Obtenemos referencias a los elementos del DOM (Document Object Model)
+    // Tips Config
+    const TIPS = [
+      "¡Agrega una malta bien fría para completar tu experiencia!",
+      "La hora pico es a las 12:30 PM, ¡llega antes!",
+      "Gana doble XP pidiendo el Plato del Día.",
+      "Usa el código 'CAPY10' (mentira, no hay códigos aún).",
+      "Recarga tu saldo con anticipación para evitar colas.",
+    ];
+
+    async function initComedor() {
+      try {
+        console.log("Initializing Comedor...");
+        loadStats();
+        startStatsTimer();
+        startTipRotation();
+
+        // 1. Check Cache
+        const cached = localStorage.getItem(CACHE_KEY);
+        let menuData = null;
+        let useCache = false;
+
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (Date.now() - parsed.timestamp < CACHE_DURATION) {
+            console.log("Using Cached Menu");
+            menuData = parsed.data;
+            useCache = true;
+          }
+        }
+
+        // 2. Fetch if no cache
+        if (!useCache) {
+          console.log("Fetching Menu from API...");
+          menuData = await fetchAPI("/comedor/menu");
+          if (menuData) {
+            localStorage.setItem(
+              CACHE_KEY,
+              JSON.stringify({
+                timestamp: Date.now(),
+                data: menuData,
+              }),
+            );
+          }
+        }
+
+        if (menuData) {
+          renderPlatoDia(menuData.platoDia);
+          if (menuData.items && Array.isArray(menuData.items)) {
+            renderCarousel(menuData.items);
+          }
+        }
+      } catch (e) {
+        console.error("Init Error", e);
+        showToast("Error cargando el menú", "error");
+      }
+    }
+
+    let lastStatsUpdate = Date.now();
+
+    async function loadStats() {
+      try {
+        const stats = await fetchAPI("/comedor/stats");
+        if (stats) {
+          lastStatsUpdate = Date.now();
+          updateStatsUI(stats);
+        }
+      } catch (e) {
+        console.error("Stats Error", e);
+      }
+    }
+
+    function updateStatsUI(stats) {
+      const ocupacionText = document.getElementById("ocupacion-text");
+      const ocupacionBar = document.getElementById("ocupacion-bar");
+      const ocupacionDetail = document.getElementById("ocupacion-detail");
+      const ocupacionDot = document.getElementById("ocupacion-dot");
+
+      if (ocupacionText) ocupacionText.innerText = stats.ocupacion.nivel;
+      if (ocupacionBar)
+        ocupacionBar.style.width = `${stats.ocupacion.porcentaje}%`;
+
+      // Store original detail to append time later
+      if (ocupacionDetail) {
+        ocupacionDetail.dataset.original = stats.ocupacion.detalle;
+        ocupacionDetail.innerText = `${stats.ocupacion.detalle} • Hace 0 min`;
+      }
+
+      if (ocupacionDot) {
+        ocupacionDot.className = `w-2 h-2 rounded-full animate-pulse transition-colors ${stats.ocupacion.nivel === "Alta" ? "bg-red-500" : stats.ocupacion.nivel === "Media" ? "bg-yellow-500" : "bg-green-500"}`;
+        if (ocupacionBar) {
+          ocupacionBar.className = `h-full rounded-full transition-all duration-1000 ${stats.ocupacion.nivel === "Alta" ? "bg-red-500" : stats.ocupacion.nivel === "Media" ? "bg-yellow-500" : "bg-green-500"}`;
+        }
+      }
+      const esperaText = document.getElementById("espera-text");
+      if (esperaText) esperaText.innerText = stats.tiempoEspera;
+      const turnoText = document.getElementById("turno-text");
+      if (turnoText) turnoText.innerText = stats.proximoTurno;
+    }
+
+    function startStatsTimer() {
+      setInterval(() => {
+        const ocupacionDetail = document.getElementById("ocupacion-detail");
+        if (ocupacionDetail && ocupacionDetail.dataset.original) {
+          const diffMins = Math.floor((Date.now() - lastStatsUpdate) / 60000);
+          ocupacionDetail.innerText = `${ocupacionDetail.dataset.original} • Hace ${diffMins} min`;
+        }
+      }, 60000); // Every minute
+    }
+
+    function startTipRotation() {
+      let index = 0;
+      const tipEl = document.getElementById("capy-tip-text");
+      if (!tipEl) return;
+
+      setInterval(() => {
+        index = (index + 1) % TIPS.length;
+        // Fade out
+        tipEl.style.opacity = "0";
+        setTimeout(() => {
+          tipEl.innerText = TIPS[index];
+          // Fade in
+          tipEl.style.opacity = "1";
+        }, 300);
+      }, 8000); // Rotate every 8s
+    }
+
+    function renderPlatoDia(item) {
+      const container = document.getElementById("plato-dia-container");
+      if (!container) return;
+      if (!item) {
+        container.innerHTML =
+          '<div class="absolute inset-0 flex items-center justify-center text-white/40 italic">No hay plato del día disponible hoy.</div>';
+        return;
+      }
+      container.innerHTML = `
+        <div class="flex flex-col lg:flex-row h-full">
+            <div class="lg:w-3/5 h-64 lg:h-auto relative overflow-hidden">
+            <div class="absolute inset-0 bg-linear-to-t lg:bg-linear-to-r from-[#0a0a0a] via-transparent to-transparent z-10 opacity-80"></div>
+            <img alt="${item.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${item.image_url || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c"}" />
+            <div class="absolute top-4 left-4 z-20">
+                <span class="bg-brand-lime text-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter shadow-lg flex items-center gap-1">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+                Plato del Día
+                </span>
+            </div>
+            </div>
+            <div class="lg:w-2/5 p-6 md:p-8 flex flex-col justify-center bg-linear-to-b from-[#1c2210] to-[#0a0a0a] lg:bg-none">
+            <p class="text-brand-lime font-bold text-xs mb-2 uppercase tracking-widest">Almuerzo Estudiantil</p>
+            <h3 class="text-2xl md:text-3xl font-extrabold mb-4 leading-tight text-white">${item.name}</h3>
+            <p class="text-white/60 text-sm md:text-base mb-8 font-medium">${item.description}</p>
+            <div class="flex items-center justify-between mt-auto">
+                <div>
+                <p class="text-white/40 text-[10px] font-bold uppercase">Precio</p>
+                <p class="text-2xl font-black text-white">${item.price} <span class="text-xs text-white/50 font-medium">Capys</span></p>
+                </div>
+                <button class="add-to-cart-btn bg-brand-lime hover:bg-brand-lime/90 text-black font-extrabold px-6 py-3 md:px-8 md:py-4 rounded-xl shadow-[0_0_20px_rgba(215,253,73,0.3)] transition-all active:scale-95 flex items-center gap-2 group"
+                data-id="${item.id}" data-name="${item.name}" data-price="${item.price}" data-image="${item.image_url}">
+                <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <span class="hidden sm:inline">Ordenar Ahora</span>
+                <span class="sm:hidden">Pedir</span>
+                </button>
+            </div>
+            </div>
+        </div>
+        `;
+      const btn = container.querySelector(".add-to-cart-btn");
+      if (btn) attachCartListener(btn);
+    }
+
+    function renderCarousel(items) {
+      const scrollContainer = document.getElementById("carousel-container");
+      if (!scrollContainer) return;
+      scrollContainer.innerHTML = "";
+      if (items.length === 0) {
+        scrollContainer.innerHTML =
+          '<div class="w-full text-center text-white/50 p-10">No hay productos disponibles por ahora.</div>';
+        return;
+      }
+      const cardTemplate = (item) => `
+          <div class="flex-none w-[85vw] md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out flex flex-col">
+            <div class="relative h-56 rounded-2xl overflow-hidden mb-4 shadow-lg shrink-0">
+              <img alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="${item.image_url || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c"}" />
+              <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+                <span class="text-brand-lime font-black text-xs">${item.price} CP</span>
+              </div>
+            </div>
+            <h4 class="font-bold text-lg text-white leading-tight">${item.name}</h4>
+            <div class="grow">
+                <p class="text-white/50 text-xs mb-4 line-clamp-2 mt-1">${item.description}</p>
+            </div>
+            <button class="add-to-cart-btn w-full py-3 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-xs hover:bg-brand-lime hover:text-black transition-all mt-auto"
+              data-id="${item.id}" data-name="${item.name}" data-price="${item.price}" data-image="${item.image_url}">
+              Añadir al Carrito
+            </button>
+          </div>
+        `;
+      const createCard = (item) => {
+        const x = document.createElement("div");
+        x.innerHTML = cardTemplate(item);
+        return x.firstElementChild;
+      };
+
+      const set = items.map(createCard);
+      set.forEach((card) => {
+        scrollContainer.appendChild(card);
+        const btn = card.querySelector(".add-to-cart-btn");
+        if (btn) attachCartListener(btn);
+      });
+
+      if (items.length >= 3) {
+        // Simple cloning for infinite feeling if plenty items
+        const set2 = items.map(createCard);
+        const set3 = items.map(createCard);
+        [...set2, ...set3].forEach((card) => {
+          scrollContainer.appendChild(card);
+          const btn = card.querySelector(".add-to-cart-btn");
+          if (btn) attachCartListener(btn);
+        });
+        initInfiniteScroll(items.length);
+      }
+    }
+
+    function attachCartListener(btn) {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const target = e.currentTarget;
+        const item = {
+          id: target.dataset.id,
+          name: target.dataset.name,
+          price: parseInt(target.dataset.price || "0"),
+          image: target.dataset.image,
+        };
+        addItemToCart(item);
+        isCartOpen.set(true);
+        showToast(`¡${item.name} agregado! 🍔`, "success");
+      });
+    }
+
+    // --- Cart Badge Logic ---
     const manualCartBtn = document.getElementById("manual-cart-btn");
     const cartBadge = document.getElementById("cart-badge-count");
 
-    /* 
-       Nos "suscribimos" a la tienda del carrito (cartStore).
-       Cada vez que items cambien (se agregue o elimine algo),
-       se ejecuta este código automáticamente.
-    */
     cartItems.subscribe((items) => {
-      // 1. Calculamos la cantidad total de items sumando la propiedad 'quantity' de cada uno.
-      // Usamos 'as Record<string, any>' para decirle a TypeScript que confíe en la estructura del objeto.
-      const count = Object.values(items as Record<string, any>).reduce(
-        (acc: number, item: any) => acc + item.quantity,
+      const count = Object.values(items).reduce(
+        (acc, item) => acc + item.quantity,
         0,
       );
-
-      // 2. Actualizamos el globito rojo (badge) con el número.
       if (cartBadge) {
         cartBadge.textContent = count.toString();
-
-        // Si hay items, mostramos el badge. Si es 0, lo ocultamos.
         if (count > 0) {
           cartBadge.classList.remove("hidden");
           cartBadge.classList.add("flex", "items-center", "justify-center");
@@ -719,159 +889,25 @@ import CartSidebar from "../components/CartSidebar.astro";
           cartBadge.classList.remove("flex", "items-center", "justify-center");
         }
       }
-
-      // 3. Efecto de "latido" (animación) en el botón al añadir algo nuevo.
       if (count > 0 && manualCartBtn) {
         manualCartBtn.classList.add("scale-110");
-        // Quitamos la clase después de 200ms para que vuelva a su tamaño original.
         setTimeout(() => manualCartBtn.classList.remove("scale-110"), 200);
       }
     });
 
-    // Evento Click: Al hacer clic en el botón flotante del carrito, abrimos la barra lateral.
     if (manualCartBtn) {
-      manualCartBtn.addEventListener("click", () => {
-        isCartOpen.set(true); // Cambiamos el estado global a 'true'
-      });
+      manualCartBtn.addEventListener("click", () => isCartOpen.set(true));
     }
 
-    // ==========================================
-    // SECCIÓN 2: Botones "Añadir al Carrito" (Tarjetas)
-    // ==========================================
+    // --- Infinite Scroll Helper ---
+    function initInfiniteScroll(count) {
+      const scrollContainer = document.getElementById("carousel-container");
+      const btnLeft = document.getElementById("scroll-left");
+      const btnRight = document.getElementById("scroll-right");
 
-    /* 
-       Buscamos TODOS los botones que tengan la clase .add-to-cart-btn.
-       Esto incluye los botones de las tarjetas del carrusel.
-    */
-    const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
+      if (!scrollContainer || !btnLeft || !btnRight) return;
 
-    addToCartButtons.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        // Prevenimos comportamientos por defecto (como recargar la página si fuera un link)
-        e.preventDefault();
-        e.stopPropagation(); // Evitamos que el clic se propague a elementos padres
-
-        const target = e.currentTarget;
-        if (!(target instanceof HTMLElement)) return;
-
-        console.log("Agregando item:", target.dataset.name);
-
-        // Construimos el objeto del producto usando los datos guardados en el HTML (data-attributes)
-        const item = {
-          id: target.dataset.id,
-          name: target.dataset.name,
-          price: parseInt(target.dataset.price || "0"),
-          image: target.dataset.image,
-        };
-
-        try {
-          // Llamamos a la función de la tienda para guardar el item
-          addItemToCart(item);
-          // Abrimos el sidebar automáticamente para dar feedback visual
-          isCartOpen.set(true);
-          // Mostramos una notificación bonita (Toast)
-          showToast(`¡${item.name} agregado! 🍔`, "success");
-        } catch (err) {
-          console.error("Error al agregar al carrito", err);
-          showToast("Error al agregar item", "error");
-        }
-      });
-    });
-
-    // ==========================================
-    // SECCIÓN 3: Carrusel Infinito (Lógica Avanzada)
-    // ==========================================
-
-    const scrollContainer = document.getElementById("carousel-container");
-    const btnLeft = document.getElementById("scroll-left");
-    const btnRight = document.getElementById("scroll-right");
-
-    if (scrollContainer && btnLeft && btnRight) {
-      /* 
-       Concepto del Scroll Infinito:
-       Para que parezca que no tiene fin, triplicamos el contenido.
-       
-       Estructura visual en memoria:
-       [SET 1 (Clones)]  [SET 2 (Originales)]  [SET 3 (Clones)]
-       
-       - El usuario empieza viendo el SET 2.
-       - Si scrollea hacia la derecha y llega al SET 3, silenciosamente lo mandamos al inicio del SET 2.
-       - Si scrollea hacia la izquierda y llega al SET 1, lo mandamos al final del SET 2.
-      */
-
-      const originalCards = Array.from(scrollContainer.children);
-      const CARD_COUNT = originalCards.length;
-
-      // 1. Limpiamos el contenedor para evitar duplicados si el script corre dos veces
-      scrollContainer.innerHTML = "";
-
-      // 2. Creamos los 3 conjuntos de tarjetas clonando los nodos originales
-      const set1 = originalCards.map((card) => card.cloneNode(true)); // Copias para el lado izquierdo
-      const set2 = originalCards.map((card) => card.cloneNode(true)); // Contenido central (el que ve el usuario)
-      const set3 = originalCards.map((card) => card.cloneNode(true)); // Copias para el lado derecho
-
-      // 3. Insertamos todo en el contenedor y reactivamos los botones
-      // (IMPORTANTE: cloneNode no copia los eventos de clic, hay que volver a añadirlos)
-      [...set1, ...set2, ...set3].forEach((card) => {
-        const btn = (card as HTMLElement).querySelector(".add-to-cart-btn");
-        if (btn) {
-          btn.addEventListener("click", (e) => {
-            // Misma lógica de añadir al carrito explicada arriba
-            e.preventDefault();
-            e.stopPropagation();
-            const target = e.currentTarget as HTMLElement;
-            const item = {
-              id: target.dataset.id,
-              name: target.dataset.name,
-              price: parseInt(target.dataset.price || "0"),
-              image: target.dataset.image,
-            };
-            addItemToCart(item);
-            isCartOpen.set(true);
-            showToast(`¡${item.name} agregado! 🍔`, "success");
-          });
-        }
-        scrollContainer.appendChild(card);
-      });
-
-      /* 
-         Función de "Easing" (Suavizado):
-         Define cómo cambia la velocidad durante la animación.
-         'easeInOutCubic' empieza lento, acelera en el medio y frena suave al final.
-         Matemáticas: t < 0.5 ? 4*t^3 : 1 - (-2*t+2)^3 / 2
-      */
-      const easeInOutCubic = (t: number): number =>
-        t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-      /* 
-         Función personalizada para animar el scroll
-         Usamos requestAnimationFrame para que sea fluido (60fps)
-      */
-      const smoothScroll = (
-        element: HTMLElement,
-        change: number,
-        duration: number,
-      ) => {
-        const start = element.scrollLeft;
-        const startTime = performance.now();
-
-        const animateScroll = (currentTime: number) => {
-          const timeElapsed = currentTime - startTime;
-          let progress = timeElapsed / duration;
-          if (progress > 1) progress = 1;
-
-          // Calculamos la posición exacta basada en la curva de aceleración
-          const ease = easeInOutCubic(progress);
-          element.scrollLeft = start + change * ease;
-
-          // Si no ha terminado el tiempo, pedimos el siguiente frame
-          if (progress < 1) requestAnimationFrame(animateScroll);
-        };
-        requestAnimationFrame(animateScroll);
-      };
-
-      // Utilidad para saber cuánto mide una tarjeta + su espacio (gap)
-      const getCardWidth = (): number => {
+      const getCardWidth = () => {
         const card = scrollContainer.children[0];
         if (!card) return 0;
         const style = window.getComputedStyle(scrollContainer);
@@ -879,50 +915,49 @@ import CartSidebar from "../components/CartSidebar.astro";
         return card.clientWidth + gap;
       };
 
-      // 4. Posicionamiento Inicial:
-      // Esperamos 100ms para asegurar que el diseño cargó y saltamos al inicio del SET 2
       setTimeout(() => {
-        const singleSetWidth = getCardWidth() * CARD_COUNT;
-        scrollContainer.scrollLeft = singleSetWidth;
+        const width = getCardWidth();
+        if (width > 0) {
+          const singleSetWidth = width * count;
+          scrollContainer.scrollLeft = singleSetWidth;
+        }
       }, 100);
 
-      // 5. El "Truco de Magia" (Teletransportación silenciosa)
       scrollContainer.addEventListener("scroll", () => {
-        const singleSetWidth = getCardWidth() * CARD_COUNT;
-
-        // Si estamos entrando en la zona de clones izquierdos, saltamos adelante
+        const width = getCardWidth();
+        if (width === 0) return;
+        const singleSetWidth = width * count;
+        // teleport
         if (scrollContainer.scrollLeft < 50) {
           scrollContainer.scrollLeft += singleSetWidth;
-        }
-        // Si estamos entrando en la zona de clones derechos, saltamos atrás
-        else if (scrollContainer.scrollLeft > singleSetWidth * 2 - 50) {
+        } else if (scrollContainer.scrollLeft > singleSetWidth * 2 - 50) {
           scrollContainer.scrollLeft -= singleSetWidth;
         }
       });
 
-      // Eventos de los botones Flecha Izquierda / Derecha
-      btnLeft.addEventListener("click", () => {
-        // Obtenemos el ancho de 2 tarjetas para movernos más rápido
-        const moveAmount = getCardWidth() * 2;
-        // Scroll negativo (hacia la izquierda) en 600 milisegundos
-        smoothScroll(scrollContainer, -moveAmount, 600);
-      });
+      const smoothScroll = (element, change, duration) => {
+        const start = element.scrollLeft;
+        const startTime = performance.now();
+        const easeInOutCubic = (t) =>
+          t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-      btnRight.addEventListener("click", () => {
-        const moveAmount = getCardWidth() * 2;
-        // Scroll positivo (hacia la derecha) en 600 milisegundos
-        smoothScroll(scrollContainer, moveAmount, 600);
-      });
+        const animateScroll = (currentTime) => {
+          const timeElapsed = currentTime - startTime;
+          let progress = timeElapsed / duration;
+          if (progress > 1) progress = 1;
+          element.scrollLeft = start + change * easeInOutCubic(progress);
+          if (progress < 1) requestAnimationFrame(animateScroll);
+        };
+        requestAnimationFrame(animateScroll);
+      };
+
+      btnLeft.onclick = () =>
+        smoothScroll(scrollContainer, -getCardWidth() * 2, 600);
+      btnRight.onclick = () =>
+        smoothScroll(scrollContainer, getCardWidth() * 2, 600);
     }
 
-    // ==========================================
-    // SECCIÓN 4: Botón Flotante (QR)
-    // ==========================================
-    const floatingBtn = document.getElementById("floating-qr-btn");
-    if (floatingBtn) {
-      floatingBtn.addEventListener("click", () => {
-        showToast("📷 Iniciando Escáner QR...", "info");
-      });
-    }
+    // Init Logic
+    initComedor();
   </script>
 </MainLayout>

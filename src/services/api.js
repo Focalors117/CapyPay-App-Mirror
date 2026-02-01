@@ -6,7 +6,7 @@ const API_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:3000/api';
  * Función genérica para hacer peticiones al backend
  * Maneja automáticamente el token de autenticación si existe
  */
-async function fetchAPI(endpoint, options = {}) {
+export async function fetchAPI(endpoint, options = {}) {
   const token = localStorage.getItem('capypay_token');
   
   const headers = {
@@ -204,6 +204,21 @@ export const userService = {
           body: JSON.stringify({ is_favorite: isFavorite })
       });
   }
+};
+
+export const comedorService = {
+  getMenu: () => fetchAPI('/comedor/menu'),
+  getStats: () => fetchAPI('/comedor/stats'),
+  createOrder: (userId, items) => fetchAPI('/comedor/order', {
+    method: 'POST',
+    body: JSON.stringify({ user_id: userId, items })
+  }),
+  getOrder: (id) => fetchAPI(`/comedor/order/${id}`),
+  getMyOrders: (userId) => fetchAPI(`/comedor/my-orders/${userId}`)
+};
+
+export const rankingService = {
+    getRanking: (userId) => fetchAPI(`/ranking${userId ? `?user_id=${userId}` : ''}`)
 };
 
 export const transactionService = {
