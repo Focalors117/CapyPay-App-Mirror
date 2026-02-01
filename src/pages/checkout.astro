@@ -121,31 +121,24 @@ import { cartItems, clearCart } from "../store/cartStore";
   </div>
 
   <script>
+    // @ts-nocheck
     import { cartItems, clearCart } from "../store/cartStore";
-    import { authService, transactionService } from "../services/api";
+    import { authService, comedorService } from "../services/api";
     import { showToast } from "../utils/toast";
 
     const itemsContainer = document.getElementById("checkout-items");
     const subtotalEl = document.getElementById("checkout-subtotal");
     const feeEl = document.getElementById("checkout-fee");
     const totalEl = document.getElementById("checkout-total");
-    const payBtn = document.getElementById(
-      "do-payment-btn",
-    ) as HTMLButtonElement | null;
+    const payBtn = document.getElementById("do-payment-btn"); // Removed TS casting
 
     if (itemsContainer && totalEl && payBtn) {
       // 1. Cargar items del store
       const items = cartItems.get();
 
-      type CartItem = {
-        id: string;
-        name: string;
-        price: number;
-        image: string;
-        quantity: number;
-      };
+      // Removed TS Type Definition
 
-      const itemsArray = Object.values(items) as CartItem[];
+      const itemsArray = Object.values(items);
       let subtotal = 0;
 
       if (itemsArray.length === 0) {
@@ -173,6 +166,7 @@ import { cartItems, clearCart } from "../store/cartStore";
         .join("");
 
       // Calculate totals
+      // Backend now handles commission/total validation, but we show estimate here
       const commission = Math.round(subtotal * 0.05);
       const totalAmount = subtotal + commission;
 
@@ -199,49 +193,38 @@ import { cartItems, clearCart } from "../store/cartStore";
           if (!userId)
             throw new Error("ID de usuario no encontrado en sesión local");
 
-          // LLAMADA AL BACKEND
-          // Enviamos el subtotal, el backend calculará la comisión y validará el saldo total
-          const response = await transactionService.transfer({
-            emisor_id: userId,
-            cedula_receptor: "COMEDOR-01", // Cédula del sistema para el comedor
-            monto: subtotal,
-            concepto: `Orden Comedor #${Math.floor(Math.random() * 9000) + 1000} - ${itemsArray.length} items`,
-          });
+          // Prepare payload for Create Order
+          // Backend expects { id, quantity }
+          const orderItems = itemsArray.map((item) => ({
+            id: item.id,
+            quantity: item.quantity,
+            price: item.price,
+          }));
 
-          // Éxito
+          const response = await comedorService.createOrder(userId, orderItems);
+
+          if (!response) throw new Error("Error al crear la orden");
+
+          showToast("¡Pago realizado con éxito! + XP ganada", "success");
+
+          // Clear cart
           clearCart();
 
-          // Actualizar saldo localmente con el dato real del servidor si viene
-          const nuevoSaldo =
-            response.saldo_restante_estimado !== undefined
-              ? response.saldo_restante_estimado
-              : parseFloat(user.balance || 0) - totalAmount; // Fallback
-
-          user.balance = nuevoSaldo;
-          localStorage.setItem("capypay_user", JSON.stringify(user));
-
-          showToast("✅ ¡Pago Exitoso! Disfruta tu comida 🍴", "success");
-
-          setTimeout(() => {
-            window.location.href = "/comedor";
-          }, 2000);
-        } catch (error: any) {
-          console.error(error);
-          // Si es error de destinatario (comedor no existe en DB), avisamos
-          let msg = error.message || "Error procesando el pago";
-          if (msg.includes("Destinatario no encontrado")) {
-            msg =
-              "Error: El Comedor no está configurado en el sistema (Cédula 'COMEDOR-01' no encontrada).";
+          // Redirect to Receipt page
+          // response usually contains { message, orderId, newBalance, xpGained }
+          if (response.orderId) {
+            window.location.href = `/order?id=${response.orderId}`;
+          } else {
+            // Fallback if no specific order ID (should not happen with new logic)
+            window.location.href = "/history";
           }
-          showToast(msg, "error");
-
+        } catch (error) {
+          console.error("Payment Error:", error);
+          showToast(error.message || "Error al procesar el pago", "error");
           btn.disabled = false;
           btn.innerHTML = originalText;
-
-          // Force alert for better visibility on errors
-          setTimeout(() => alert(msg), 100);
         }
       });
     }
-  </script>
-</MainLayout>
+  </script></MainLayout
+>
