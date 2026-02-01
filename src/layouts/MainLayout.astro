@@ -10,9 +10,15 @@ const { title = "CapyPay", showSidebar = false } = Astro.props;
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <title>{title}</title>
     <!-- Auth Guard Anti-Flash (Improved) -->
     <script is:inline>
@@ -59,7 +65,9 @@ const { title = "CapyPay", showSidebar = false } = Astro.props;
       }
     </style>
   </head>
-  <body class="flex h-screen overflow-hidden bg-[#0a0a0a] text-brand-white safe-area-all">
+  <body
+    class="flex h-screen overflow-hidden bg-[#0a0a0a] text-brand-white safe-area-all"
+  >
     <!-- 
       FONDO AMBIENTAL
       Estos círculos (divs) son los que dan esa luz de fondo borrosa.
@@ -99,16 +107,30 @@ const { title = "CapyPay", showSidebar = false } = Astro.props;
       }
 
       <main
-        class={`grow w-full max-w-400 mx-auto px-4 sm:px-6 lg:px-8 py-6 relative flex flex-col min-h-0 ${showSidebar ? "pb-40 lg:pb-6" : ""}`}
+        class={`grow w-full max-w-400 mx-auto px-4 sm:px-6 lg:px-8 py-6 relative flex flex-col ${showSidebar ? "pb-40 lg:pb-6" : ""}`}
       >
         <slot />
       </main>
 
       <footer
-        class="hidden lg:block border-t border-white/5 py-4 shrink-0 mx-6"
+        class="border-t border-white/5 py-8 mt-auto shrink-0 mx-6 relative z-10 bg-[#0a0a0a]"
       >
-        <div class="text-center text-slate-500 text-xs">
-          &copy; {new Date().getFullYear()} CapyPay. Todos los derechos reservados.
+        <div
+          class="flex flex-col items-center justify-center gap-2 text-center"
+        >
+          <div
+            class="flex items-center gap-2 opacity-30 grayscale hover:grayscale-0 transition-all duration-500"
+          >
+            <span class="w-2 h-2 rounded-full bg-brand-lime"></span>
+            <span class="text-xs font-bold text-white tracking-widest"
+              >CAPYPAY SYSTEM</span
+            >
+          </div>
+          <p
+            class="text-white/20 text-[10px] font-medium uppercase tracking-wider"
+          >
+            &copy; {new Date().getFullYear()} Delta Force. All Rights Reserved.
+          </p>
         </div>
       </footer>
     </div>

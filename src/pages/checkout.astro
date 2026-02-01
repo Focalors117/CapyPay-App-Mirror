@@ -1,0 +1,247 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { cartItems, clearCart } from "../store/cartStore";
+// Import transaction service if strictly needed server side?
+// Actually, transactionService is likely a client-side module if it uses fetch globally or similar.
+// But we are using it inside <script> tag.
+---
+
+<MainLayout title="Resumen de Pago | CapyPay" showSidebar={true}>
+  <div class="max-w-2xl mx-auto p-4 md:p-8">
+    <a
+      href="/comedor"
+      class="inline-flex items-center gap-2 text-white/50 hover:text-white mb-6"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        ><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg
+      >
+      Volver al menú
+    </a>
+
+    <h1 class="text-3xl font-extrabold text-white mb-8">Resumen del Pedido</h1>
+
+    <div class="grid gap-8">
+      <!-- Order Items -->
+      <div class="bg-[#1a1a1a] border border-white/10 rounded-3xl p-6">
+        <h2 class="text-lg font-bold text-white mb-4">Detalle de items</h2>
+        <div
+          id="checkout-items"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4"
+        >
+          <!-- Fallback content, will be replaced by JS -->
+          <div class="animate-pulse flex items-center gap-4">
+            <div class="w-16 h-16 bg-white/10 rounded-xl"></div>
+            <div class="flex-1 space-y-2">
+              <div class="h-4 bg-white/10 rounded w-1/2"></div>
+              <div class="h-3 bg-white/10 rounded w-1/4"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary Lines -->
+        <div class="border-t border-white/5 pt-4 space-y-2 mb-4">
+          <div class="flex justify-between text-sm">
+            <span class="text-white/60">Subtotal</span>
+            <span id="checkout-subtotal" class="text-white font-bold"
+              >0.00 CP</span
+            >
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-white/60">Comisión (5%)</span>
+            <span id="checkout-fee" class="text-white/80">0.00 CP</span>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-dashed border-white/10 pt-4 flex justify-between items-end"
+        >
+          <span class="text-white/60">Total a pagar</span>
+          <span id="checkout-total" class="text-3xl font-black text-brand-lime"
+            >0.00 CP</span
+          >
+        </div>
+      </div>
+
+      <!-- Payment Action -->
+      <div class="bg-brand-black border border-white/10 rounded-3xl p-6">
+        <h2 class="text-lg font-bold text-white mb-2">Método de Pago</h2>
+        <div
+          class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/5 mb-6"
+        >
+          <div
+            class="w-10 h-10 rounded-full bg-brand-lime flex items-center justify-center text-black"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg
+            >
+          </div>
+          <div>
+            <h4 class="text-white font-bold">Saldo CapyPay</h4>
+            <p class="text-white/50 text-xs">Pago instantáneo sin comisiones</p>
+          </div>
+        </div>
+
+        <button
+          id="do-payment-btn"
+          class="w-full py-4 bg-brand-purple hover:bg-brand-purple/90 text-white font-extrabold rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 relative overflow-hidden group"
+        >
+          <span class="relative z-10 flex items-center gap-2">
+            Confirmar Pago
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"></path></svg
+            >
+          </span>
+          <div
+            class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+          >
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import { cartItems, clearCart } from "../store/cartStore";
+    import { authService, transactionService } from "../services/api";
+    import { showToast } from "../utils/toast";
+
+    const itemsContainer = document.getElementById("checkout-items");
+    const subtotalEl = document.getElementById("checkout-subtotal");
+    const feeEl = document.getElementById("checkout-fee");
+    const totalEl = document.getElementById("checkout-total");
+    const payBtn = document.getElementById(
+      "do-payment-btn",
+    ) as HTMLButtonElement | null;
+
+    if (itemsContainer && totalEl && payBtn) {
+      // 1. Cargar items del store
+      const items = cartItems.get();
+
+      type CartItem = {
+        id: string;
+        name: string;
+        price: number;
+        image: string;
+        quantity: number;
+      };
+
+      const itemsArray = Object.values(items) as CartItem[];
+      let subtotal = 0;
+
+      if (itemsArray.length === 0) {
+        window.location.href = "/comedor";
+      }
+
+      // Render items
+      itemsContainer.innerHTML = itemsArray
+        .map((item) => {
+          subtotal += item.price * item.quantity;
+          return `
+                <div class="flex justify-between items-center bg-white/5 p-3 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-black/20 flex items-center justify-center text-white/50 font-bold text-xs border border-white/5">
+                            x${item.quantity}
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold text-sm text-balance">${item.name}</h4>
+                        </div>
+                    </div>
+                    <span class="text-white font-bold text-sm">${(item.price * item.quantity).toLocaleString()} CP</span>
+                </div>
+            `;
+        })
+        .join("");
+
+      // Calculate totals
+      const commission = Math.round(subtotal * 0.05);
+      const totalAmount = subtotal + commission;
+
+      if (subtotalEl)
+        subtotalEl.textContent = `${subtotal.toLocaleString()} CP`;
+      if (feeEl) feeEl.textContent = `${commission.toLocaleString()} CP`;
+      totalEl.textContent = `${totalAmount.toLocaleString()} CP`;
+
+      // 2. Lógica de Pago
+      payBtn.addEventListener("click", async () => {
+        const btn = payBtn;
+        const originalText = btn.innerHTML;
+
+        try {
+          btn.disabled = true;
+          btn.innerHTML = `<span class="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full mr-2"></span> Procesando...`;
+
+          const userStr = localStorage.getItem("capypay_user");
+          if (!userStr) throw new Error("Debes iniciar sesión");
+          const user = JSON.parse(userStr);
+
+          // Validar identificador de usuario
+          const userId = user.id || user.usuarioId;
+          if (!userId)
+            throw new Error("ID de usuario no encontrado en sesión local");
+
+          // LLAMADA AL BACKEND
+          // Enviamos el subtotal, el backend calculará la comisión y validará el saldo total
+          const response = await transactionService.transfer({
+            emisor_id: userId,
+            cedula_receptor: "COMEDOR-01", // Cédula del sistema para el comedor
+            monto: subtotal,
+            concepto: `Orden Comedor #${Math.floor(Math.random() * 9000) + 1000} - ${itemsArray.length} items`,
+          });
+
+          // Éxito
+          clearCart();
+
+          // Actualizar saldo localmente con el dato real del servidor si viene
+          const nuevoSaldo =
+            response.saldo_restante_estimado !== undefined
+              ? response.saldo_restante_estimado
+              : parseFloat(user.balance || 0) - totalAmount; // Fallback
+
+          user.balance = nuevoSaldo;
+          localStorage.setItem("capypay_user", JSON.stringify(user));
+
+          showToast("✅ ¡Pago Exitoso! Disfruta tu comida 🍴", "success");
+
+          setTimeout(() => {
+            window.location.href = "/comedor";
+          }, 2000);
+        } catch (error: any) {
+          console.error(error);
+          // Si es error de destinatario (comedor no existe en DB), avisamos
+          let msg = error.message || "Error procesando el pago";
+          if (msg.includes("Destinatario no encontrado")) {
+            msg =
+              "Error: El Comedor no está configurado en el sistema (Cédula 'COMEDOR-01' no encontrada).";
+          }
+          showToast(msg, "error");
+
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+
+          // Force alert for better visibility on errors
+          setTimeout(() => alert(msg), 100);
+        }
+      });
+    }
+  </script>
+</MainLayout>

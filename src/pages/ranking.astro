@@ -1,0 +1,776 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+
+const rankData = {
+  user: {
+    name: "@Alex_Dev",
+    rank: 8,
+    points: 8950,
+    avatar:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuA9zOaPWPfoSuWVNqGMRI35cfI714z6dQEcOzpfiC2dARxme2tNeH3XeSk95JTAxNVWrYrT5RYJzeBO4Rg286adS8bjF4COzlLsWD_NliAo0u6nGLGwqstDmamE9BakvL4buw5EvB7CV9rM-kU72DV-1bsHTJ3PzMjJ8MKplwwmH5EknzVPhCMoje8FybiLUsjItbKyiGnbhCTMkqZfqGnDtVB8s0UxntIpfduWo4XVRVP-HV5q-bwYgejwrYuanELdBIj0GK0ioLo",
+  },
+  top3: [
+    {
+      rank: 2,
+      name: "@NicoFintech",
+      points: "18,450",
+      avatar:
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuDP-CP8BNih0s90zRvcvU0b_F81UK49IRx7RNiIOpiPDiplTOQ_hRtvfSocVvB5es4_TlQQkvEI3qlrerVyvVUNG6koGTSaqJLlnyS5ZvEWafjJZUwB8DQOldBvZwodyaKFuXCqPO09V6Gjej1uwR2yEVM6zqPyYaIb9tOf6xRT9UOPPa-6-q2eFm__fcboga8IPbo2xC-NftoYq9Fl5q28aRIJ8fuN60wb2uF8O9Mhpzq7Vdb621uEDBq99V6G_MBe-GkD3D0h_mA",
+    },
+    {
+      rank: 1,
+      name: "@CapyKing",
+      points: "24,900",
+      avatar:
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuAF3Gj3WgI3oNmOjBuQguu1P4BD_2J7nawhCPeEBMLI8L-zHdqaDi0zzVwaH_sxtHwVtg8QEY7-whldfONmKVmx-John84tY6x9TtEdxSM9ztqrl6p73UdNTjFIV0I6YVpI6G3RIY9Gx17CjAY0-2EheLHyzYxO-1hIF_QmqMivywyjBqSKRjHJ0fvo796MD8OCNW43UljJ-5ELMUKXC_RQBUeBc_igMgJs_A1Vx_cy9ff-Gg_qO7TSrp1f1iJPCM9_rdSMmZ3Dz0g",
+    },
+    {
+      rank: 3,
+      name: "@SofiCrypto",
+      points: "15,200",
+      avatar:
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuAlgvProPaHGK8PRRLYaw_BHL4Zo-aRxAt9b6bORvh6SrCASsVzbUkhQAp6a8esCRy708ahh_gUVLy5w0ucW3a9xZ52Q3opV7MggYGH_itndwJ61ooMn1hX5H437tSCp7t22bQajCfTY-r-Gk2ZSgQKoYT7UsaIklRusy8aVElisUbx6YVObyBRYRfhRf9tJq5uw6m6dYehvt4whJ7MslJx4aWd-MAPLiyI2xLsWYDQOdtczvkPvVueAIlrMj9MD_Q-HApVTxnTS20",
+    },
+  ],
+  list: [
+    {
+      rank: 4,
+      name: "@DiegoPay",
+      points: "12,100",
+      avatar:
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuBoVO-vLn10cAtMbHeFV_8WzsxSA7HIYiwJ88mzonr2EyBLX58Zjrg4J8HzYAF7uYcsmdTODXZPUE3mjw3pHtjZ74IkXrBc3zpQBjuIhgDA-7hUWfjtK7T9q9ePAY6ZeLcBPCST9bQsuF4BveYODzp6bwBI2DmCUVIRmLu3QLfmmtwf1GaZ25N9U1Wfr7oUayZwcQIB4778nKz4RPO63BSOfm7Op1AJy01gBRLyb1l5HELkdl00YXykc6CEuwMtvb0CmOT9WfsU-mk",
+    },
+    {
+      rank: 5,
+      name: "@Luna_Fin",
+      points: "11,850",
+      avatar:
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuBWK__Vv77B48HZIy-zugTgG68jq54IZDWuBuMLGLqKjuYT-Xv2VFA8LlkRmLY8Y9IUoEyDb-3OVCKY5OYNxWopuKwS2PdNco5RJvq3BWsxA1TRHwSi6_U8PUTsVKp4EEn8k1Nx06jHIOf-_tUlSL7yauFPXN7ohICiTF_HM_gIpC2eDZK_DF8fHx_QocRsh_tf_sIAIea_6T3j0y2Ggm_4ia31_vTUdy5cZlJGxGHFaGg19NAmojreWeQVA-bSwLf3E382Rqt5d_U",
+    },
+    {
+      rank: 6,
+      name: "@Marko.Chain",
+      points: "10,200",
+      avatar:
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuCmJ8Hb7_P3p0kMVza2pvTcJp_zcT0CvCrQrU6kBv4T_D0rXNM2vKcG-2Ls37Dd2AikpI-C5bzfiVUBzZPZ4WsrpGK2Ke_QP46GAqdjIgjWnldAyJxABfhZ6iOMj3rdu-SX6kDZbR9xp2ND0gnLmo_yIY9nJKlFXS1t4lVkfeRhRQVmxt0XyoCBTl6PYEitsJQnA6jQV7jN3-leAWhmT0f6wRfpYDKmy_3GcaXQmqo1ICIIU5kbY8h9wpsVEEHPTIRnYZPvinI7UPM",
+    },
+    {
+      rank: 7,
+      name: "@Clara_Capy",
+      points: "9,400",
+      avatar:
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuCsgNVYvJjRP57HlAnyR3RCm1bzA0V763VVp7in1CHEH1vlxbzlgq_vL9iio3xFqtQvs0iOsmqIODXdw5JQvKxB8Ucl5fxWyvLtewhRa-GT_KXGt0kfRa6KF3B3P0W0RFf-18PU4q5AIIcpyUGUbDpe0tdbBeICVwSCgdGvafVasa07QB2V7FNOBl-8nPNiNa2-MNEfGLegPoyIVy48YApu2KfBDR1b8SdFFKetU1bmaclD-GDJVOzpq4Hub5GvICP91ZQqHcjpdLw",
+    },
+  ],
+};
+---
+
+<MainLayout title="Ranking de Influencia | CapyPay" showSidebar={true}>
+  <!-- Inject Custom Fonts/Icons just for this page if needed, though MainLayout usually handles it.
+       MainLayout has 'Outfit', but this design asked for 'Space Grotesk'. 
+       We will stick to the project font 'Outfit' for consistency primarily, or load Space Grotesk if strictly required. 
+       Let's stick to project defaults for better integration unless it looks bad. -->
+
+  <style>
+    .hexagon-clip {
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    }
+    .glow-lime {
+      box-shadow: 0 0 20px rgba(215, 253, 73, 0.4);
+    }
+    .glow-purple {
+      box-shadow: 0 0 25px rgba(131, 98, 232, 0.6);
+    }
+    .glass-blur {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .text-accent-purple {
+      color: #8362e8;
+    }
+    .bg-accent-purple {
+      background-color: #8362e8;
+    }
+    .border-accent-purple {
+      border-color: #8362e8;
+    }
+    .from-accent-purple {
+      --tw-gradient-from: #8362e8;
+      --tw-gradient-stops:
+        var(--tw-gradient-from), var(--tw-gradient-to, rgba(131, 98, 232, 0));
+    }
+  </style>
+
+  <!-- Content Wrapper with padding for bottom fixed bar -->
+  <div class="max-w-7xl mx-auto w-full px-4 md:px-0 py-8 pb-48">
+    <!-- Back Button -->
+    <a
+      href="/comedor"
+      class="inline-flex items-center gap-2 text-white/50 hover:text-brand-lime transition-colors mb-6 group font-bold uppercase tracking-wider text-xs"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 group-hover:-translate-x-1 transition-transform"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      Volver a Comedor
+    </a>
+
+    <!-- Page Heading & Prize Banner -->
+    <div class="flex flex-col lg:flex-row justify-between gap-6 mb-12">
+      <div class="flex flex-col gap-2">
+        <h1
+          class="text-white text-4xl md:text-5xl font-black leading-tight tracking-tight uppercase italic"
+        >
+          Ranking de <span class="text-brand-lime">Influencia</span>
+        </h1>
+        <p class="text-white/60 text-lg max-w-xl font-medium">
+          Compite con la comunidad estudiantil y llévate el botín semanal.
+        </p>
+      </div>
+
+      <div
+        class="flex-1 max-w-md bg-linear-to-r from-accent-purple to-indigo-900 rounded-xl p-6 relative overflow-hidden flex items-center justify-between border border-white/20 shadow-2xl"
+      >
+        <div class="relative z-10">
+          <p class="text-xs font-bold uppercase tracking-widest text-white/70">
+            Premio Semanal
+          </p>
+          <p class="text-2xl font-black text-white">10,000 Capys + Merch</p>
+          <button
+            class="mt-3 bg-white text-accent-purple px-4 py-1.5 rounded-lg text-xs font-bold uppercase hover:bg-brand-lime hover:text-black transition-colors"
+          >
+            Ver Detalles
+          </button>
+        </div>
+        <span
+          class="material-symbols-outlined text-7xl text-white/20 absolute -right-2 -bottom-2 rotate-12"
+          >redeem</span
+        >
+      </div>
+    </div>
+
+    <!-- Main Grid: Removed items-start for full height columns -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <!-- Left & Center: Podium and List -->
+      <div class="lg:col-span-8 space-y-8">
+        <!-- The Podium (Top 3) -->
+        <div class="grid grid-cols-3 gap-2 md:gap-4 items-end pt-12">
+          <!-- Rank 2 -->
+          <div class="flex flex-col items-center gap-4">
+            <div class="relative group cursor-pointer">
+              <div
+                class="absolute -inset-1 bg-white/30 rounded-full blur-sm opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"
+              >
+              </div>
+              <div
+                class="size-24 md:size-32 hexagon-clip bg-white/10 p-1 flex items-center justify-center border-2 border-white/20"
+              >
+                <img
+                  class="hexagon-clip w-full h-full object-cover bg-black"
+                  src={rankData.top3[0].avatar}
+                  alt={rankData.top3[0].name}
+                />
+              </div>
+              <div
+                class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white/20 backdrop-blur px-3 py-0.5 rounded-full border border-white/30 text-xs font-bold"
+              >
+                #2
+              </div>
+            </div>
+            <div class="text-center">
+              <p class="font-bold text-white text-sm md:text-base">
+                {rankData.top3[0].name}
+              </p>
+              <p class="text-brand-lime text-xs md:text-sm font-black italic">
+                {rankData.top3[0].points} pts
+              </p>
+            </div>
+          </div>
+
+          <!-- Rank 1 -->
+          <div class="flex flex-col items-center gap-6 pb-8">
+            <div class="relative group cursor-pointer">
+              <!-- Golden Crown -->
+              <div
+                class="absolute -top-10 left-1/2 -translate-x-1/2 z-20 drop-shadow-[0_0_15px_rgba(255,215,0,0.8)]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="48px"
+                  viewBox="0 -960 960 960"
+                  width="48px"
+                  fill="#FFD700"
+                  ><path
+                    d="M200-200v-560l160 120 120-120 120 120 160-120v560H200Zm80-80h400v-326L556-486 480-562 404-486l-124-120v326Zm200-240Z"
+                  ></path></svg
+                >
+              </div>
+              <!-- Glowing Hexagon -->
+              <div
+                class="absolute -inset-2 bg-linear-to-tr from-brand-lime via-accent-purple to-brand-lime rounded-full blur-lg opacity-40 group-hover:opacity-70 animate-pulse transition duration-1000"
+              >
+              </div>
+              <div
+                class="size-32 md:size-44 hexagon-clip bg-brand-lime p-1.5 flex items-center justify-center glow-purple"
+              >
+                <img
+                  class="hexagon-clip w-full h-full object-cover bg-black"
+                  src={rankData.top3[1].avatar}
+                  alt={rankData.top3[1].name}
+                />
+              </div>
+              <div
+                class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-brand-lime text-black px-4 py-1 rounded-full text-sm font-black border-2 border-black"
+              >
+                #1
+              </div>
+            </div>
+            <div class="text-center">
+              <p
+                class="text-lg md:text-xl font-black text-white uppercase tracking-tight"
+              >
+                {rankData.top3[1].name}
+              </p>
+              <p
+                class="text-brand-lime text-base md:text-lg font-black italic drop-shadow-[0_0_5px_rgba(166,242,13,0.5)]"
+              >
+                {rankData.top3[1].points} pts
+              </p>
+            </div>
+          </div>
+
+          <!-- Rank 3 -->
+          <div class="flex flex-col items-center gap-4">
+            <div class="relative group cursor-pointer">
+              <div
+                class="absolute -inset-1 bg-accent-purple/30 rounded-full blur-sm opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"
+              >
+              </div>
+              <div
+                class="size-24 md:size-32 hexagon-clip bg-accent-purple/20 p-1 flex items-center justify-center border-2 border-accent-purple/40"
+              >
+                <img
+                  class="hexagon-clip w-full h-full object-cover bg-black"
+                  src={rankData.top3[2].avatar}
+                  alt={rankData.top3[2].name}
+                />
+              </div>
+              <div
+                class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white/20 backdrop-blur px-3 py-0.5 rounded-full border border-white/30 text-xs font-bold"
+              >
+                #3
+              </div>
+            </div>
+            <div class="text-center">
+              <p class="font-bold text-white text-sm md:text-base">
+                {rankData.top3[2].name}
+              </p>
+              <p class="text-brand-lime text-xs md:text-sm font-black italic">
+                {rankData.top3[2].points} pts
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FILTERS & TABS -->
+        <div
+          class="flex flex-col md:flex-row justify-between items-center gap-4 bg-white/5 p-2 rounded-2xl border border-white/10"
+        >
+          <!-- Filter: Scope -->
+          <div class="flex bg-black/40 rounded-xl p-1 gap-1" id="scope-filters">
+            <button
+              class="scope-btn px-4 py-2 rounded-lg text-sm font-bold bg-brand-lime text-black shadow-[0_0_10px_rgba(215,253,73,0.3)] transition-all"
+              data-value="global">Global</button
+            >
+            <button
+              class="scope-btn px-4 py-2 rounded-lg text-sm font-bold text-white/50 hover:text-white hover:bg-white/10 transition-all"
+              data-value="facultad">Facultad</button
+            >
+            <button
+              class="scope-btn px-4 py-2 rounded-lg text-sm font-bold text-white/50 hover:text-white hover:bg-white/10 transition-all"
+              data-value="carrera">Carrera</button
+            >
+          </div>
+
+          <!-- Filter: Time (Custom Dropdown) -->
+          <div class="relative w-full md:w-48 z-20">
+            <button
+              id="time-filter-btn"
+              class="w-full bg-black/40 text-white text-sm font-bold rounded-xl border border-white/10 py-2.5 px-4 flex justify-between items-center hover:border-brand-lime/50 transition-all focus:outline-none focus:border-brand-lime/50 group"
+              type="button"
+            >
+              <span class="text-white" id="time-filter-label">Esta Semana</span>
+              <svg
+                id="time-filter-arrow"
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 text-white/50 transition-transform duration-200 group-hover:text-brand-lime"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div
+              id="time-filter-menu"
+              class="absolute top-full right-0 w-full mt-2 bg-[#1a1b2e] border border-brand-lime/20 rounded-xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)] z-50 hidden"
+            >
+              <div class="p-1 flex flex-col gap-1">
+                <button
+                  class="time-option w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10 transition-colors flex items-center justify-between group"
+                  data-label="Esta Semana"
+                >
+                  <span>Esta Semana</span>
+                  <span
+                    class="opacity-0 group-hover:opacity-100 text-brand-lime text-xs"
+                    >●</span
+                  >
+                </button>
+                <button
+                  class="time-option w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors flex items-center justify-between group"
+                  data-label="Este Mes"
+                >
+                  <span>Este Mes</span>
+                  <span
+                    class="opacity-0 group-hover:opacity-100 text-brand-lime text-xs"
+                    >●</span
+                  >
+                </button>
+                <button
+                  class="time-option w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors flex items-center justify-between group"
+                  data-label="Histórico"
+                >
+                  <span>Histórico</span>
+                  <span
+                    class="opacity-0 group-hover:opacity-100 text-brand-lime text-xs"
+                    >●</span
+                  >
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Leaderboard Table (Ranks 4-10) -->
+        <div
+          class="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 overflow-hidden shadow-2xl"
+        >
+          <div
+            class="px-6 py-4 border-b border-white/10 flex justify-between items-center bg-white/5"
+          >
+            <h3 class="font-bold text-lg uppercase tracking-wider text-white">
+              Top Global 10
+            </h3>
+            <span class="text-xs text-white/40 font-bold"
+              >SE ACTUALIZA CADA 5 MINUTOS</span
+            >
+          </div>
+          <div class="divide-y divide-white/5">
+            {
+              rankData.list.map((user) => (
+                <div class="flex items-center gap-4 px-6 py-4 hover:bg-white/5 transition-all cursor-pointer group">
+                  <span class="text-white/40 font-black italic w-6 group-hover:text-white transition-colors">
+                    {user.rank}
+                  </span>
+                  <div class="size-10 rounded-lg overflow-hidden border border-white/10">
+                    <img
+                      class="w-full h-full object-cover"
+                      src={user.avatar}
+                      alt={user.name}
+                    />
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-bold text-white">{user.name}</p>
+                  </div>
+                  <p class="text-brand-lime font-black italic text-right">
+                    {user.points} pts
+                  </p>
+                </div>
+              ))
+            }
+
+            <!-- My Rank Row (Embedded in list for demo, showing user at #8) -->
+            <div
+              class="flex items-center gap-4 px-6 py-4 bg-brand-lime/10 border-l-4 border-brand-lime relative overflow-hidden"
+            >
+              <div
+                class="absolute inset-0 bg-brand-lime/5 animate-pulse pointer-events-none"
+              >
+              </div>
+              <span class="text-brand-lime font-black italic w-6">8</span>
+              <div
+                class="size-10 rounded-lg overflow-hidden border border-brand-lime/30 z-10"
+              >
+                <img
+                  class="w-full h-full object-cover"
+                  src={rankData.user.avatar}
+                  alt={rankData.user.name}
+                />
+              </div>
+              <div class="flex-1 z-10">
+                <p class="font-bold text-white">{rankData.user.name} (Tú)</p>
+              </div>
+              <p class="text-brand-lime font-black italic text-right z-10">
+                {rankData.user.points} pts
+              </p>
+            </div>
+
+            <!-- Fake content to show scroll -->
+            <!-- Only visual filler if needed -->
+          </div>
+        </div>
+
+        <!-- User Status Card (Moved from Footer) -->
+        <div
+          class="bg-[#0a0b08]/90 backdrop-blur-xl border border-brand-lime/30 rounded-2xl py-4 px-6 md:px-12 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+        >
+          <div
+            class="flex flex-col md:flex-row items-center justify-between gap-4"
+          >
+            <!-- User Info -->
+            <div
+              class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-start"
+            >
+              <div class="flex items-center gap-4">
+                <div
+                  class="size-12 rounded-full border-2 border-brand-lime p-0.5 overflow-hidden glow-lime"
+                >
+                  <img
+                    class="w-full h-full rounded-full object-cover"
+                    src={rankData.user.avatar}
+                    alt="User"
+                  />
+                </div>
+                <div>
+                  <p class="text-sm text-white/60 font-medium">
+                    Tu posición actual
+                  </p>
+                  <p class="text-2xl font-black text-white italic">
+                    RANK <span class="text-brand-lime">#45</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="flex-1 max-w-2xl w-full flex flex-col gap-1.5 px-1">
+              <div
+                class="flex justify-between text-xs font-black uppercase italic tracking-wider"
+              >
+                <span class="text-white/40">Nivel 12</span>
+                <span class="text-brand-lime"
+                  >Solo faltan 150 pts para el #44</span
+                >
+              </div>
+              <div
+                class="h-3 w-full bg-white/10 rounded-full overflow-hidden border border-white/5"
+              >
+                <div
+                  class="h-full bg-linear-to-r from-brand-lime/60 to-brand-lime w-[75%] rounded-full relative"
+                >
+                  <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Points & Action (Desktop) -->
+            <div class="items-center gap-3 hidden md:flex">
+              <div class="text-right">
+                <p class="text-xs text-white/40 font-bold">Total Puntos</p>
+                <p class="text-lg font-black text-brand-lime italic">
+                  {rankData.user.points}
+                </p>
+              </div>
+              <button
+                class="bg-white/5 hover:bg-white/10 p-3 rounded-xl border border-white/10 transition-colors cursor-pointer"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="white"
+                  ><path
+                    d="M720-80q-50 0-85-35t-35-85q0-7 1-14.5t3-13.5L322-392q-17 15-38 23.5t-44 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q23 0 44 8.5t38 23.5l282-164q-2-6-3-13.5t-1-14.5q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-23 0-44-8.5T638-672L356-508q2 6 3 13.5t1 14.5q0 7-1 14.5t-3 13.5l282 164q17-15 38-23.5t44-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Z"
+                  ></path></svg
+                >
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Sidebar: How to Earn Points -->
+      <aside class="lg:col-span-4 space-y-6">
+        <div
+          class="bg-black/20 backdrop-blur-md rounded-xl border border-white/10 p-6 shadow-2xl"
+        >
+          <h3
+            class="text-xl font-black uppercase italic mb-6 border-b border-brand-lime pb-2 inline-block text-white"
+          >
+            ¿Cómo ganar puntos?
+          </h3>
+          <div class="space-y-6">
+            <div class="flex gap-4 group">
+              <div
+                class="size-10 rounded-lg bg-brand-lime/10 flex items-center justify-center border border-brand-lime/20 shrink-0 group-hover:bg-brand-lime/20 transition-all text-brand-lime"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="currentColor"
+                  ><path
+                    d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z"
+                  ></path></svg
+                >
+              </div>
+              <div>
+                <h4 class="font-bold text-white leading-tight">
+                  Bono de Mantenimiento
+                </h4>
+                <p class="text-sm text-white/50">
+                  +10 PI por cada plato subvencionado pagado.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex gap-4 group">
+              <div
+                class="size-10 rounded-lg bg-brand-lime/10 flex items-center justify-center border border-brand-lime/20 shrink-0 group-hover:bg-brand-lime/20 transition-all text-brand-lime"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="currentColor"
+                  ><path
+                    d="M280-80v-366q-51-14-85.5-56T160-600v-280h80v280h40v-280h80v280h40v-280h80v280q0 56-34.5 98T360-446v366h-80Zm400 0v-320H560v-280q0-83 58.5-141.5T760-880v800h-80Z"
+                  ></path></svg
+                >
+              </div>
+              <div>
+                <h4 class="font-bold text-white leading-tight">Capy-Gourmet</h4>
+                <p class="text-sm text-white/50">
+                  +25 PI en menú especial (Pizza, Hamburguesas). Combo Mes x2.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex gap-4 group">
+              <div
+                class="size-10 rounded-lg bg-brand-lime/10 flex items-center justify-center border border-brand-lime/20 shrink-0 group-hover:bg-brand-lime/20 transition-all text-brand-lime"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="currentColor"
+                  ><path
+                    d="m612-292 56-56-148-148v-184h-80v216l172 172ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Z"
+                  ></path></svg
+                >
+              </div>
+              <div>
+                <h4 class="font-bold text-white leading-tight">Madrugador</h4>
+                <p class="text-sm text-white/50">
+                  +15 PI por pickup antes de las 11:30 AM.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex gap-4 group">
+              <div
+                class="size-10 rounded-lg bg-brand-lime/10 flex items-center justify-center border border-brand-lime/20 shrink-0 group-hover:bg-brand-lime/20 transition-all text-brand-lime"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="currentColor"
+                  ><path
+                    d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-240v-32q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v32q0 33-23.5 56.5T720-160H240q-33 0-56.5-23.5T160-240Zm80 0h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0 320Zm0-400Z"
+                  ></path></svg
+                >
+              </div>
+              <div>
+                <h4 class="font-bold text-white leading-tight">Capy-Socio</h4>
+                <p class="text-sm text-white/50">
+                  +50 PI por Split (3+ amigos). +5 PI por Likes.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex gap-4 group">
+              <div
+                class="size-10 rounded-lg bg-brand-lime/10 flex items-center justify-center border border-brand-lime/20 shrink-0 group-hover:bg-brand-lime/20 transition-all text-brand-lime"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="currentColor"
+                  ><path
+                    d="M240-80v-160h-80v-80h80v-120h-80v-80h80v-120h-80v-80h80v-160h600v720q-30 0-58 13t-48 37l-44 56-54-56q-20-22-47-36t-59-14q-32 0-59 14t-47 36l-54 56-44-56q-20-24-48-37t-58-13H240Zm80-80h480v-560H320v560Zm0 0v-560 560Z"
+                  ></path></svg
+                >
+              </div>
+              <div>
+                <h4 class="font-bold text-white leading-tight">
+                  Racha Semanal
+                </h4>
+                <p class="text-sm text-white/50">
+                  +100 PI por comer 5 días seguidos.
+                </p>
+              </div>
+            </div>
+          </div>
+          <button
+            class="w-full mt-8 bg-brand-lime hover:bg-[#c2e440] text-black font-black py-4 rounded-xl transition-all uppercase tracking-widest shadow-lg shadow-brand-lime/20 cursor-pointer"
+          >
+            Invitar ahora
+          </button>
+        </div>
+
+        <div
+          class="bg-accent-purple/10 border border-accent-purple/30 rounded-xl p-6"
+        >
+          <p
+            class="text-xs font-bold text-accent-purple uppercase tracking-tighter mb-2"
+          >
+            Tip de Capy
+          </p>
+          <p class="text-sm text-white/70 italic">
+            "Los pagos en comercios asociados te dan el doble de puntos esta
+            semana. ¡Aprovecha!"
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</MainLayout>
+
+<script>
+  // Scope Filters Logic
+  const scopeBtns = document.querySelectorAll(".scope-btn");
+
+  if (scopeBtns.length > 0) {
+    scopeBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        // Reset all buttons
+        scopeBtns.forEach((b) => {
+          b.classList.remove(
+            "bg-brand-lime",
+            "text-black",
+            "shadow-[0_0_10px_rgba(215,253,73,0.3)]",
+          );
+          b.classList.add("text-white/50");
+        });
+
+        // Activate clicked button
+        btn.classList.remove("text-white/50");
+        btn.classList.add(
+          "bg-brand-lime",
+          "text-black",
+          "shadow-[0_0_10px_rgba(215,253,73,0.3)]",
+        );
+      });
+    });
+  }
+
+  // Custom Dropdown Logic
+  const filterBtn = document.getElementById("time-filter-btn");
+  const filterMenu = document.getElementById("time-filter-menu");
+  const filterArrow = document.getElementById("time-filter-arrow");
+  const filterLabel = document.getElementById("time-filter-label");
+  const timeOptions = document.querySelectorAll(".time-option");
+
+  let isDropdownOpen = false;
+
+  function toggleDropdown() {
+    if (!filterMenu || !filterArrow) return;
+
+    isDropdownOpen = !isDropdownOpen;
+    if (isDropdownOpen) {
+      filterMenu.classList.remove("hidden");
+      filterMenu.classList.add("dropdown-enter-active");
+      filterArrow.style.transform = "rotate(180deg)";
+    } else {
+      filterMenu.classList.add("hidden");
+      filterMenu.classList.remove("dropdown-enter-active");
+      filterArrow.style.transform = "rotate(0deg)";
+    }
+  }
+
+  // Close when clicking outside
+  document.addEventListener("click", (e) => {
+    const target = e.target as Node;
+    if (
+      filterBtn &&
+      filterMenu &&
+      filterArrow &&
+      !filterBtn.contains(target) &&
+      !filterMenu.contains(target)
+    ) {
+      isDropdownOpen = false;
+      filterMenu.classList.add("hidden");
+      filterArrow.style.transform = "rotate(0deg)";
+    }
+  });
+
+  if (filterBtn) {
+    filterBtn.addEventListener("click", toggleDropdown);
+  }
+
+  // Handle Option Selection
+  if (timeOptions.length > 0 && filterLabel) {
+    timeOptions.forEach((option) => {
+      option.addEventListener("click", () => {
+        const value = option.getAttribute("data-label");
+        if (value) filterLabel.innerText = value;
+
+        // Reset styling for all options
+        timeOptions.forEach((opt) => {
+          opt.classList.remove("text-white");
+          opt.classList.add("text-white/70");
+          const check = opt.querySelector("span:last-child");
+          if (check) {
+            check.classList.remove("opacity-100");
+            check.classList.add("opacity-0");
+          }
+        });
+
+        // Style active option
+        option.classList.remove("text-white/70");
+        option.classList.add("text-white");
+        const checkActive = option.querySelector("span:last-child");
+        if (checkActive) {
+          checkActive.classList.remove("opacity-0");
+          checkActive.classList.add("opacity-100");
+        }
+
+        toggleDropdown(); // Close menu
+      });
+    });
+  }
+</script>

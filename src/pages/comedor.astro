@@ -1,88 +1,910 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import CartSidebar from "../components/CartSidebar.astro";
 ---
 
-<MainLayout title="Comedor | CapyPay">
-  <div class="flex flex-col gap-6 h-full p-4 lg:p-0">
-    <div
-      class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-brand-black p-6 rounded-3xl border border-white/10 shadow-lg relative overflow-hidden group"
-    >
-      <div
-        class="absolute -top-24 -right-24 w-48 h-48 bg-brand-lime/10 rounded-full blur-3xl group-hover:bg-brand-lime/20 transition-all duration-700"
-      >
-      </div>
+<MainLayout title="Comedor | CapyPay" showSidebar={true}>
+  <CartSidebar />
+  <!-- Custom Styles for this page -->
+  <style>
+    .glass-card {
+      background: rgba(20, 20, 20, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
 
-      <div class="relative z-10 flex gap-4 items-center w-full">
-        <!-- Botón de regresar -->
-        <a
-          href="/dashboard"
-          class="flex items-center justify-center w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-all hover:border-brand-lime/30 group"
-          aria-label="Regresar al dashboard"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 transition-transform group-hover:-translate-x-1"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M15 19l-7-7 7-7"
-            ></path>
-          </svg>
-        </a>
+  <div class="max-w-7xl mx-auto px-4 md:px-6 py-8 pb-32">
+    <!-- Header / Navbar especifia para el comedor -->
+    <header
+      class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8"
+    >
+      <div class="flex items-center gap-4 w-full md:w-auto">
         <div
-          class="w-16 h-16 rounded-full bg-brand-purple/20 flex items-center justify-center text-brand-purple border border-brand-purple/30"
+          class="size-12 bg-brand-lime rounded-2xl flex items-center justify-center text-black shadow-[0_0_20px_rgba(215,253,73,0.3)]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-8 w-8"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            fill="currentColor"
+            ><path
+              d="M280-80v-366q-51-14-85.5-56T160-600v-280h80v280h40v-280h80v280h40v-280h80v280q0 56-34.5 98T360-446v366h-80Zm400 0v-320H560v-280q0-83 58.5-141.5T760-880v800h-80Z"
+            ></path></svg
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-            ></path>
-          </svg>
         </div>
         <div>
-          <h1 class="text-2xl font-bold text-white mb-1">Comedor</h1>
-          <p class="text-slate-400 text-sm">
-            Consulta el menú del día y reserva tu almuerzo.
+          <h1 class="text-2xl font-extrabold tracking-tight text-white">
+            CapyPay <span class="text-brand-lime">Dining</span>
+          </h1>
+          <p class="text-white/40 text-sm font-medium">
+            Reserva, come y disfruta
           </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 w-full md:w-auto">
+        <div class="relative w-full md:w-64">
+          <svg
+            class="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg
+          >
+          <input
+            class="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-brand-lime/50 transition-colors placeholder-white/20"
+            placeholder="Buscar comida..."
+            type="text"
+          />
+        </div>
+        <div
+          class="hidden md:block h-10 w-10 rounded-full border-2 border-brand-lime overflow-hidden shrink-0"
+        >
+          <img
+            alt="User Avatar"
+            class="w-full h-full object-cover"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAg4BI_O8mW_nXVRrCrGJZUPkUxaoNEllDjDwkaVxLgsdMHhPri-fzLJG8UaNkgBMkx2Bvp-ctsb_A9TWczYPhvqRFVGl5_MhplFHJYlQLCNXEHuk6_0G_plGjGRu-0GWSga_URLW20A7K30nS1WcFHSSjozAN9jx__HqP7yGPZAfDR1ckQrj8oLhooOQuI8CoYCzTgjSj7cpZJTGjXV14dFeXlaCig3cA9o-aV1l8ToOBYdyjYncrd3swtYkkpzYPQO2jLQtvvB_I"
+          />
+        </div>
+      </div>
+    </header>
+
+    <!-- Stats Row -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="col-span-1 md:col-span-2 flex flex-col sm:flex-row gap-4">
+        <!-- Ocupación Card -->
+        <div
+          class="glass-card flex-1 p-6 rounded-3xl flex flex-col justify-between"
+        >
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+              <p
+                class="text-white/60 text-xs font-bold uppercase tracking-widest"
+              >
+                Ocupación Comedor
+              </p>
+            </div>
+            <h3 class="text-2xl font-extrabold text-white">
+              Alta <span class="text-red-500 text-3xl leading-none">.</span>
+            </h3>
+          </div>
+          <div>
+            <div
+              class="mt-4 w-full bg-white/10 h-2 rounded-full overflow-hidden"
+            >
+              <div class="bg-red-500 h-full w-[85%] rounded-full"></div>
+            </div>
+            <p class="text-red-400 text-xs mt-2 font-medium">+12% vs. ayer</p>
+          </div>
+        </div>
+
+        <!-- Tiempo Espera Card -->
+        <div
+          class="glass-card flex-1 p-6 rounded-3xl flex flex-col justify-between"
+        >
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <svg
+                class="w-3 h-3 text-brand-lime"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                ><path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg
+              >
+              <p
+                class="text-white/60 text-xs font-bold uppercase tracking-widest"
+              >
+                Tiempo de Espera
+              </p>
+            </div>
+            <h3 class="text-3xl font-extrabold text-brand-lime">15 min</h3>
+          </div>
+          <div
+            class="flex items-center gap-2 mt-4 bg-brand-lime/10 px-3 py-1.5 rounded-lg w-fit"
+          >
+            <span class="text-brand-lime text-xs font-bold"
+              >Siguiente turno: 13:45</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Gamification Badge Card -->
+      <div
+        class="bg-linear-to-br from-brand-purple to-purple-900 p-6 rounded-3xl relative overflow-hidden flex flex-col justify-between group cursor-pointer transition-transform hover:scale-[1.02]"
+      >
+        <div class="z-10">
+          <div class="flex items-center justify-between mb-2">
+            <p
+              class="text-white/80 text-xs font-bold uppercase tracking-widest"
+            >
+              Logro del Mes
+            </p>
+            <span
+              class="bg-white/20 px-2 py-0.5 rounded text-[10px] font-bold text-white"
+              >NUEVO</span
+            >
+          </div>
+          <h3 class="text-xl font-extrabold text-white mb-1">Capy-Chef 🏆</h3>
+          <p class="text-white/70 text-xs text-balance">
+            @CapyUser - Top Contribuidor
+          </p>
+        </div>
+
+        <a
+          href="/ranking"
+          class="z-10 mt-4 px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-xl text-xs font-bold text-white transition-all w-fit flex items-center gap-2"
+        >
+          Ver Ranking
+          <svg
+            class="w-3 h-3"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"></path></svg
+          >
+        </a>
+
+        <div
+          class="absolute -right-6 -bottom-6 opacity-20 transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500"
+        >
+          <svg
+            class="w-32 h-32 text-white"
+            fill="currentColor"
+            viewBox="0 -960 960 960"
+            ><path
+              d="M280-80v-366q-51-14-85.5-56T160-600v-280h80v280h40v-280h80v280h40v-280h80v280q0 56-34.5 98T360-446v366h-80Zm400 0v-320H560v-280q0-83 58.5-141.5T760-880v800h-80Z"
+            ></path></svg
+          >
         </div>
       </div>
     </div>
 
-    <!-- Placeholder Content -->
-    <div
-      class="flex-1 flex flex-col items-center justify-center p-8 border-2 border-dashed border-white/10 rounded-3xl bg-brand-black/20"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-16 w-16 text-slate-600 mb-4"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
+    <!-- Featured Card: Plato del Día -->
+    <section class="mb-10">
+      <div class="flex items-center justify-between mb-4 px-1">
+        <h2
+          class="text-xl font-extrabold tracking-tight text-white flex items-center gap-2"
+        >
+          🍽️ Menú Subvencionado
+        </h2>
+        <span
+          class="text-brand-lime text-[10px] sm:text-xs font-bold px-2 py-1 bg-brand-lime/10 rounded border border-brand-lime/20 animate-pulse"
+          >ACTUALIZADO HACE 5 MIN</span
+        >
+      </div>
+      <div
+        class="relative group overflow-hidden rounded-3xl bg-[#1c2210] border border-white/10 shadow-2xl"
       >
-        <path
+        <div class="flex flex-col lg:flex-row">
+          <div class="lg:w-3/5 h-75 lg:h-100 relative overflow-hidden">
+            <div
+              class="absolute inset-0 bg-linear-to-t lg:bg-linear-to-r from-[#0a0a0a] via-transparent to-transparent z-10 opacity-80"
+            >
+            </div>
+            <img
+              alt="Lentejas con chorizo"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLw9wLCYp3DuUTIPtjjzd3Z_2cPu39rvy9_yvDb-GSXJMLygE8jli2yvNthBOvg8sjatt-2pXOvEyASlEIGBS0zog-C_d4YHWdklhCKqVZaextJNzbayLW9AItKqzrvbEP1x2D8loLBdmhFGhcqUAA45e2EOf8XE4b7Yg-eS2vB0Os8BCJKnzsT-80yK6VbwZHFyZoBTFA1S7l8PTisoDH-IVnjfTf0VDe70_z1aJG7axMQ7bxtlF6R7AgZyrkFx3MjEBQJF3n0Yc"
+            />
+            <div class="absolute top-4 left-4 z-20">
+              <span
+                class="bg-brand-lime text-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter shadow-lg flex items-center gap-1"
+              >
+                <svg
+                  class="w-3 h-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                  ></path></svg
+                >
+                Plato del Día
+              </span>
+            </div>
+          </div>
+          <div
+            class="lg:w-2/5 p-6 md:p-8 flex flex-col justify-center bg-linear-to-b from-[#1c2210] to-[#0a0a0a] lg:bg-none"
+          >
+            <p
+              class="text-brand-lime font-bold text-xs mb-2 uppercase tracking-widest"
+            >
+              Almuerzo Estudiantil
+            </p>
+            <h3
+              class="text-2xl md:text-3xl font-extrabold mb-4 leading-tight text-white"
+            >
+              Pabellón Criollo
+            </h3>
+            <div class="flex gap-2 mb-6">
+              <span
+                class="text-[10px] bg-white/10 text-white/70 px-2 py-1 rounded"
+                >Típico</span
+              >
+              <span
+                class="text-[10px] bg-white/10 text-white/70 px-2 py-1 rounded"
+                >Completo</span
+              >
+            </div>
+            <p class="text-white/60 text-sm md:text-base mb-8 font-medium">
+              Caraotas negras, arroz blanco, carne mechada y tajadas. Arepita
+              opcional.
+            </p>
+            <div class="flex items-center justify-between mt-auto">
+              <div>
+                <p class="text-white/40 text-[10px] font-bold uppercase">
+                  Precio
+                </p>
+                <p class="text-2xl font-black text-white">
+                  $0.00 <span class="text-xs text-white/50 font-medium"
+                    >Capys</span
+                  >
+                </p>
+              </div>
+              <button
+                class="add-to-cart-btn bg-brand-lime hover:bg-brand-lime/90 text-black font-extrabold px-6 py-3 md:px-8 md:py-4 rounded-xl shadow-[0_0_20px_rgba(215,253,73,0.3)] transition-all active:scale-95 flex items-center gap-2 group"
+                data-id="pabellon-dia"
+                data-name="Pabellón Criollo"
+                data-price="0"
+                data-image="https://lh3.googleusercontent.com/aida-public/AB6AXuBLw9wLCYp3DuUTIPtjjzd3Z_2cPu39rvy9_yvDb-GSXJMLygE8jli2yvNthBOvg8sjatt-2pXOvEyASlEIGBS0zog-C_d4YHWdklhCKqVZaextJNzbayLW9AItKqzrvbEP1x2D8loLBdmhFGhcqUAA45e2EOf8XE4b7Yg-eS2vB0Os8BCJKnzsT-80yK6VbwZHFyZoBTFA1S7l8PTisoDH-IVnjfTf0VDe70_z1aJG7axMQ7bxtlF6R7AgZyrkFx3MjEBQJF3n0Yc"
+              >
+                <svg
+                  class="w-5 h-5 group-hover:scale-110 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg
+                >
+                <span class="hidden sm:inline">Ordenar Ahora</span>
+                <span class="sm:hidden">Pedir</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Capy-Tip Alert -->
+    <div
+      class="bg-brand-lime/5 border border-brand-lime/20 p-5 rounded-2xl flex flex-col sm:flex-row items-center justify-between mb-10 gap-4"
+    >
+      <div class="flex items-center gap-4 text-center sm:text-left">
+        <div
+          class="size-12 shrink-0 rounded-xl bg-brand-lime/10 flex items-center justify-center text-brand-lime"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+            ></path></svg
+          >
+        </div>
+        <div>
+          <h4 class="font-bold text-white">Capy-Tip</h4>
+          <p class="text-white/60 text-sm">
+            ¡Agrega una malta bien fría para completar tu experiencia!
+          </p>
+        </div>
+      </div>
+      <a
+        href="#"
+        class="text-sm font-bold text-brand-lime flex items-center gap-2 hover:underline whitespace-nowrap"
+      >
+        Ver más tips
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg
+        >
+      </a>
+    </div>
+
+    <!-- Premium Carousel Section -->
+    <section class="mb-20 relative group">
+      <div class="flex items-center justify-between mb-6 px-1">
+        <h2 class="text-xl font-extrabold tracking-tight text-white">
+          Capy-Gourmet <span class="text-brand-purple font-normal italic"
+            >(Premium)</span
+          >
+        </h2>
+        <!-- Navigation arrows moved to absolute positioning on the sides -->
+      </div>
+
+      <!-- Container -->
+      <div class="relative w-full">
+        <!-- Decoration / Fade Masks (Subtle inside container) -->
+        <div
+          class="absolute inset-y-0 left-0 w-8 md:w-16 bg-linear-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none rounded-l-3xl"
+        >
+        </div>
+        <div
+          class="absolute inset-y-0 right-0 w-8 md:w-16 bg-linear-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none rounded-r-3xl"
+        >
+        </div>
+
+        <!-- Navigation Buttons (Absolute) -->
+        <button
+          id="scroll-left"
+          class="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-6 z-20 w-12 h-12 rounded-full bg-black/50 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-brand-lime hover:text-black hover:scale-110 transition-all duration-300 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 shadow-xl"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"></path></svg
+          >
+        </button>
+
+        <button
+          id="scroll-right"
+          class="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-6 z-20 w-12 h-12 rounded-full bg-black/50 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-brand-lime hover:text-black hover:scale-110 transition-all duration-300 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 shadow-xl"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"></path></svg
+          >
+        </button>
+
+        <!-- Carousel Track -->
+        <div
+          id="carousel-container"
+          class="flex gap-6 overflow-hidden py-12 px-2"
+        >
+          <!-- Card 1: Pepito Guaro -->
+          <div
+            class="flex-none w-[85vw] md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
+          >
+            <div
+              class="relative h-56 rounded-2xl overflow-hidden mb-4 box-shadow-lg"
+            >
+              <img
+                alt="Pepito Guaro"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                src="https://images.unsplash.com/photo-1734769853702-c7444c039c8c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              />
+              <div
+                class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10"
+              >
+                <span class="text-brand-lime font-black text-xs">450 CP</span>
+              </div>
+            </div>
+            <h4 class="font-bold text-lg text-white">Pepito Guaro</h4>
+            <p class="text-white/50 text-xs mb-4 line-clamp-1">
+              Lomito, pollo, chuleta, queso pecorino y salsas.
+            </p>
+            <button
+              class="add-to-cart-btn w-full py-3 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-xs hover:bg-brand-lime hover:text-black transition-all"
+              data-id="pepito-guaro"
+              data-name="Pepito Guaro"
+              data-price="450"
+              data-image="https://images.unsplash.com/photo-1596662951482-0c4babeae723"
+              >Añadir al Carrito</button
+            >
+          </div>
+          <!-- Card 2: Cachapa con Queso -->
+          <div
+            class="flex-none w-[85vw] md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
+          >
+            <div
+              class="relative h-56 rounded-2xl overflow-hidden mb-4 shadow-lg"
+            >
+              <img
+                alt="Cachapa con Queso"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800"
+              />
+              <div
+                class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10"
+              >
+                <span class="text-brand-lime font-black text-xs">380 CP</span>
+              </div>
+            </div>
+            <h4 class="font-bold text-lg text-white">Cachapa de Maíz</h4>
+            <p class="text-white/50 text-xs mb-4 line-clamp-1">
+              Maíz tierno molido con full queso de mano y mantequilla.
+            </p>
+            <button
+              class="add-to-cart-btn w-full py-3 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-xs hover:bg-brand-lime hover:text-black transition-all"
+              data-id="cachapa-queso"
+              data-name="Cachapa con Queso"
+              data-price="380"
+              data-image="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800"
+              >Añadir al Carrito</button
+            >
+          </div>
+          <!-- Card 3: Tequeños -->
+          <div
+            class="flex-none w-[85vw] md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
+          >
+            <div
+              class="relative h-56 rounded-2xl overflow-hidden mb-4 shadow-lg"
+            >
+              <img
+                alt="Tequeños Ración"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                src="https://images.unsplash.com/photo-1640718534338-466077731ca9?q=80&w=1166&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              />
+              <div
+                class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10"
+              >
+                <span class="text-brand-lime font-black text-xs">200 CP</span>
+              </div>
+            </div>
+            <h4 class="font-bold text-lg text-white">Ración de Tequeños</h4>
+            <p class="text-white/50 text-xs mb-4 line-clamp-1">
+              6 unidades de tequeños full queso con salsa de ajo.
+            </p>
+            <button
+              class="add-to-cart-btn w-full py-3 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-xs hover:bg-brand-lime hover:text-black transition-all"
+              data-id="tequenos-racion"
+              data-name="Ración de Tequeños"
+              data-price="200"
+              data-image="https://images.unsplash.com/photo-1574484284008-59166b615a77?w=800"
+              >Añadir al Carrito</button
+            >
+          </div>
+          <!-- Card 4: Pasticho -->
+          <div
+            class="flex-none w-[85vw] md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
+          >
+            <div
+              class="relative h-56 rounded-2xl overflow-hidden mb-4 shadow-lg"
+            >
+              <img
+                alt="Pasticho Venezolano"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800"
+              />
+              <div
+                class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10"
+              >
+                <span class="text-brand-lime font-black text-xs">420 CP</span>
+              </div>
+            </div>
+            <h4 class="font-bold text-lg text-white">Pasticho Venezolano</h4>
+            <p class="text-white/50 text-xs mb-4 line-clamp-1">
+              Con extra de carne, bechamel y queso parmesano gratinado.
+            </p>
+            <button
+              class="add-to-cart-btn w-full py-3 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-xs hover:bg-brand-lime hover:text-black transition-all"
+              data-id="pasticho-venezolano"
+              data-name="Pasticho Venezolano"
+              data-price="420"
+              data-image="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800"
+              >Añadir al Carrito</button
+            >
+          </div>
+          <!-- Card 5: Extra 1 -->
+          <div
+            class="flex-none w-[85vw] md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
+          >
+            <div
+              class="relative h-56 rounded-2xl overflow-hidden mb-4 shadow-lg"
+            >
+              <img
+                alt="Burger Suprema"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800"
+              />
+              <div
+                class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10"
+              >
+                <span class="text-brand-lime font-black text-xs">550 CP</span>
+              </div>
+            </div>
+            <h4 class="font-bold text-lg text-white">Burger Suprema</h4>
+            <p class="text-white/50 text-xs mb-4 line-clamp-1">
+              Doble carne, cheddar fundido y bacon crujiente.
+            </p>
+            <button
+              class="add-to-cart-btn w-full py-3 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-xs hover:bg-brand-lime hover:text-black transition-all"
+              data-id="burger-suprema"
+              data-name="Burger Suprema"
+              data-price="550"
+              data-image="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800"
+              >Añadir al Carrito</button
+            >
+          </div>
+          <!-- Card 6: Extra 2 -->
+          <div
+            class="flex-none w-[85vw] md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
+          >
+            <div
+              class="relative h-56 rounded-2xl overflow-hidden mb-4 shadow-lg"
+            >
+              <img
+                alt="Dragon Roll"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800"
+              />
+              <div
+                class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10"
+              >
+                <span class="text-brand-lime font-black text-xs">600 CP</span>
+              </div>
+            </div>
+            <h4 class="font-bold text-lg text-white">Dragon Roll</h4>
+            <p class="text-white/50 text-xs mb-4 line-clamp-1">
+              Langostinos tempura, aguacate y salsa de anguila.
+            </p>
+            <button
+              class="add-to-cart-btn w-full py-3 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-xs hover:bg-brand-lime hover:text-black transition-all"
+              data-id="dragon-roll"
+              data-name="Dragon Roll"
+              data-price="600"
+              data-image="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800"
+              >Añadir al Carrito</button
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Floating Action Button: Scan to Pay / Open Cart -->
+  <div
+    class="fixed bottom-24 lg:bottom-12 right-6 lg:right-12 z-40 flex flex-col gap-4"
+  >
+    <!-- Extra Cart Button (Manual) -->
+    <button
+      id="manual-cart-btn"
+      class="bg-[#1a1a1a] hover:bg-white/10 active:scale-95 transition-all w-16 h-16 rounded-full shadow-2xl border border-white/10 flex items-center justify-center text-white relative group"
+    >
+      <div
+        class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-6 h-6 rounded-full hidden"
+        id="cart-badge-count"
+      >
+        0
+      </div>
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        ><path
           stroke-linecap="round"
           stroke-linejoin="round"
           stroke-width="2"
           d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-        ></path>
-      </svg>
-      <h2 class="text-xl font-bold text-white mb-2">Servicio de Comedor</h2>
-      <p class="text-slate-400 text-center max-w-md">
-        Próximamente podrás ver el calendario de comidas y hacer tus pedidos.
-      </p>
-    </div>
+        ></path></svg
+      >
+      <span
+        class="absolute right-full mr-4 bg-black/80 px-2 py-1 rounded text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
+        >Ver Carrito</span
+      >
+    </button>
+
+    <!-- QR Scanner Button -->
+    <button
+      id="floating-qr-btn"
+      class="bg-brand-lime hover:scale-110 active:scale-95 transition-all w-16 h-16 rounded-full shadow-[0_0_30px_rgba(215,253,73,0.4)] flex items-center justify-center text-black animate-pulse"
+    >
+      <svg class="w-8 h-8" fill="currentColor" viewBox="0 -960 960 960"
+        ><path
+          d="M120-120v-200h80v120h120v80H120Zm520 0v-80h120v-120h80v200H640ZM120-640v-200h200v80H200v120h-80Zm640 0v-120H640v-80h200v200h-80Zm-480 80h320v320H280v-320Zm80 80v160h160v-160H360Z"
+        ></path></svg
+      >
+      <span
+        class="absolute right-full mr-4 bg-black/80 px-2 py-1 rounded text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
+        >Escanear QR</span
+      >
+    </button>
   </div>
+
+  <script>
+    import { addItemToCart, isCartOpen, cartItems } from "../store/cartStore";
+    import { showToast } from "../utils/toast";
+
+    console.log("Comedor script loaded");
+
+    // ==========================================
+    // SECCIÓN 1: Manejo del Botón del Carrito y Badge
+    // ==========================================
+
+    // Obtenemos referencias a los elementos del DOM (Document Object Model)
+    const manualCartBtn = document.getElementById("manual-cart-btn");
+    const cartBadge = document.getElementById("cart-badge-count");
+
+    /* 
+       Nos "suscribimos" a la tienda del carrito (cartStore).
+       Cada vez que items cambien (se agregue o elimine algo),
+       se ejecuta este código automáticamente.
+    */
+    cartItems.subscribe((items) => {
+      // 1. Calculamos la cantidad total de items sumando la propiedad 'quantity' de cada uno.
+      // Usamos 'as Record<string, any>' para decirle a TypeScript que confíe en la estructura del objeto.
+      const count = Object.values(items as Record<string, any>).reduce(
+        (acc: number, item: any) => acc + item.quantity,
+        0,
+      );
+
+      // 2. Actualizamos el globito rojo (badge) con el número.
+      if (cartBadge) {
+        cartBadge.textContent = count.toString();
+
+        // Si hay items, mostramos el badge. Si es 0, lo ocultamos.
+        if (count > 0) {
+          cartBadge.classList.remove("hidden");
+          cartBadge.classList.add("flex", "items-center", "justify-center");
+        } else {
+          cartBadge.classList.add("hidden");
+          cartBadge.classList.remove("flex", "items-center", "justify-center");
+        }
+      }
+
+      // 3. Efecto de "latido" (animación) en el botón al añadir algo nuevo.
+      if (count > 0 && manualCartBtn) {
+        manualCartBtn.classList.add("scale-110");
+        // Quitamos la clase después de 200ms para que vuelva a su tamaño original.
+        setTimeout(() => manualCartBtn.classList.remove("scale-110"), 200);
+      }
+    });
+
+    // Evento Click: Al hacer clic en el botón flotante del carrito, abrimos la barra lateral.
+    if (manualCartBtn) {
+      manualCartBtn.addEventListener("click", () => {
+        isCartOpen.set(true); // Cambiamos el estado global a 'true'
+      });
+    }
+
+    // ==========================================
+    // SECCIÓN 2: Botones "Añadir al Carrito" (Tarjetas)
+    // ==========================================
+
+    /* 
+       Buscamos TODOS los botones que tengan la clase .add-to-cart-btn.
+       Esto incluye los botones de las tarjetas del carrusel.
+    */
+    const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
+
+    addToCartButtons.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        // Prevenimos comportamientos por defecto (como recargar la página si fuera un link)
+        e.preventDefault();
+        e.stopPropagation(); // Evitamos que el clic se propague a elementos padres
+
+        const target = e.currentTarget;
+        if (!(target instanceof HTMLElement)) return;
+
+        console.log("Agregando item:", target.dataset.name);
+
+        // Construimos el objeto del producto usando los datos guardados en el HTML (data-attributes)
+        const item = {
+          id: target.dataset.id,
+          name: target.dataset.name,
+          price: parseInt(target.dataset.price || "0"),
+          image: target.dataset.image,
+        };
+
+        try {
+          // Llamamos a la función de la tienda para guardar el item
+          addItemToCart(item);
+          // Abrimos el sidebar automáticamente para dar feedback visual
+          isCartOpen.set(true);
+          // Mostramos una notificación bonita (Toast)
+          showToast(`¡${item.name} agregado! 🍔`, "success");
+        } catch (err) {
+          console.error("Error al agregar al carrito", err);
+          showToast("Error al agregar item", "error");
+        }
+      });
+    });
+
+    // ==========================================
+    // SECCIÓN 3: Carrusel Infinito (Lógica Avanzada)
+    // ==========================================
+
+    const scrollContainer = document.getElementById("carousel-container");
+    const btnLeft = document.getElementById("scroll-left");
+    const btnRight = document.getElementById("scroll-right");
+
+    if (scrollContainer && btnLeft && btnRight) {
+      /* 
+       Concepto del Scroll Infinito:
+       Para que parezca que no tiene fin, triplicamos el contenido.
+       
+       Estructura visual en memoria:
+       [SET 1 (Clones)]  [SET 2 (Originales)]  [SET 3 (Clones)]
+       
+       - El usuario empieza viendo el SET 2.
+       - Si scrollea hacia la derecha y llega al SET 3, silenciosamente lo mandamos al inicio del SET 2.
+       - Si scrollea hacia la izquierda y llega al SET 1, lo mandamos al final del SET 2.
+      */
+
+      const originalCards = Array.from(scrollContainer.children);
+      const CARD_COUNT = originalCards.length;
+
+      // 1. Limpiamos el contenedor para evitar duplicados si el script corre dos veces
+      scrollContainer.innerHTML = "";
+
+      // 2. Creamos los 3 conjuntos de tarjetas clonando los nodos originales
+      const set1 = originalCards.map((card) => card.cloneNode(true)); // Copias para el lado izquierdo
+      const set2 = originalCards.map((card) => card.cloneNode(true)); // Contenido central (el que ve el usuario)
+      const set3 = originalCards.map((card) => card.cloneNode(true)); // Copias para el lado derecho
+
+      // 3. Insertamos todo en el contenedor y reactivamos los botones
+      // (IMPORTANTE: cloneNode no copia los eventos de clic, hay que volver a añadirlos)
+      [...set1, ...set2, ...set3].forEach((card) => {
+        const btn = (card as HTMLElement).querySelector(".add-to-cart-btn");
+        if (btn) {
+          btn.addEventListener("click", (e) => {
+            // Misma lógica de añadir al carrito explicada arriba
+            e.preventDefault();
+            e.stopPropagation();
+            const target = e.currentTarget as HTMLElement;
+            const item = {
+              id: target.dataset.id,
+              name: target.dataset.name,
+              price: parseInt(target.dataset.price || "0"),
+              image: target.dataset.image,
+            };
+            addItemToCart(item);
+            isCartOpen.set(true);
+            showToast(`¡${item.name} agregado! 🍔`, "success");
+          });
+        }
+        scrollContainer.appendChild(card);
+      });
+
+      /* 
+         Función de "Easing" (Suavizado):
+         Define cómo cambia la velocidad durante la animación.
+         'easeInOutCubic' empieza lento, acelera en el medio y frena suave al final.
+         Matemáticas: t < 0.5 ? 4*t^3 : 1 - (-2*t+2)^3 / 2
+      */
+      const easeInOutCubic = (t: number): number =>
+        t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+      /* 
+         Función personalizada para animar el scroll
+         Usamos requestAnimationFrame para que sea fluido (60fps)
+      */
+      const smoothScroll = (
+        element: HTMLElement,
+        change: number,
+        duration: number,
+      ) => {
+        const start = element.scrollLeft;
+        const startTime = performance.now();
+
+        const animateScroll = (currentTime: number) => {
+          const timeElapsed = currentTime - startTime;
+          let progress = timeElapsed / duration;
+          if (progress > 1) progress = 1;
+
+          // Calculamos la posición exacta basada en la curva de aceleración
+          const ease = easeInOutCubic(progress);
+          element.scrollLeft = start + change * ease;
+
+          // Si no ha terminado el tiempo, pedimos el siguiente frame
+          if (progress < 1) requestAnimationFrame(animateScroll);
+        };
+        requestAnimationFrame(animateScroll);
+      };
+
+      // Utilidad para saber cuánto mide una tarjeta + su espacio (gap)
+      const getCardWidth = (): number => {
+        const card = scrollContainer.children[0];
+        if (!card) return 0;
+        const style = window.getComputedStyle(scrollContainer);
+        const gap = parseFloat(style.gap) || 24;
+        return card.clientWidth + gap;
+      };
+
+      // 4. Posicionamiento Inicial:
+      // Esperamos 100ms para asegurar que el diseño cargó y saltamos al inicio del SET 2
+      setTimeout(() => {
+        const singleSetWidth = getCardWidth() * CARD_COUNT;
+        scrollContainer.scrollLeft = singleSetWidth;
+      }, 100);
+
+      // 5. El "Truco de Magia" (Teletransportación silenciosa)
+      scrollContainer.addEventListener("scroll", () => {
+        const singleSetWidth = getCardWidth() * CARD_COUNT;
+
+        // Si estamos entrando en la zona de clones izquierdos, saltamos adelante
+        if (scrollContainer.scrollLeft < 50) {
+          scrollContainer.scrollLeft += singleSetWidth;
+        }
+        // Si estamos entrando en la zona de clones derechos, saltamos atrás
+        else if (scrollContainer.scrollLeft > singleSetWidth * 2 - 50) {
+          scrollContainer.scrollLeft -= singleSetWidth;
+        }
+      });
+
+      // Eventos de los botones Flecha Izquierda / Derecha
+      btnLeft.addEventListener("click", () => {
+        // Obtenemos el ancho de 2 tarjetas para movernos más rápido
+        const moveAmount = getCardWidth() * 2;
+        // Scroll negativo (hacia la izquierda) en 600 milisegundos
+        smoothScroll(scrollContainer, -moveAmount, 600);
+      });
+
+      btnRight.addEventListener("click", () => {
+        const moveAmount = getCardWidth() * 2;
+        // Scroll positivo (hacia la derecha) en 600 milisegundos
+        smoothScroll(scrollContainer, moveAmount, 600);
+      });
+    }
+
+    // ==========================================
+    // SECCIÓN 4: Botón Flotante (QR)
+    // ==========================================
+    const floatingBtn = document.getElementById("floating-qr-btn");
+    if (floatingBtn) {
+      floatingBtn.addEventListener("click", () => {
+        showToast("📷 Iniciando Escáner QR...", "info");
+      });
+    }
+  </script>
 </MainLayout>
