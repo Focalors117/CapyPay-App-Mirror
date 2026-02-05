@@ -34,10 +34,10 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
           <h1
             class="text-xl sm:text-2xl lg:text-3xl font-bold text-white truncate"
           >
-            Recargar Capys 👋
+            Recargar BARAS
           </h1>
           <p class="text-slate-400 text-xs sm:text-sm mt-0.5 lg:mt-1">
-            Compra Capys de forma rápida y segura.
+            Compra BARAS de forma rápida y segura.
           </p>
         </div>
       </div>
@@ -118,11 +118,11 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
                 </div>
               </div>
 
-              <!-- Input Capys -->
+              <!-- Input BARAS -->
               <div class="relative group/input">
                 <label
                   class="text-[10px] sm:text-xs text-slate-500 font-bold ml-3 sm:ml-4 mb-1 block uppercase"
-                  >Recibes en Capys</label
+                  >Recibes en BARAS</label
                 >
                 <div class="relative">
                   <span
@@ -145,25 +145,25 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
                   data-action="set-amount"
                   data-value="5"
                   class="px-3 py-1.5 bg-white/5 rounded-full text-xs font-bold text-slate-300 hover:bg-brand-lime hover:text-black transition-colors whitespace-nowrap active:scale-95 border border-white/5"
-                  >5 Capys</button
+                  >5 BARAS</button
                 >
                 <button
                   data-action="set-amount"
                   data-value="10"
                   class="px-3 py-1.5 bg-white/5 rounded-full text-xs font-bold text-slate-300 hover:bg-brand-lime hover:text-black transition-colors whitespace-nowrap active:scale-95 border border-white/5"
-                  >10 Capys</button
+                  >10 BARAS</button
                 >
                 <button
                   data-action="set-amount"
                   data-value="20"
                   class="px-3 py-1.5 bg-white/5 rounded-full text-xs font-bold text-slate-300 hover:bg-brand-lime hover:text-black transition-colors whitespace-nowrap active:scale-95 border border-white/5"
-                  >20 Capys</button
+                  >20 BARAS</button
                 >
                 <button
                   data-action="set-amount"
                   data-value="50"
                   class="px-3 py-1.5 bg-white/5 rounded-full text-xs font-bold text-slate-300 hover:bg-brand-lime hover:text-black transition-colors whitespace-nowrap active:scale-95 border border-white/5"
-                  >50 Capys</button
+                  >50 BARAS</button
                 >
               </div>
             </div>
@@ -178,25 +178,25 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
                   data-action="set-amount"
                   data-value="5"
                   class="px-2 sm:px-3 py-0.5 sm:py-1.5 bg-white/5 rounded-full text-[10px] font-bold text-slate-300 hover:bg-brand-lime hover:text-black transition-colors whitespace-nowrap active:scale-95 flex-shrink-0"
-                  >5 Capys</button
+                  >5 BARAS</button
                 >
                 <button
                   data-action="set-amount"
                   data-value="10"
                   class="px-2 sm:px-3 py-0.5 sm:py-1.5 bg-white/5 rounded-full text-[10px] font-bold text-slate-300 hover:bg-brand-lime hover:text-black transition-colors whitespace-nowrap active:scale-95 flex-shrink-0"
-                  >10 Capys</button
+                  >10 BARAS</button
                 >
                 <button
                   data-action="set-amount"
                   data-value="20"
                   class="px-2 sm:px-3 py-0.5 sm:py-1.5 bg-white/5 rounded-full text-[10px] font-bold text-slate-300 hover:bg-brand-lime hover:text-black transition-colors whitespace-nowrap active:scale-95 flex-shrink-0"
-                  >20 Capys</button
+                  >20 BARAS</button
                 >
                 <button
                   data-action="set-amount"
                   data-value="50"
                   class="px-2 sm:px-3 py-0.5 sm:py-1.5 bg-white/5 rounded-full text-[10px] font-bold text-slate-300 hover:bg-brand-lime hover:text-black transition-colors whitespace-nowrap active:scale-95 flex-shrink-0"
-                  >50 Capys</button
+                  >50 BARAS</button
                 >
               </div>
 
@@ -675,7 +675,7 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
                     <span
                       id="summary-capys"
                       class="text-sm sm:text-base font-bold text-brand-lime"
-                      >0.00 Capys</span
+                      >0.00 BARAS</span
                     >
                   </div>
                   <div
@@ -780,9 +780,9 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
     let exchangeRate = 0; // Inicializar en 0 para evitar cálculos erróneos antes de cargar
 
     const inputBs = document.getElementById("input-bs"); // Input de Bolívares
-    const inputCapy = document.getElementById("input-capy"); // Input de Capys
+    const inputCapy = document.getElementById("input-capy"); // Input de BARAS
     const summaryBs = document.getElementById("summary-bs"); // Elemento de resumen de Bs
-    const summaryCapys = document.getElementById("summary-capys"); // Elemento de resumen de Capys
+    const summaryBARAS = document.getElementById("summary-capys"); // Elemento de resumen de BARAS
     let activeInput = "capy"; // Controla qué input tiene el foco (bs o capy)
 
     // Auxiliar: Determinar si es vista móvil
@@ -895,8 +895,8 @@ import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         });
-      if (summaryCapys)
-        summaryCapys.innerText = capys.toLocaleString("es-VE", {
+      if (summaryBARAS)
+        summaryBARAS.innerText = capys.toLocaleString("es-VE", {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         });

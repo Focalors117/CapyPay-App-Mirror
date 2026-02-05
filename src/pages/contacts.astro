@@ -3,85 +3,37 @@ import MainLayout from "../layouts/MainLayout.astro";
 ---
 
 <MainLayout title="Contactos | CapyPay">
-  <div class="flex flex-col gap-6 h-full p-4 lg:p-0 relative">
-    <!-- 1. Header Area (Title + New Btn + Search + Filters) -->
-    <div class="flex flex-col gap-6">
-      <!-- Top Row: Title & Add Button -->
-      <div
-        class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4"
-      >
-        <div>
-          <h1
-            class="text-3xl font-bold text-white mb-2 flex items-center gap-3"
-          >
-            <a
-              href="/dashboard"
-              class="group/back p-2 hover:bg-white/5 rounded-xl transition-colors"
-              title="Volver al Dashboard"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6 text-slate-400 group-hover/back:text-white transition-colors"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-              </svg>
-            </a>
-            Contactos
-          </h1>
-          <p class="text-slate-400 text-sm ml-12">
-            Gestiona tus destinatarios frecuentes y favoritos.
-          </p>
-        </div>
-        <button
-          id="btn-open-modal"
-          class="bg-[#2a2a2a] hover:bg-[#333] text-white px-5 py-2.5 rounded-xl font-medium transition-all flex items-center gap-2 border border-white/10 group cursor-pointer"
+  <div class="flex flex-col gap-4 lg:gap-6 min-h-screen lg:h-full p-3 sm:p-4 lg:p-0 relative overflow-y-auto">
+    <!-- Header -->
+    <header
+      class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 lg:gap-4 shrink-0"
+    >
+      <div class="flex items-center gap-3 lg:gap-4 w-full md:w-auto">
+        <a
+          href="/dashboard"
+          class="w-9 h-9 lg:w-10 lg:h-10 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/5 transition-colors shrink-0"
         >
-          <div
-            class="w-5 h-5 rounded-full bg-brand-lime/20 flex items-center justify-center text-brand-lime group-hover:bg-brand-lime group-hover:text-black transition-colors"
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 lg:h-5 lg:w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 19l-7-7 7-7m8 14l-7-7 7-7"
+            ></path>
+          </svg>
+        </a>
+        <div class="min-w-0 flex-1">
+          <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white flex items-center gap-2">
+            Contactos
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-3 w-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="3"
-                d="M12 4v16m8-8H4"></path>
-            </svg>
-          </div>
-          <span>Añadir Nuevo</span>
-        </button>
-      </div>
-
-      <!-- Second Row: Search & Filters -->
-      <div
-        class="flex flex-col md:flex-row gap-4 justify-between items-center bg-[#0f1012] p-2 rounded-2xl border border-white/5"
-      >
-        <!-- Search Input -->
-        <div class="relative w-full md:w-96 group">
-          <input
-            type="text"
-            id="search-input"
-            placeholder="Buscar por nombre, cédula o alias..."
-            class="w-full bg-[#1a1a1a] text-white text-sm rounded-xl pl-10 pr-4 py-3 border border-transparent focus:border-brand-lime/30 focus:bg-black transition-all placeholder:text-slate-600 outline-none"
-          />
-          <div
-            class="absolute left-0 top-0 h-full w-10 flex items-center justify-center text-slate-600 group-focus-within:text-brand-lime transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
+              class="h-6 w-6 text-brand-purple"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -90,39 +42,91 @@ import MainLayout from "../layouts/MainLayout.astro";
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+              ></path>
             </svg>
-          </div>
+          </h1>
+          <p class="text-slate-400 text-xs sm:text-sm mt-0.5 lg:mt-1">
+            Gestiona tus destinatarios frecuentes y favoritos
+          </p>
         </div>
+      </div>
 
-        <!-- Filter Tabs -->
-        <div class="flex p-1 bg-[#1a1a1a] rounded-xl self-stretch md:self-auto">
-          <button
-            class="px-5 py-2 rounded-lg text-xs font-bold bg-brand-lime text-black shadow-lg transition-all filter-btn"
-            data-filter="all">Todos</button
-          >
-          <button
-            class="px-5 py-2 rounded-lg text-xs font-bold text-slate-500 hover:text-white transition-all filter-btn"
-            data-filter="recent">Recientes</button
-          >
-          <button
-            class="px-5 py-2 rounded-lg text-xs font-bold text-slate-500 hover:text-white transition-all filter-btn"
-            data-filter="favorites">Favoritos</button
-          >
-        </div>
+      <!-- Botón Añadir -->
+      <button
+        id="btn-open-modal"
+        class="flex items-center gap-2 px-4 py-2.5 bg-brand-lime hover:bg-brand-lime/90 text-black rounded-xl transition-all border border-brand-lime/30 font-medium shadow-[0_0_10px_rgba(215,253,73,0.2)] hover:shadow-[0_0_15px_rgba(215,253,73,0.3)] shrink-0"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 4v16m8-8H4"
+          ></path>
+        </svg>
+        <span class="text-sm font-medium hidden sm:inline">Añadir Nuevo</span>
+      </button>
+    </header>
+
+    <!-- Search & Filters -->
+    <div class="flex flex-col sm:flex-row gap-3">
+      <!-- Search Input -->
+      <div class="relative flex-1">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Buscar por nombre, cédula o alias..."
+          class="w-full bg-brand-black border border-white/10 text-white text-sm rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-brand-lime/30 focus:bg-brand-black transition-all placeholder:text-slate-500"
+        />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          ></path>
+        </svg>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="flex p-1 bg-brand-black rounded-xl border border-white/10 self-stretch sm:self-auto shrink-0">
+        <button
+          class="px-3 py-2 rounded-lg text-xs font-bold bg-brand-lime text-black shadow-sm transition-all filter-btn"
+          data-filter="all">Todos</button
+        >
+        <button
+          class="px-3 py-2 rounded-lg text-xs font-bold text-slate-500 hover:text-white transition-all filter-btn"
+          data-filter="recent">Recientes</button
+        >
+        <button
+          class="px-3 py-2 rounded-lg text-xs font-bold text-slate-500 hover:text-white transition-all filter-btn"
+          data-filter="favorites">Favoritos</button>
       </div>
     </div>
 
-    <!-- 2. Content Grid -->
+    <!-- Contacts Grid -->
     <div
       id="contacts-grid"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 flex-1 overflow-y-auto custom-scrollbar content-start pb-20 mt-2"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 flex-1 pb-20 lg:pb-0"
     >
       <!-- Loading State -->
       <div class="col-span-full flex justify-center py-20 text-slate-500">
-        <div class="animate-pulse flex flex-col items-center gap-2">
+        <div class="flex flex-col items-center gap-3">
           <div
-            class="w-8 h-8 border-2 border-brand-lime/30 border-t-brand-lime rounded-full animate-spin"
+            class="w-12 h-12 border-2 border-brand-lime/30 border-t-brand-lime rounded-full animate-spin"
           >
           </div>
           <span>Cargando contactos...</span>
@@ -130,19 +134,22 @@ import MainLayout from "../layouts/MainLayout.astro";
       </div>
       <!-- Contacts will be injected here via JS -->
     </div>
+
+    <!-- Spacer para bottom nav en mobile -->
+    <div class="lg:hidden h-20 w-full shrink-0"></div>
   </div>
 
-  <!-- 3. Modal Nuevo Contacto (Hidden by default) -->
+  <!-- Modal Nuevo Contacto -->
   <div
     id="modal-add-contact"
-    class="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"
   >
     <div
-      class="bg-[#121212] w-full max-w-md rounded-3xl border border-white/10 p-6 shadow-2xl transform scale-95 transition-transform duration-300 relative overflow-hidden"
+      class="bg-brand-black border border-white/10 w-full max-w-md rounded-3xl p-6 shadow-2xl transform scale-95 transition-transform duration-300 relative overflow-hidden"
     >
-      <!-- Decoration -->
+      <!-- Glow FX -->
       <div
-        class="absolute -top-20 -left-20 w-40 h-40 bg-brand-lime/5 rounded-full blur-3xl"
+        class="absolute -top-10 -right-10 w-32 h-32 bg-brand-lime/5 rounded-full blur-3xl pointer-events-none"
       >
       </div>
 
@@ -163,7 +170,7 @@ import MainLayout from "../layouts/MainLayout.astro";
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
-              d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+              d="M18 9v3m0 0v3m0-3h3m-3 0v3m0-3h3m-2-5a4 4 0 11-8 0 4 4 0 018 0z"
             ></path>
           </svg>
         </div>
@@ -171,7 +178,7 @@ import MainLayout from "../layouts/MainLayout.astro";
       </h2>
 
       <form id="form-add-contact" class="flex flex-col gap-4 relative z-10">
-        <!-- Input Cedula with Live Search -->
+        <!-- Input Cédula -->
         <div class="relative group/input">
           <label
             class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-2"
@@ -185,29 +192,14 @@ import MainLayout from "../layouts/MainLayout.astro";
               required
               autocomplete="off"
               placeholder="Ej: 8459201"
-              class="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3.5 text-white focus:border-brand-lime/50 focus:outline-none transition-all placeholder:text-slate-700"
+              class="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3.5 text-white focus:border-brand-lime/50 focus:outline-none transition-all placeholder:text-slate-600"
             />
-            <div class="absolute right-3 top-3 text-slate-600">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-              </svg>
-            </div>
           </div>
 
           <!-- Suggestions Dropdown -->
           <div
             id="cedula-suggestions"
-            class="absolute left-0 right-0 top-full mt-2 bg-[#1a1a1a] border border-white/10 rounded-xl shadow-2xl max-h-48 overflow-y-auto hidden z-50 custom-scrollbar"
+            class="absolute left-0 right-0 top-full mt-2 bg-[#0a0a0a] border border-white/10 rounded-xl shadow-2xl max-h-48 overflow-y-auto hidden z-20"
           >
             <!-- Items injected via JS -->
           </div>
@@ -223,14 +215,14 @@ import MainLayout from "../layouts/MainLayout.astro";
             type="text"
             name="alias"
             placeholder="Ej: El Jefe, Mamá, etc."
-            class="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3.5 text-white focus:border-brand-lime/50 focus:outline-none transition-all placeholder:text-slate-700"
+            class="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3.5 text-white focus:border-brand-lime/50 focus:outline-none transition-all placeholder:text-slate-600"
           />
         </div>
 
         <!-- Error Message -->
         <div
           id="add-error"
-          class="hidden text-red-400 text-sm bg-red-500/10 p-3 rounded-lg border border-red-500/20 items-center gap-2"
+          class="hidden text-red-400 text-sm bg-red-500/10 p-3 rounded-xl border border-red-500/20 items-center gap-2"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -238,17 +230,19 @@ import MainLayout from "../layouts/MainLayout.astro";
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            ><path
+          >
+            <path
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
-              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg
-          >
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
           <span id="add-error-text">Error</span>
         </div>
 
         <!-- Actions -->
-        <div class="flex gap-3 justify-end mt-4 pt-4 border-t border-white/5">
+        <div class="flex gap-3 justify-end mt-2 pt-4 border-t border-white/5">
           <button
             type="button"
             id="btn-close-modal"
@@ -258,7 +252,7 @@ import MainLayout from "../layouts/MainLayout.astro";
           </button>
           <button
             type="submit"
-            class="bg-brand-lime hover:bg-[#bce628] text-black px-6 py-2.5 rounded-xl font-bold transition-all shadow-[0_0_15px_rgba(215,253,73,0.3)] hover:shadow-[0_0_25px_rgba(215,253,73,0.5)] cursor-pointer text-sm flex items-center gap-2"
+            class="bg-brand-lime hover:bg-[#bce628] text-black px-6 py-2.5 rounded-xl font-bold transition-all shadow-[0_0_10px_rgba(215,253,73,0.2)] hover:shadow-[0_0_20px_rgba(215,253,73,0.4)] cursor-pointer text-sm"
           >
             Guardar Contacto
           </button>
@@ -365,14 +359,14 @@ import MainLayout from "../layouts/MainLayout.astro";
     users.forEach((u) => {
       const item = document.createElement("div");
       item.className =
-        "px-4 py-3 hover:bg-brand-lime/10 cursor-pointer border-b border-white/5 last:border-0 flex flex-col transition-colors group";
+        "px-4 py-3 hover:bg-white/5 cursor-pointer border-b border-white/5 last:border-0 flex flex-col transition-colors group";
       item.innerHTML = `
                 <div class="flex items-center justify-between">
                     <span class="text-white text-sm font-bold group-hover:text-brand-lime transition-colors">${u.cedula}</span>
-                    <span class="text-[10px] bg-white/10 px-1.5 rounded text-slate-400">Usuario</span>
+                    <span class="text-[10px] text-slate-400 bg-white/5 px-1.5 rounded">Usuario</span>
                 </div>
                 <span class="text-slate-400 text-xs">${u.name}</span>
-            `;
+              `;
       item.addEventListener("click", () => {
         inputCedula.value = u.cedula;
         // Auto-fill alias logic
@@ -389,7 +383,7 @@ import MainLayout from "../layouts/MainLayout.astro";
 
   // --- GRID RENDERING ---
 
-  // Globals needed for HTML onclick attributes
+  // Global function for card menu toggle
   window.toggleCardMenu = (id) => {
     const menu = document.getElementById(`menu-${id}`);
     // Close others
@@ -397,7 +391,7 @@ import MainLayout from "../layouts/MainLayout.astro";
       if (m.id !== `menu-${id}`) m.classList.add("hidden");
     });
     // Toggle current
-    menu.classList.toggle("hidden");
+    if (menu) menu.classList.toggle("hidden");
   };
 
   // Close menus on click outside
@@ -413,11 +407,11 @@ import MainLayout from "../layouts/MainLayout.astro";
     const isFav = contact.is_favorite;
     const div = document.createElement("div");
     div.className =
-      "bg-[#0f1012] border border-white/5 rounded-3xl p-6 flex flex-col items-center gap-4 hover:border-brand-lime/30 transition-all group relative animate-fade-in hover:shadow-xl hover:shadow-black/50 hover:-translate-y-1 duration-300";
+      "bg-brand-black border border-white/10 rounded-3xl p-6 flex flex-col items-center gap-4 hover:border-brand-lime/30 transition-all group relative animate-fade-in hover:shadow-xl hover:shadow-black/50";
 
     // Add Star Badge if favorite
     const favBadge = isFav
-      ? `<div class="absolute top-4 right-4 text-brand-lime animate-pulse"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>`
+      ? `<div class="absolute top-4 right-4 text-brand-lime"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.24 8.63 1.64-7.03L5.82 21l-1.63-4.73L12 2 9.24 7.19 8.63 1.63L14.36 21l-1.64-4.73L12 2 9.24 5.82 21z"/></svg></div>`
       : "";
 
     div.innerHTML = `
@@ -427,52 +421,49 @@ import MainLayout from "../layouts/MainLayout.astro";
                 <img
                     src="https://api.dicebear.com/9.x/avataaars/svg?seed=${contact.nombre}"
                     alt="${contact.nombre}"
-                    class="w-20 h-20 rounded-full bg-[#1a1a1a] border-4 border-[#0f1012] group-hover:border-brand-lime transition-colors shadow-2xl"
+                    class="w-24 h-24 rounded-full bg-[#121212] border-4 border-white/10 group-hover:border-brand-lime transition-colors shadow-2xl"
                 />
-                <div class="absolute bottom-1 right-1 w-4 h-4 bg-brand-lime border-2 border-[#0f1012] rounded-full"></div>
+                <div class="absolute bottom-1 right-1 w-5 h-5 bg-brand-lime border-2 border-[#121212] rounded-full"></div>
             </div>
 
             <!-- Text Info -->
-            <div class="text-center w-full mb-2">
+            <div class="text-center w-full">
                 <h3 class="text-white font-bold text-lg truncate mb-1" title="${contact.nombre}">
                     ${contact.nombre}
                 </h3>
                 <div class="flex justify-center mb-2">
-                    <span class="text-[10px] text-slate-500 font-mono bg-[#1a1a1a] px-2 py-0.5 rounded border border-white/5">
+                    <span class="text-[10px] text-slate-400 font-mono bg-white/5 px-2 py-0.5 rounded border border-white/5">
                         ${contact.cedula}
                     </span>
                 </div>
                 <div class="text-xs text-slate-400 truncate w-full px-2">
-                    ${contact.alias ? "@" + contact.alias : "@" + contact.nombre.replace(/\s+/g, "").toLowerCase()} 
+                    ${contact.alias ? "@" + contact.alias : "@" + contact.nombre.replace(/\s+/g, "").toLowerCase()}
                 </div>
             </div>
 
             <!-- Actions Row -->
-            <div class="flex gap-2 w-full mt-auto">
+            <div class="flex gap-2 w-full">
                 <button 
-                  class="flex-1 bg-brand-lime hover:bg-[#bce628] text-black text-xs font-bold py-3 rounded-xl transition-all shadow-[0_0_10px_rgba(215,253,73,0.1)] hover:shadow-[0_0_20px_rgba(215,253,73,0.3)] cursor-pointer active:scale-95"
-                  onclick="window.location.href='/dashboard?transferTo=${contact.cedula}'"
+                    class="flex-1 bg-brand-lime hover:bg-[#bce628] text-black text-xs font-bold py-3 rounded-xl transition-all shadow-[0_0_10px_rgba(215,253,73,0.1)] hover:shadow-[0_0_15px_rgba(215,253,73,0.2)] active:scale-95"
+                    onclick="window.location.href='/dashboard?transferTo=${contact.cedula}'"
                 >
-                    Enviar Capys
+                    Enviar BARAS
                 </button>
                 
                 <div class="relative card-actions">
                     <button 
                         onclick="toggleCardMenu('${contact.id}')"
-                        class="w-10 h-full rounded-xl bg-[#1a1a1a] text-slate-400 hover:text-white hover:bg-[#252525] flex items-center justify-center border border-white/5 transition-colors cursor-pointer"
+                        class="w-10 h-full rounded-xl bg-[#121212] text-slate-400 hover:text-white hover:bg-[#252525] flex items-center justify-center border border-white/5 transition-colors cursor-pointer"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/></svg>
                     </button>
                     <!-- Dropdown Menu -->
-                    <div id="menu-${contact.id}" class="card-menu hidden absolute bottom-full right-0 mb-2 w-48 bg-[#1a1a1a] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-20 animate-fade-in-up origin-bottom-right">
-                        <div class="p-1">
-                            <button class="w-full text-left px-3 py-2.5 text-xs font-medium text-slate-300 hover:bg-white/5 hover:text-white rounded-lg flex items-center gap-3 transition-colors cursor-pointer btn-favorite" data-id="${contact.id}" data-fav="${isFav}">
+                    <div id="menu-${contact.id}" class="card-menu hidden absolute bottom-full right-0 mb-2 w-48 bg-[#121212] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-20">
+                        <div class="p-1 flex flex-col gap-0.5">
+                            <button class="w-full text-left px-3 py-2.5 text-xs font-medium text-slate-300 hover:bg-white/5 hover:text-white rounded-lg flex items-center gap-3 transition-colors btn-favorite" data-id="${contact.id}" data-fav="${isFav}">
                                 <span class="${isFav ? "text-brand-lime" : "text-slate-500"}">★</span> ${isFav ? "Quitar de Favoritos" : "Añadir a Favoritos"}
                             </button>
-                            <div class="h-px bg-white/5 my-1"></div>
-                            <button class="w-full text-left px-3 py-2.5 text-xs font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300 rounded-lg flex items-center gap-3 transition-colors btn-delete cursor-pointer" data-id="${contact.id}">
+                            <button class="w-full text-left px-3 py-2.5 text-xs font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300 rounded-lg flex items-center gap-3 transition-colors btn-delete" data-id="${contact.id}">
                                 <span>🗑</span> Eliminar Contacto
                             </button>
                         </div>
@@ -486,18 +477,18 @@ import MainLayout from "../layouts/MainLayout.astro";
   function createAddCard() {
     const div = document.createElement("div");
     div.className =
-      "bg-transparent border-2 border-dashed border-[#2a2a2a] rounded-3xl p-6 flex flex-col items-center justify-center gap-4 hover:border-brand-lime hover:bg-brand-lime/5 transition-all group cursor-pointer h-full min-h-[280px]";
+      "bg-transparent border-2 border-dashed border-white/10 rounded-3xl p-6 flex flex-col items-center justify-center gap-4 hover:border-brand-lime/30 hover:bg-brand-lime/5 transition-all group cursor-pointer h-full min-h-[240px]";
     div.innerHTML = `
-             <div class="w-20 h-20 rounded-full bg-[#151515] flex items-center justify-center text-slate-600 group-hover:bg-brand-lime group-hover:text-black transition-all shadow-lg group-hover:scale-110 duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                </svg>
-             </div>
-             <div class="text-center">
-                 <h3 class="text-slate-400 group-hover:text-brand-lime font-bold mb-1 transition-colors text-lg">Añadir Nuevo</h3>
-                 <p class="text-xs text-slate-600 group-hover:text-slate-500 transition-colors">Guardar nuevo destinatario</p>
-             </div>
-         `;
+             <div class="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center text-slate-500 group-hover:bg-brand-lime group-hover:text-black transition-all">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                 </svg>
+              </div>
+              <div class="text-center">
+                  <h3 class="text-slate-400 group-hover:text-black font-bold mb-1 transition-colors text-lg">Añadir Nuevo</h3>
+                  <p class="text-xs text-slate-500 group-hover:text-slate-600 transition-colors">Guardar nuevo destinatario</p>
+              </div>
+          `;
     div.addEventListener("click", () => toggleModal(true));
     return div;
   }
@@ -535,21 +526,21 @@ import MainLayout from "../layouts/MainLayout.astro";
       // If favorite filter is active, show specific message
       if (currentFilter === "favorites") {
         grid.innerHTML = `
-            <div class="col-span-full flex flex-col items-center justify-center p-10 text-slate-500 border-2 border-dashed border-white/5 rounded-3xl h-64">
-                <span class="text-4xl mb-2">★</span>
-                <p>No tienes favoritos añadidos aún.</p>
-            </div>`;
+              <div class="col-span-full flex flex-col items-center justify-center p-10 text-slate-500 border-2 border-dashed border-white/10 rounded-3xl h-64">
+                    <span class="text-4xl mb-2">★</span>
+                    <p class="text-slate-400">No tienes favoritos añadidos aún.</p>
+              </div>`;
       } else {
         grid.appendChild(createAddCard());
       }
     } else if (filtered.length === 0 && term) {
       // Empty Search Results
       grid.innerHTML = `
-                <div class="col-span-full flex flex-col items-center justify-center p-10 text-slate-500 border-2 border-dashed border-white/5 rounded-3xl h-64">
-                   <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                   <p>No hay resultados para "${term}"</p>
+                <div class="col-span-full flex flex-col items-center justify-center p-10 text-slate-500 border-2 border-dashed border-white/10 rounded-3xl h-64">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                    <p>No hay resultados para "${term}"</p>
                 </div>
-            `;
+              `;
     } else {
       // Render Cards
       filtered.forEach((c) => {
@@ -614,11 +605,11 @@ import MainLayout from "../layouts/MainLayout.astro";
     btn.addEventListener("click", () => {
       // Styles
       filterBtns.forEach((b) => {
-        b.classList.remove("bg-brand-lime", "text-black", "shadow-lg");
+        b.classList.remove("bg-brand-lime", "text-black", "shadow-sm");
         b.classList.add("text-slate-500");
       });
       btn.classList.remove("text-slate-500");
-      btn.classList.add("bg-brand-lime", "text-black", "shadow-lg");
+      btn.classList.add("bg-brand-lime", "text-black", "shadow-sm");
 
       // Logic
       currentFilter = btn.getAttribute("data-filter");

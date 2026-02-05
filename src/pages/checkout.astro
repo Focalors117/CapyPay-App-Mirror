@@ -47,12 +47,12 @@ import { cartItems, clearCart } from "../store/cartStore";
           <div class="flex justify-between text-sm">
             <span class="text-white/60">Subtotal</span>
             <span id="checkout-subtotal" class="text-white font-bold"
-              >0.00 CP</span
+              >0.00 BARAS</span
             >
           </div>
           <div class="flex justify-between text-sm">
             <span class="text-white/60">Comisión (5%)</span>
-            <span id="checkout-fee" class="text-white/80">0.00 CP</span>
+            <span id="checkout-fee" class="text-white/80">0.00 BARAS</span>
           </div>
         </div>
 
@@ -61,7 +61,7 @@ import { cartItems, clearCart } from "../store/cartStore";
         >
           <span class="text-white/60">Total a pagar</span>
           <span id="checkout-total" class="text-3xl font-black text-brand-lime"
-            >0.00 CP</span
+            >0.00 BARAS</span
           >
         </div>
       </div>
@@ -159,7 +159,7 @@ import { cartItems, clearCart } from "../store/cartStore";
                             <h4 class="text-white font-bold text-sm text-balance">${item.name}</h4>
                         </div>
                     </div>
-                    <span class="text-white font-bold text-sm">${(item.price * item.quantity).toLocaleString()} CP</span>
+                    <span class="text-white font-bold text-sm">${(item.price * item.quantity).toLocaleString()} BARAS</span>
                 </div>
             `;
         })
@@ -171,9 +171,9 @@ import { cartItems, clearCart } from "../store/cartStore";
       const totalAmount = subtotal + commission;
 
       if (subtotalEl)
-        subtotalEl.textContent = `${subtotal.toLocaleString()} CP`;
-      if (feeEl) feeEl.textContent = `${commission.toLocaleString()} CP`;
-      totalEl.textContent = `${totalAmount.toLocaleString()} CP`;
+        subtotalEl.textContent = `${subtotal.toLocaleString()} BARAS`;
+      if (feeEl) feeEl.textContent = `${commission.toLocaleString()} BARAS`;
+      totalEl.textContent = `${totalAmount.toLocaleString()} BARAS`;
 
       // 2. Lógica de Pago
       payBtn.addEventListener("click", async () => {

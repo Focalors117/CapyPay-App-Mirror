@@ -38,7 +38,7 @@ const { puntosActuales = 1500 } = Astro.props;
       <!-- Info de XP ganada hoy -->
       <div class="flex items-center justify-between bg-white/5 rounded-xl py-2 px-4">
         <div class="flex items-center gap-2">
-          <span id="xp-indicator" class="w-3 h-3 rounded-full bg-[#60A5FA] animate-pulse shadow-[0_0_8px_rgba(96,165,250,0.6)]"></span>
+          <span id="xp-indicator" class="w-3 h-3 rounded-full bg-brand-lime animate-pulse shadow-[0_0_8px_rgba(215,253,73,0.6)]"></span>
           <span id="xp-hoy" class="text-slate-300 text-sm">+0 XP obtenida hoy</span>
         </div>
         <a href="#como-ganar-xp" class="text-[10px] text-brand-lime hover:text-white transition-colors flex items-center gap-1 group">
@@ -465,8 +465,8 @@ const { puntosActuales = 1500 } = Astro.props;
     }
 
     if (xpIndicator) {
-      xpIndicator.style.backgroundColor = nivelActual.color;
-      xpIndicator.style.boxShadow = `0 0 8px ${hexToRgba(nivelActual.color, 0.5)}`;
+      xpIndicator.style.backgroundColor = '#D7FD49';
+      xpIndicator.style.boxShadow = `0 0 8px rgba(215,253,73,0.6)`;
     }
 
     // Actualizar bordes de otras secciones

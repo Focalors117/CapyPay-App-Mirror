@@ -66,7 +66,7 @@
     <div class="flex justify-between items-center mb-4 text-white">
       <span class="text-white/60">Total</span>
       <span id="cart-total" class="text-2xl font-bold text-brand-lime"
-        >0.00 CP</span
+        >0.00 BARAS</span
       >
     </div>
     <button
@@ -155,7 +155,7 @@
                       <p>Tu carrito está vacío</p>
                   </div>`;
         checkoutBtn.disabled = true;
-        totalEl.textContent = "0.00 CP";
+        totalEl.textContent = "0.00 BARAS";
         return;
       }
 
@@ -170,7 +170,7 @@
                       <img src="${item.image}" class="w-16 h-16 rounded-lg object-cover bg-black/20" alt="${item.name}">
                       <div class="flex-1 min-w-0">
                           <h4 class="text-white font-bold text-sm truncate">${item.name}</h4>
-                          <p class="text-brand-lime font-bold text-xs mt-1">${item.price} CP</p>
+                          <p class="text-brand-lime font-bold text-xs mt-1">${item.price} BARAS</p>
                           <div class="flex items-center gap-3 mt-2">
                               <button class="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors btn-decrease" data-id="${item.id}">-</button>
                               <span class="text-white text-sm font-medium w-4 text-center">${item.quantity}</span>
@@ -182,7 +182,7 @@
         })
         .join("");
 
-      totalEl.textContent = `${total.toLocaleString()} CP`;
+      totalEl.textContent = `${total.toLocaleString()} BARAS`;
 
       // Re-attach event listeners for dynamic buttons
       document.querySelectorAll(".btn-decrease").forEach((btn) => {
