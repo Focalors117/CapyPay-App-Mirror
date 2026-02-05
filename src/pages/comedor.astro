@@ -1,4 +1,4 @@
----
+﻿---
 import MainLayout from "../layouts/MainLayout.astro";
 import CartSidebar from "../components/CartSidebar.astro";
 ---
@@ -21,12 +21,12 @@ import CartSidebar from "../components/CartSidebar.astro";
     }
   </style>
 
-  <div class="max-w-7xl mx-auto px-4 md:px-6 py-8 pb-32">
+  <div class="max-w-7xl mx-auto px-4 md:px-6 py-8 pb-40 overflow-x-hidden">
     <!-- Header / Navbar especifia para el comedor -->
     <header
       class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8"
     >
-      <div class="flex items-center gap-3 lg:gap-4 w-full md:w-auto">
+      <div class="flex items-center gap-2 sm:gap-4 w-full md:w-auto">
         <a
           href="/dashboard"
           class="w-9 h-9 lg:w-10 lg:h-10 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/5 transition-colors shrink-0"
@@ -46,7 +46,7 @@ import CartSidebar from "../components/CartSidebar.astro";
           </svg>
         </a>
         <div
-          class="size-12 bg-brand-lime rounded-2xl flex items-center justify-center text-black shadow-[0_0_20px_rgba(215,253,73,0.3)]"
+          class="w-10 h-10 sm:w-12 sm:h-12 bg-brand-lime rounded-2xl flex items-center justify-center text-black shadow-[0_0_20px_rgba(215,253,73,0.3)]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -60,146 +60,117 @@ import CartSidebar from "../components/CartSidebar.astro";
           >
         </div>
         <div>
-          <h1 class="text-2xl font-extrabold tracking-tight text-white">
+          <h1
+            class="text-xl sm:text-2xl font-extrabold tracking-tight text-white leading-tight"
+          >
             CapyPay <span class="text-brand-lime">Dining</span>
           </h1>
-          <p class="text-white/40 text-sm font-medium">
-            Reserva, come y disfruta
+          <!-- RESPONSIVE: Text size adjusts, simpler subtext for mobile clarity -->
+          <p class="text-white/40 text-sm font-medium flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-brand-lime animate-pulse"
+            ></span>
+            Abierto: 7:00 AM - 3:00 PM
           </p>
         </div>
       </div>
 
-      <div class="flex items-center gap-4 w-full md:w-auto">
-        <div class="relative w-full md:w-64">
-          <svg
-            class="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            ><path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg
-          >
-          <input
-            class="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-brand-lime/50 transition-colors placeholder-white/20"
-            placeholder="Buscar comida..."
-            type="text"
-          />
-        </div>
-        <div
-          class="hidden md:block h-10 w-10 rounded-full border-2 border-brand-lime overflow-hidden shrink-0"
-        >
-          <img
-            alt="User Avatar"
-            class="w-full h-full object-cover"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAg4BI_O8mW_nXVRrCrGJZUPkUxaoNEllDjDwkaVxLgsdMHhPri-fzLJG8UaNkgBMkx2Bvp-ctsb_A9TWczYPhvqRFVGl5_MhplFHJYlQLCNXEHuk6_0G_plGjGRu-0GWSga_URLW20A7K30nS1WcFHSSjozAN9jx__HqP7yGPZAfDR1ckQrj8oLhooOQuI8CoYCzTgjSj7cpZJTGjXV14dFeXlaCig3cA9o-aV1l8ToOBYdyjYncrd3swtYkkpzYPQO2jLQtvvB_I"
-          />
-        </div>
-      </div>
+      <!-- REMOVED Search Bar & Avatar as requested for cleaner UI -->
+      <!-- RESPONSIVE: Kept header flex logic to align items correctly on mobile vs desktop -->
     </header>
 
     <!-- Stats Row -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      <div class="col-span-1 md:col-span-2 flex flex-col sm:flex-row gap-4">
-        <!-- Ocupación Card -->
-        <div
-          class="glass-card flex-1 p-6 rounded-3xl flex flex-col justify-between"
-        >
-          <div>
-            <div class="flex items-center gap-2 mb-2">
-              <div
-                id="ocupacion-dot"
-                class="w-2 h-2 rounded-full bg-gray-500 animate-pulse"
-              >
-              </div>
-              <p
-                class="text-white/60 text-xs font-bold uppercase tracking-widest"
-              >
-                Ocupación Comedor
-              </p>
-            </div>
-            <h3 class="text-2xl font-extrabold text-white">
-              <span id="ocupacion-text">Calculando...</span>
-            </h3>
-          </div>
-          <div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 pb-40">
+      <!-- Ocupación Card -->
+      <div
+        class="glass-card p-4 rounded-3xl flex flex-col justify-between h-auto min-h-35 col-span-1"
+      >
+        <div class="w-full">
+          <div class="flex items-center gap-2 mb-2">
             <div
-              class="mt-4 w-full bg-white/10 h-2 rounded-full overflow-hidden"
+              id="ocupacion-dot"
+              class="w-1.5 h-1.5 rounded-full bg-gray-500 animate-pulse"
             >
-              <div
-                id="ocupacion-bar"
-                class="bg-gray-500 h-full w-[0%] rounded-full transition-all duration-1000"
-              >
-              </div>
             </div>
             <p
-              id="ocupacion-detail"
-              class="text-white/40 text-xs mt-2 font-medium"
+              class="text-white/60 text-[10px] font-bold uppercase tracking-widest"
             >
-              ...
+              Ocupación
             </p>
           </div>
+          <h3 class="text-xl font-extrabold text-white">
+            <span id="ocupacion-text">...</span>
+          </h3>
         </div>
-
-        <!-- Tiempo Espera Card -->
-        <div
-          class="glass-card flex-1 p-6 rounded-3xl flex flex-col justify-between"
-        >
-          <div>
-            <div class="flex items-center gap-2 mb-2">
-              <svg
-                class="w-3 h-3 text-brand-lime"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                ><path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg
-              >
-              <p
-                class="text-white/60 text-xs font-bold uppercase tracking-widest"
-              >
-                Tiempo de Espera
-              </p>
+        <div class="w-full mt-3">
+          <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+            <div
+              id="ocupacion-bar"
+              class="bg-gray-500 h-full w-[0%] rounded-full transition-all duration-1000"
+            >
             </div>
-            <h3
-              id="espera-text"
-              class="text-3xl font-extrabold text-brand-lime"
-            >
-              -- min
-            </h3>
           </div>
-          <div
-            class="flex items-center gap-2 mt-4 bg-brand-lime/10 px-3 py-1.5 rounded-lg w-fit"
+          <p
+            id="ocupacion-detail"
+            class="text-white/40 text-[9px] mt-1.5 font-medium truncate"
           >
-            <span id="turno-text" class="text-brand-lime text-xs font-bold"
-              >Consultando turno...</span
+            Cargando...
+          </p>
+        </div>
+      </div>
+
+      <!-- Tiempo Espera Card -->
+      <div
+        class="glass-card p-4 rounded-3xl flex flex-col justify-between h-auto min-h-35 col-span-1"
+      >
+        <div class="w-full">
+          <div class="flex items-center gap-2 mb-2">
+            <svg
+              class="w-3 h-3 text-brand-lime"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg
             >
+            <p
+              class="text-white/60 text-[10px] font-bold uppercase tracking-widest"
+            >
+              Espera
+            </p>
           </div>
+          <h3 id="espera-text" class="text-2xl font-extrabold text-brand-lime">
+            -- min
+          </h3>
+        </div>
+        <div class="mt-3">
+          <span
+            id="turno-text"
+            class="bg-brand-lime/10 text-brand-lime px-2 py-1 rounded text-[9px] font-bold inline-block"
+            >Consultando...</span
+          >
         </div>
       </div>
 
       <!-- Gamification Badge Card -->
       <div
-        class="bg-linear-to-br from-brand-purple to-purple-900 p-6 rounded-3xl relative overflow-hidden flex flex-col justify-between group cursor-pointer transition-transform hover:scale-[1.02]"
+        class="bg-linear-to-br from-brand-purple to-purple-900 p-4 rounded-3xl relative overflow-hidden flex flex-col justify-between group cursor-pointer col-span-2 md:col-span-1 h-auto min-h-35"
       >
         <div class="z-10">
           <div class="flex items-center justify-between mb-2">
             <p
               class="text-white/80 text-xs font-bold uppercase tracking-widest"
             >
-              Competencia Semanal
+              Competencia
             </p>
             <span
               class="bg-brand-lime text-black px-2 py-0.5 rounded text-[10px] font-bold animate-pulse"
               >LIVE</span
             >
           </div>
-          <h3 class="text-xl font-extrabold text-white mb-1">
+          <h3 class="text-lg sm:text-xl font-extrabold text-white mb-1">
             Gran Chigüire 👑
           </h3>
           <p class="text-white/70 text-xs text-balance">
@@ -210,7 +181,7 @@ import CartSidebar from "../components/CartSidebar.astro";
 
         <a
           href="/ranking"
-          class="z-10 mt-4 px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-xl text-xs font-bold text-white transition-all w-fit flex items-center gap-2"
+          class="z-10 mt-4 px-3 py-1.5 sm:px-4 sm:py-2 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-xl text-xs font-bold text-white transition-all w-fit flex items-center gap-2"
         >
           Entrar a la Batalla
           <svg
@@ -239,73 +210,358 @@ import CartSidebar from "../components/CartSidebar.astro";
           >
         </div>
       </div>
-    </div>
 
-    <!-- Featured Card: Plato del Día -->
-    <section class="mb-10">
-      <div class="flex items-center justify-between mb-4 px-1">
-        <h2
-          class="text-xl font-extrabold tracking-tight text-white flex items-center gap-2"
-        >
-          🍽️ Menú Subvencionado
-        </h2>
-        <span
-          class="text-brand-lime text-[10px] sm:text-xs font-bold px-2 py-1 bg-brand-lime/10 rounded border border-brand-lime/20 animate-pulse"
-          >ACTUALIZADO HACE 5 MIN</span
-        >
-      </div>
-      <div
-        id="plato-dia-container"
-        class="relative group overflow-hidden rounded-3xl bg-[#1c2210] border border-white/10 shadow-2xl min-h-100"
-      >
-        <!-- JS Injected Content -->
-        <div class="absolute inset-0 flex items-center justify-center">
-          <div
-            class="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-lime"
+      <!-- Featured Card: Plato del Día -->
+      <section class="col-span-2 md:col-span-3">
+        <div class="flex items-center justify-between mb-4 px-1">
+          <h2
+            class="text-xl font-extrabold tracking-tight text-white flex items-center gap-2"
           >
+            🍽️ Menú Subvencionado
+          </h2>
+          <span
+            class="text-brand-lime text-[10px] sm:text-xs font-bold px-2 py-1 bg-brand-lime/10 rounded border border-brand-lime/20 animate-pulse"
+            >ACTUALIZADO HACE 5 MIN</span
+          >
+        </div>
+        <div
+          id="plato-dia-container"
+          class="relative group overflow-hidden rounded-3xl bg-[#1c2210] border border-white/10 shadow-2xl min-h-auto h-auto transition-all"
+        >
+          <!-- JS Injected Content -->
+          <!-- RESPONSIVE: h-auto allows container to grow with content, overflow logic fixed -->
+          <div class="h-64 sm:h-96 md:h-100 flex items-center justify-center">
+            <div
+              class="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-lime"
+            >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Capy-Tip Alert -->
+      <div
+        class="bg-brand-lime/5 border border-brand-lime/20 p-4 rounded-2xl flex flex-col items-center text-center gap-3 w-full col-span-2 md:col-span-3 order-4 md:order-4"
+      >
+        <div class="flex items-center gap-3 w-full justify-center">
+          <div
+            class="size-10 shrink-0 rounded-xl bg-brand-lime/10 flex items-center justify-center text-brand-lime"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+              ></path></svg
+            >
+          </div>
+          <div class="text-left">
+            <h4 class="font-bold text-white text-xs uppercase tracking-wide">
+              Capy-Tip
+            </h4>
+            <p
+              id="capy-tip-text"
+              class="text-white/70 text-xs animate-fade-in-up"
+            >
+              ¡Agrega una malta bien fría para completar tu experiencia!
+            </p>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- Capy-Tip Alert -->
-    <div
-      class="bg-brand-lime/5 border border-brand-lime/20 p-5 rounded-2xl flex flex-col sm:flex-row items-center justify-between mb-10 gap-4"
-    >
-      <div class="flex items-center gap-4 text-center sm:text-left">
-        <div
-          class="size-12 shrink-0 rounded-xl bg-brand-lime/10 flex items-center justify-center text-brand-lime"
-        >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            ><path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-            ></path></svg
-          >
-        </div>
-        <div>
-          <h4 class="font-bold text-white">Capy-Tip</h4>
-          <p
-            id="capy-tip-text"
-            class="text-white/60 text-sm animate-fade-in-up"
-          >
-            ¡Agrega una malta bien fría para completar tu experiencia!
-          </p>
-        </div>
-      </div>
-      <a
-        href="#"
-        class="text-sm font-bold text-brand-lime flex items-center gap-2 hover:underline whitespace-nowrap"
+      <!-- Premium Carousel Section -->
+      <section
+        class="relative group col-span-2 md:col-span-3 order-3 md:order-3"
       >
-        Ver más tips
+        <div class="flex items-center justify-between mb-6 px-1">
+          <h2 class="text-xl font-extrabold tracking-tight text-white">
+            Capy-Gourmet <span class="text-brand-purple font-normal italic"
+              >(Premium)</span
+            >
+          </h2>
+          <!-- Navigation arrows moved to absolute positioning on the sides -->
+        </div>
+
+        <!-- Container -->
+        <div class="relative w-full">
+          <!-- Decoration / Fade Masks (Subtle inside container) -->
+          <div
+            class="hidden md:block absolute inset-y-0 left-0 w-16 bg-linear-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none rounded-l-3xl"
+          >
+          </div>
+          <div
+            class="hidden md:block absolute inset-y-0 right-0 w-16 bg-linear-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none rounded-r-3xl"
+          >
+          </div>
+
+          <!-- Navigation Buttons (Absolute) -->
+          <button
+            id="scroll-left"
+            class="absolute top-1/2 -translate-y-1/2 scale-0 md:scale-100 md:-left-6 z-20 w-12 h-12 rounded-full bg-black/50 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-brand-lime hover:text-black hover:scale-110 transition-all duration-300 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 shadow-xl"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"></path></svg
+            >
+          </button>
+
+          <button
+            id="scroll-right"
+            class="absolute top-1/2 -translate-y-1/2 scale-0 md:scale-100 md:-right-6 z-20 w-12 h-12 rounded-full bg-black/50 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-brand-lime hover:text-black hover:scale-110 transition-all duration-300 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 shadow-xl"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"></path></svg
+            >
+          </button>
+
+          <!-- Carousel Track -->
+          <!-- RESPONSIVE: overflow-x-auto allows native swipe on mobile, snap-x for snap effect -->
+          <div
+            id="carousel-container"
+            class="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory py-8 md:py-12 -mx-4 md:mx-0 px-4 md:px-2 hide-scrollbar scroll-smooth"
+          >
+            <!-- Card 1: Pepito Guaro -->
+            <div
+              class="flex-none w-[80vw] sm:w-72 md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
+            >
+              <div
+                class="relative h-48 rounded-2xl overflow-hidden mb-3 box-shadow-lg"
+              >
+                <img
+                  alt="Pepito Guaro"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  src="https://images.unsplash.com/photo-1734769853702-c7444c039c8c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                />
+                <div
+                  class="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/10"
+                >
+                  <span class="text-brand-lime font-black text-[10px]"
+                    >450 B</span
+                  >
+                </div>
+              </div>
+              <h4 class="font-bold text-base text-white mb-1">Pepito Guaro</h4>
+              <p class="text-white/50 text-[10px] mb-3 line-clamp-2">
+                Lomito, pollo, chuleta, queso pecorino y salsas.
+              </p>
+              <button
+                class="add-to-cart-btn w-full py-2.5 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-[10px] uppercase hover:bg-brand-lime hover:text-black transition-all"
+                data-id="pepito-guaro"
+                data-name="Pepito Guaro"
+                data-price="450"
+                data-image="https://images.unsplash.com/photo-1596662951482-0c4babeae723"
+                >Agregar</button
+              >
+            </div>
+            <!-- Card 2: Cachapa con Queso -->
+            <div
+              class="flex-none w-[80vw] sm:w-72 md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
+            >
+              <div
+                class="relative h-48 rounded-2xl overflow-hidden mb-3 shadow-lg"
+              >
+                <img
+                  alt="Cachapa con Queso"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800"
+                />
+                <div
+                  class="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/10"
+                >
+                  <span class="text-brand-lime font-black text-[10px]"
+                    >380 B</span
+                  >
+                </div>
+              </div>
+              <h4 class="font-bold text-base text-white">Cachapa de Maíz</h4>
+              <p class="text-white/50 text-[10px] mb-3 line-clamp-1">
+                Maíz tierno molido con full queso de mano.
+              </p>
+              <button
+                class="add-to-cart-btn w-full py-2.5 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-[10px] uppercase hover:bg-brand-lime hover:text-black transition-all"
+                data-id="cachapa-queso"
+                data-name="Cachapa con Queso"
+                data-price="380"
+                data-image="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800"
+                >Agregar</button
+              >
+            </div>
+            <!-- Card 3: Tequeños -->
+            <div
+              class="flex-none w-[80vw] sm:w-72 md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
+            >
+              <div
+                class="relative h-48 rounded-2xl overflow-hidden mb-3 shadow-lg"
+              >
+                <img
+                  alt="Tequeños Ración"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  src="https://images.unsplash.com/photo-1640718534338-466077731ca9?q=80&w=1166&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                />
+                <div
+                  class="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/10"
+                >
+                  <span class="text-brand-lime font-black text-[10px]"
+                    >200 B</span
+                  >
+                </div>
+              </div>
+              <h4 class="font-bold text-base text-white">Ración de Tequeños</h4>
+              <p class="text-white/50 text-[10px] mb-3 line-clamp-1">
+                6 unidades de tequeños full queso.
+              </p>
+              <button
+                class="add-to-cart-btn w-full py-2.5 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-[10px] uppercase hover:bg-brand-lime hover:text-black transition-all"
+                data-id="tequenos-racion"
+                data-name="Ración de Tequeños"
+                data-price="200"
+                data-image="https://images.unsplash.com/photo-1574484284008-59166b615a77?w=800"
+                >Agregar</button
+              >
+            </div>
+            <!-- Card 4: Pasticho -->
+            <div
+              class="flex-none w-[80vw] sm:w-72 md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
+            >
+              <div
+                class="relative h-48 rounded-2xl overflow-hidden mb-3 shadow-lg"
+              >
+                <img
+                  alt="Pasticho Venezolano"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800"
+                />
+                <div
+                  class="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/10"
+                >
+                  <span class="text-brand-lime font-black text-[10px]"
+                    >420 B</span
+                  >
+                </div>
+              </div>
+              <h4 class="font-bold text-base text-white">
+                Pasticho Venezolano
+              </h4>
+              <p class="text-white/50 text-[10px] mb-3 line-clamp-1">
+                Con extra de carne, bechamel y parmesano.
+              </p>
+              <button
+                class="add-to-cart-btn w-full py-2.5 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-[10px] uppercase hover:bg-brand-lime hover:text-black transition-all"
+                data-id="pasticho-venezolano"
+                data-name="Pasticho Venezolano"
+                data-price="420"
+                data-image="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800"
+                >Agregar</button
+              >
+            </div>
+            <!-- Card 5: Extra 1 -->
+            <div
+              class="flex-none w-[80vw] sm:w-72 md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
+            >
+              <div
+                class="relative h-48 rounded-2xl overflow-hidden mb-3 shadow-lg"
+              >
+                <img
+                  alt="Burger Suprema"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800"
+                />
+                <div
+                  class="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/10"
+                >
+                  <span class="text-brand-lime font-black text-[10px]"
+                    >550 B</span
+                  >
+                </div>
+              </div>
+              <h4 class="font-bold text-base text-white">Burger Suprema</h4>
+              <p class="text-white/50 text-[10px] mb-3 line-clamp-1">
+                Doble carne, cheddar fundido y bacon.
+              </p>
+              <button
+                class="add-to-cart-btn w-full py-2.5 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-[10px] uppercase hover:bg-brand-lime hover:text-black transition-all"
+                data-id="burger-suprema"
+                data-name="Burger Suprema"
+                data-price="550"
+                data-image="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800"
+                >Agregar</button
+              >
+            </div>
+            <!-- Card 6: Extra 2 -->
+            <div
+              class="flex-none w-[80vw] sm:w-72 md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
+            >
+              <div
+                class="relative h-48 rounded-2xl overflow-hidden mb-3 shadow-lg"
+              >
+                <img
+                  alt="Dragon Roll"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800"
+                />
+                <div
+                  class="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/10"
+                >
+                  <span class="text-brand-lime font-black text-[10px]"
+                    >600 B</span
+                  >
+                </div>
+              </div>
+              <h4 class="font-bold text-base text-white">Dragon Roll</h4>
+              <p class="text-white/50 text-[10px] mb-3 line-clamp-1">
+                Langostinos tempura, aguacate.
+              </p>
+              <button
+                class="add-to-cart-btn w-full py-2.5 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-[10px] uppercase hover:bg-brand-lime hover:text-black transition-all"
+                data-id="dragon-roll"
+                data-name="Dragon Roll"
+                data-price="600"
+                data-image="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800"
+                >Agregar</button
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Floating Action Button: Scan to Pay / Open Cart -->
+    <div
+      class="fixed bottom-24 lg:bottom-12 right-6 lg:right-12 z-40 flex flex-col gap-4"
+    >
+      <!-- Extra Cart Button (Manual) -->
+      <button
+        id="manual-cart-btn"
+        class="bg-[#1a1a1a] hover:bg-white/10 active:scale-95 transition-all w-16 h-16 rounded-full shadow-2xl border border-white/10 flex items-center justify-center text-white relative group"
+      >
+        <div
+          class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-6 h-6 rounded-full hidden"
+          id="cart-badge-count"
+        >
+          0
+        </div>
         <svg
-          class="w-4 h-4"
+          class="w-7 h-7"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -313,654 +569,384 @@ import CartSidebar from "../components/CartSidebar.astro";
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke-width="2"
-            d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg
+            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+          ></path></svg
+        >
+        <span
+          class="absolute right-full mr-4 bg-black/80 px-2 py-1 rounded text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
+          >Ver Carrito</span
+        >
+      </button>
+
+      <!-- Orders Button (Desktop/Mobile) - Replacement for QR -->
+      <a
+        href="/orders"
+        id="floating-orders-btn"
+        class="bg-brand-lime hover:scale-110 active:scale-95 transition-all w-16 h-16 rounded-full shadow-[0_0_30px_rgba(215,253,73,0.4)] flex items-center justify-center text-black animate-pulse relative group"
+      >
+        <svg
+          class="w-8 h-8"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+          ></path></svg
+        >
+        <span
+          class="absolute right-full mr-4 bg-black/80 px-2 py-1 rounded text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
+          >Ver Pedidos</span
         >
       </a>
     </div>
 
-    <!-- Premium Carousel Section -->
-    <section class="mb-20 relative group">
-      <div class="flex items-center justify-between mb-6 px-1">
-        <h2 class="text-xl font-extrabold tracking-tight text-white">
-          Capy-Gourmet <span class="text-brand-purple font-normal italic"
-            >(Premium)</span
-          >
-        </h2>
-        <!-- Navigation arrows moved to absolute positioning on the sides -->
-      </div>
+    <script>
+      // @ts-nocheck
+      import { addItemToCart, isCartOpen, cartItems } from "../store/cartStore";
+      import { showToast } from "../utils/toast";
+      import { fetchAPI } from "../services/api";
 
-      <!-- Container -->
-      <div class="relative w-full">
-        <!-- Decoration / Fade Masks (Subtle inside container) -->
-        <div
-          class="absolute inset-y-0 left-0 w-8 md:w-16 bg-linear-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none rounded-l-3xl"
-        >
-        </div>
-        <div
-          class="absolute inset-y-0 right-0 w-8 md:w-16 bg-linear-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none rounded-r-3xl"
-        >
-        </div>
+      console.log("Comedor script loaded (API Integrated + Cached)");
 
-        <!-- Navigation Buttons (Absolute) -->
-        <button
-          id="scroll-left"
-          class="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-6 z-20 w-12 h-12 rounded-full bg-black/50 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-brand-lime hover:text-black hover:scale-110 transition-all duration-300 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 shadow-xl"
-        >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            ><path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M15 19l-7-7 7-7"></path></svg
-          >
-        </button>
+      // Cache Config
+      const CACHE_KEY = "capypay_menu_cache";
+      const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 Hours
 
-        <button
-          id="scroll-right"
-          class="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-6 z-20 w-12 h-12 rounded-full bg-black/50 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-brand-lime hover:text-black hover:scale-110 transition-all duration-300 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 shadow-xl"
-        >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            ><path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 5l7 7-7 7"></path></svg
-          >
-        </button>
+      // Tips Config
+      const TIPS = [
+        "¡Agrega una malta bien fría para completar tu experiencia!",
+        "La hora pico es a las 12:30 PM, ¡llega antes!",
+        "Gana doble XP pidiendo el Plato del Día.",
+        "Usa el código 'CAPY10' (mentira, no hay códigos aún).",
+        "Recarga tu saldo con anticipación para evitar colas.",
+      ];
 
-        <!-- Carousel Track -->
-        <div
-          id="carousel-container"
-          class="flex gap-6 overflow-hidden py-12 px-2"
-        >
-          <!-- Card 1: Pepito Guaro -->
-          <div
-            class="flex-none w-[85vw] md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
-          >
-            <div
-              class="relative h-56 rounded-2xl overflow-hidden mb-4 box-shadow-lg"
-            >
-              <img
-                alt="Pepito Guaro"
-                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                src="https://images.unsplash.com/photo-1734769853702-c7444c039c8c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              />
-              <div
-                class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10"
-              >
-                <span class="text-brand-lime font-black text-xs">450 BARAS</span>
-              </div>
-            </div>
-            <h4 class="font-bold text-lg text-white">Pepito Guaro</h4>
-            <p class="text-white/50 text-xs mb-4 line-clamp-1">
-              Lomito, pollo, chuleta, queso pecorino y salsas.
-            </p>
-            <button
-              class="add-to-cart-btn w-full py-3 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-xs hover:bg-brand-lime hover:text-black transition-all"
-              data-id="pepito-guaro"
-              data-name="Pepito Guaro"
-              data-price="450"
-              data-image="https://images.unsplash.com/photo-1596662951482-0c4babeae723"
-              >Añadir al Carrito</button
-            >
-          </div>
-          <!-- Card 2: Cachapa con Queso -->
-          <div
-            class="flex-none w-[85vw] md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
-          >
-            <div
-              class="relative h-56 rounded-2xl overflow-hidden mb-4 shadow-lg"
-            >
-              <img
-                alt="Cachapa con Queso"
-                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800"
-              />
-              <div
-                class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10"
-              >
-                <span class="text-brand-lime font-black text-xs">380 BARAS</span>
-              </div>
-            </div>
-            <h4 class="font-bold text-lg text-white">Cachapa de Maíz</h4>
-            <p class="text-white/50 text-xs mb-4 line-clamp-1">
-              Maíz tierno molido con full queso de mano y mantequilla.
-            </p>
-            <button
-              class="add-to-cart-btn w-full py-3 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-xs hover:bg-brand-lime hover:text-black transition-all"
-              data-id="cachapa-queso"
-              data-name="Cachapa con Queso"
-              data-price="380"
-              data-image="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800"
-              >Añadir al Carrito</button
-            >
-          </div>
-          <!-- Card 3: Tequeños -->
-          <div
-            class="flex-none w-[85vw] md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
-          >
-            <div
-              class="relative h-56 rounded-2xl overflow-hidden mb-4 shadow-lg"
-            >
-              <img
-                alt="Tequeños Ración"
-                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                src="https://images.unsplash.com/photo-1640718534338-466077731ca9?q=80&w=1166&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              />
-              <div
-                class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10"
-              >
-                <span class="text-brand-lime font-black text-xs">200 BARAS</span>
-              </div>
-            </div>
-            <h4 class="font-bold text-lg text-white">Ración de Tequeños</h4>
-            <p class="text-white/50 text-xs mb-4 line-clamp-1">
-              6 unidades de tequeños full queso con salsa de ajo.
-            </p>
-            <button
-              class="add-to-cart-btn w-full py-3 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-xs hover:bg-brand-lime hover:text-black transition-all"
-              data-id="tequenos-racion"
-              data-name="Ración de Tequeños"
-              data-price="200"
-              data-image="https://images.unsplash.com/photo-1574484284008-59166b615a77?w=800"
-              >Añadir al Carrito</button
-            >
-          </div>
-          <!-- Card 4: Pasticho -->
-          <div
-            class="flex-none w-[85vw] md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
-          >
-            <div
-              class="relative h-56 rounded-2xl overflow-hidden mb-4 shadow-lg"
-            >
-              <img
-                alt="Pasticho Venezolano"
-                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800"
-              />
-              <div
-                class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10"
-              >
-                <span class="text-brand-lime font-black text-xs">420 BARAS</span>
-              </div>
-            </div>
-            <h4 class="font-bold text-lg text-white">Pasticho Venezolano</h4>
-            <p class="text-white/50 text-xs mb-4 line-clamp-1">
-              Con extra de carne, bechamel y queso parmesano gratinado.
-            </p>
-            <button
-              class="add-to-cart-btn w-full py-3 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-xs hover:bg-brand-lime hover:text-black transition-all"
-              data-id="pasticho-venezolano"
-              data-name="Pasticho Venezolano"
-              data-price="420"
-              data-image="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800"
-              >Añadir al Carrito</button
-            >
-          </div>
-          <!-- Card 5: Extra 1 -->
-          <div
-            class="flex-none w-[85vw] md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
-          >
-            <div
-              class="relative h-56 rounded-2xl overflow-hidden mb-4 shadow-lg"
-            >
-              <img
-                alt="Burger Suprema"
-                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800"
-              />
-              <div
-                class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10"
-              >
-                <span class="text-brand-lime font-black text-xs">550 BARAS</span>
-              </div>
-            </div>
-            <h4 class="font-bold text-lg text-white">Burger Suprema</h4>
-            <p class="text-white/50 text-xs mb-4 line-clamp-1">
-              Doble carne, cheddar fundido y bacon crujiente.
-            </p>
-            <button
-              class="add-to-cart-btn w-full py-3 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-xs hover:bg-brand-lime hover:text-black transition-all"
-              data-id="burger-suprema"
-              data-name="Burger Suprema"
-              data-price="550"
-              data-image="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800"
-              >Añadir al Carrito</button
-            >
-          </div>
-          <!-- Card 6: Extra 2 -->
-          <div
-            class="flex-none w-[85vw] md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out"
-          >
-            <div
-              class="relative h-56 rounded-2xl overflow-hidden mb-4 shadow-lg"
-            >
-              <img
-                alt="Dragon Roll"
-                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800"
-              />
-              <div
-                class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10"
-              >
-                <span class="text-brand-lime font-black text-xs">600 BARAS</span>
-              </div>
-            </div>
-            <h4 class="font-bold text-lg text-white">Dragon Roll</h4>
-            <p class="text-white/50 text-xs mb-4 line-clamp-1">
-              Langostinos tempura, aguacate y salsa de anguila.
-            </p>
-            <button
-              class="add-to-cart-btn w-full py-3 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-xs hover:bg-brand-lime hover:text-black transition-all"
-              data-id="dragon-roll"
-              data-name="Dragon Roll"
-              data-price="600"
-              data-image="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800"
-              >Añadir al Carrito</button
-            >
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+      async function initComedor() {
+        try {
+          console.log("Initializing Comedor...");
+          loadStats();
+          startStatsTimer();
+          startTipRotation();
 
-  <!-- Floating Action Button: Scan to Pay / Open Cart -->
-  <div
-    class="fixed bottom-24 lg:bottom-12 right-6 lg:right-12 z-40 flex flex-col gap-4"
-  >
-    <!-- Extra Cart Button (Manual) -->
-    <button
-      id="manual-cart-btn"
-      class="bg-[#1a1a1a] hover:bg-white/10 active:scale-95 transition-all w-16 h-16 rounded-full shadow-2xl border border-white/10 flex items-center justify-center text-white relative group"
-    >
-      <div
-        class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-6 h-6 rounded-full hidden"
-        id="cart-badge-count"
-      >
-        0
-      </div>
-      <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-        ></path></svg
-      >
-      <span
-        class="absolute right-full mr-4 bg-black/80 px-2 py-1 rounded text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
-        >Ver Carrito</span
-      >
-    </button>
+          // 1. Check Cache
+          const cached = localStorage.getItem(CACHE_KEY);
+          let menuData = null;
+          let useCache = false;
 
-    <!-- Orders Button (Desktop/Mobile) - Replacement for QR -->
-    <a
-      href="/orders"
-      id="floating-orders-btn"
-      class="bg-brand-lime hover:scale-110 active:scale-95 transition-all w-16 h-16 rounded-full shadow-[0_0_30px_rgba(215,253,73,0.4)] flex items-center justify-center text-black animate-pulse relative group"
-    >
-      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-        ></path></svg
-      >
-      <span
-        class="absolute right-full mr-4 bg-black/80 px-2 py-1 rounded text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
-        >Ver Pedidos</span
-      >
-    </a>
-  </div>
-
-  <script>
-    // @ts-nocheck
-    import { addItemToCart, isCartOpen, cartItems } from "../store/cartStore";
-    import { showToast } from "../utils/toast";
-    import { fetchAPI } from "../services/api";
-
-    console.log("Comedor script loaded (API Integrated + Cached)");
-
-    // Cache Config
-    const CACHE_KEY = "capypay_menu_cache";
-    const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 Hours
-
-    // Tips Config
-    const TIPS = [
-      "¡Agrega una malta bien fría para completar tu experiencia!",
-      "La hora pico es a las 12:30 PM, ¡llega antes!",
-      "Gana doble XP pidiendo el Plato del Día.",
-      "Usa el código 'CAPY10' (mentira, no hay códigos aún).",
-      "Recarga tu saldo con anticipación para evitar colas.",
-    ];
-
-    async function initComedor() {
-      try {
-        console.log("Initializing Comedor...");
-        loadStats();
-        startStatsTimer();
-        startTipRotation();
-
-        // 1. Check Cache
-        const cached = localStorage.getItem(CACHE_KEY);
-        let menuData = null;
-        let useCache = false;
-
-        if (cached) {
-          const parsed = JSON.parse(cached);
-          if (Date.now() - parsed.timestamp < CACHE_DURATION) {
-            console.log("Using Cached Menu");
-            menuData = parsed.data;
-            useCache = true;
+          if (cached) {
+            const parsed = JSON.parse(cached);
+            if (Date.now() - parsed.timestamp < CACHE_DURATION) {
+              console.log("Using Cached Menu");
+              menuData = parsed.data;
+              useCache = true;
+            }
           }
-        }
 
-        // 2. Fetch if no cache
-        if (!useCache) {
-          console.log("Fetching Menu from API...");
-          menuData = await fetchAPI("/comedor/menu");
+          // 2. Fetch if no cache
+          if (!useCache) {
+            console.log("Fetching Menu from API...");
+            menuData = await fetchAPI("/comedor/menu");
+            if (menuData) {
+              localStorage.setItem(
+                CACHE_KEY,
+                JSON.stringify({
+                  timestamp: Date.now(),
+                  data: menuData,
+                }),
+              );
+            }
+          }
+
           if (menuData) {
-            localStorage.setItem(
-              CACHE_KEY,
-              JSON.stringify({
-                timestamp: Date.now(),
-                data: menuData,
-              }),
-            );
+            renderPlatoDia(menuData.platoDia);
+            if (menuData.items && Array.isArray(menuData.items)) {
+              renderCarousel(menuData.items);
+            }
           }
+        } catch (e) {
+          console.error("Init Error", e);
+          showToast("Error cargando el menú", "error");
         }
+      }
 
-        if (menuData) {
-          renderPlatoDia(menuData.platoDia);
-          if (menuData.items && Array.isArray(menuData.items)) {
-            renderCarousel(menuData.items);
+      let lastStatsUpdate = Date.now();
+
+      async function loadStats() {
+        try {
+          const stats = await fetchAPI("/comedor/stats");
+          if (stats) {
+            lastStatsUpdate = Date.now();
+            updateStatsUI(stats);
           }
-        }
-      } catch (e) {
-        console.error("Init Error", e);
-        showToast("Error cargando el menú", "error");
-      }
-    }
-
-    let lastStatsUpdate = Date.now();
-
-    async function loadStats() {
-      try {
-        const stats = await fetchAPI("/comedor/stats");
-        if (stats) {
-          lastStatsUpdate = Date.now();
-          updateStatsUI(stats);
-        }
-      } catch (e) {
-        console.error("Stats Error", e);
-      }
-    }
-
-    function updateStatsUI(stats) {
-      const ocupacionText = document.getElementById("ocupacion-text");
-      const ocupacionBar = document.getElementById("ocupacion-bar");
-      const ocupacionDetail = document.getElementById("ocupacion-detail");
-      const ocupacionDot = document.getElementById("ocupacion-dot");
-
-      if (ocupacionText) ocupacionText.innerText = stats.ocupacion.nivel;
-      if (ocupacionBar)
-        ocupacionBar.style.width = `${stats.ocupacion.porcentaje}%`;
-
-      // Store original detail to append time later
-      if (ocupacionDetail) {
-        ocupacionDetail.dataset.original = stats.ocupacion.detalle;
-        ocupacionDetail.innerText = `${stats.ocupacion.detalle} • Hace 0 min`;
-      }
-
-      if (ocupacionDot) {
-        ocupacionDot.className = `w-2 h-2 rounded-full animate-pulse transition-colors ${stats.ocupacion.nivel === "Alta" ? "bg-red-500" : stats.ocupacion.nivel === "Media" ? "bg-yellow-500" : "bg-green-500"}`;
-        if (ocupacionBar) {
-          ocupacionBar.className = `h-full rounded-full transition-all duration-1000 ${stats.ocupacion.nivel === "Alta" ? "bg-red-500" : stats.ocupacion.nivel === "Media" ? "bg-yellow-500" : "bg-green-500"}`;
+        } catch (e) {
+          console.error("Stats Error", e);
         }
       }
-      const esperaText = document.getElementById("espera-text");
-      if (esperaText) esperaText.innerText = stats.tiempoEspera;
-      const turnoText = document.getElementById("turno-text");
-      if (turnoText) turnoText.innerText = stats.proximoTurno;
-    }
 
-    function startStatsTimer() {
-      setInterval(() => {
+      function updateStatsUI(stats) {
+        const ocupacionText = document.getElementById("ocupacion-text");
+        const ocupacionBar = document.getElementById("ocupacion-bar");
         const ocupacionDetail = document.getElementById("ocupacion-detail");
-        if (ocupacionDetail && ocupacionDetail.dataset.original) {
-          const diffMins = Math.floor((Date.now() - lastStatsUpdate) / 60000);
-          ocupacionDetail.innerText = `${ocupacionDetail.dataset.original} • Hace ${diffMins} min`;
+        const ocupacionDot = document.getElementById("ocupacion-dot");
+
+        if (ocupacionText) ocupacionText.innerText = stats.ocupacion.nivel;
+        if (ocupacionBar)
+          ocupacionBar.style.width = `${stats.ocupacion.porcentaje}%`;
+
+        // Store original detail to append time later
+        if (ocupacionDetail) {
+          ocupacionDetail.dataset.original = stats.ocupacion.detalle;
+          ocupacionDetail.innerText = `${stats.ocupacion.detalle} • Hace 0 min`;
         }
-      }, 60000); // Every minute
-    }
 
-    function startTipRotation() {
-      let index = 0;
-      const tipEl = document.getElementById("capy-tip-text");
-      if (!tipEl) return;
-
-      setInterval(() => {
-        index = (index + 1) % TIPS.length;
-        // Fade out
-        tipEl.style.opacity = "0";
-        setTimeout(() => {
-          tipEl.innerText = TIPS[index];
-          // Fade in
-          tipEl.style.opacity = "1";
-        }, 300);
-      }, 8000); // Rotate every 8s
-    }
-
-    function renderPlatoDia(item) {
-      const container = document.getElementById("plato-dia-container");
-      if (!container) return;
-      if (!item) {
-        container.innerHTML =
-          '<div class="absolute inset-0 flex items-center justify-center text-white/40 italic">No hay plato del día disponible hoy.</div>';
-        return;
+        if (ocupacionDot) {
+          ocupacionDot.className = `w-2 h-2 rounded-full animate-pulse transition-colors ${stats.ocupacion.nivel === "Alta" ? "bg-red-500" : stats.ocupacion.nivel === "Media" ? "bg-yellow-500" : "bg-green-500"}`;
+          if (ocupacionBar) {
+            ocupacionBar.className = `h-full rounded-full transition-all duration-1000 ${stats.ocupacion.nivel === "Alta" ? "bg-red-500" : stats.ocupacion.nivel === "Media" ? "bg-yellow-500" : "bg-green-500"}`;
+          }
+        }
+        const esperaText = document.getElementById("espera-text");
+        if (esperaText) esperaText.innerText = stats.tiempoEspera;
+        const turnoText = document.getElementById("turno-text");
+        if (turnoText) turnoText.innerText = stats.proximoTurno;
       }
-      container.innerHTML = `
-        <div class="flex flex-col lg:flex-row h-full">
-            <div class="lg:w-3/5 h-64 lg:h-auto relative overflow-hidden">
-            <div class="absolute inset-0 bg-linear-to-t lg:bg-linear-to-r from-[#0a0a0a] via-transparent to-transparent z-10 opacity-80"></div>
-            <img alt="${item.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${item.image_url || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c"}" />
-            <div class="absolute top-4 left-4 z-20">
-                <span class="bg-brand-lime text-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter shadow-lg flex items-center gap-1">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
-                Plato del Día
-                </span>
-            </div>
-            </div>
-            <div class="lg:w-2/5 p-6 md:p-8 flex flex-col justify-center bg-linear-to-b from-[#1c2210] to-[#0a0a0a] lg:bg-none">
-            <p class="text-brand-lime font-bold text-xs mb-2 uppercase tracking-widest">Almuerzo Estudiantil</p>
-            <h3 class="text-2xl md:text-3xl font-extrabold mb-4 leading-tight text-white">${item.name}</h3>
-            <p class="text-white/60 text-sm md:text-base mb-8 font-medium">${item.description}</p>
-            <div class="flex items-center justify-between mt-auto">
-                <div>
-                <p class="text-white/40 text-[10px] font-bold uppercase">Precio</p>
-                <p class="text-2xl font-black text-white">${item.price} <span class="text-xs text-white/50 font-medium">BARAS</span></p>
+
+      function startStatsTimer() {
+        setInterval(() => {
+          const ocupacionDetail = document.getElementById("ocupacion-detail");
+          if (ocupacionDetail && ocupacionDetail.dataset.original) {
+            const diffMins = Math.floor((Date.now() - lastStatsUpdate) / 60000);
+            ocupacionDetail.innerText = `${ocupacionDetail.dataset.original} • Hace ${diffMins} min`;
+          }
+        }, 60000); // Every minute
+      }
+
+      function startTipRotation() {
+        let index = 0;
+        const tipEl = document.getElementById("capy-tip-text");
+        if (!tipEl) return;
+
+        setInterval(() => {
+          index = (index + 1) % TIPS.length;
+          // Fade out
+          tipEl.style.opacity = "0";
+          setTimeout(() => {
+            tipEl.innerText = TIPS[index];
+            // Fade in
+            tipEl.style.opacity = "1";
+          }, 300);
+        }, 8000); // Rotate every 8s
+      }
+
+      function renderPlatoDia(item) {
+        const container = document.getElementById("plato-dia-container");
+        if (!container) return;
+        if (!item) {
+          container.innerHTML =
+            '<div class="h-96 flex items-center justify-center text-white/40 italic">No hay plato del día disponible hoy.</div>';
+          return;
+        }
+        container.innerHTML = `
+        <div class="grid h-min w-full overflow-hidden rounded-3xl border border-white/10 bg-[#1c2210] shadow-2xl" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+            <div class="relative h-64 sm:h-auto min-h-[280px] w-full">
+                <div class="absolute inset-0 bg-linear-to-t md:bg-linear-to-r from-[#0a0a0a] via-transparent to-transparent z-10 opacity-70"></div>
+                <img alt="${item.name}" class="absolute inset-0 w-full h-full object-cover" style="width:100%; height:100%;" src="${item.image_url || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c"}" />
+                <div class="absolute top-4 left-4 z-20">
+                    <span class="bg-brand-lime text-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-xl flex items-center gap-1">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+                    PLATO DEL DÍA
+                    </span>
                 </div>
-                <button class="add-to-cart-btn bg-brand-lime hover:bg-brand-lime/90 text-black font-extrabold px-6 py-3 md:px-8 md:py-4 rounded-xl shadow-[0_0_20px_rgba(215,253,73,0.3)] transition-all active:scale-95 flex items-center gap-2 group"
-                data-id="${item.id}" data-name="${item.name}" data-price="${item.price}" data-image="${item.image_url}">
-                <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                <span class="hidden sm:inline">Ordenar Ahora</span>
-                <span class="sm:hidden">Pedir</span>
-                </button>
             </div>
+            
+            <div class="p-6 md:p-8 flex flex-col justify-center bg-[#1c2210] w-full box-border">
+              <h3 class="text-2xl md:text-3xl font-extrabold mb-3 leading-tight text-white line-clamp-2">${item.name}</h3>
+              <p class="text-white/70 text-sm md:text-base mb-6 font-medium line-clamp-3 leading-relaxed">${item.description}</p>
+              
+              <div class="flex items-center justify-between mt-auto gap-4 pt-4 border-t border-white/5">
+                  <div class="flex flex-col">
+                    <span class="text-[10px] text-white/40 font-bold uppercase tracking-wider">PRECIO</span>
+                    <p class="text-3xl font-black text-brand-lime whitespace-nowrap">${item.price} <span class="text-sm text-white/50 font-medium">B</span></p>
+                  </div>
+                  <button class="add-to-cart-btn bg-white text-black hover:bg-brand-lime font-black px-6 py-3 rounded-xl shadow-lg flex items-center justify-center gap-2 text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all"
+                  data-id="${item.id}" data-name="${item.name}" data-price="${item.price}" data-image="${item.image_url}">
+                    <span>AÑADIR</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                  </button>
+              </div>
             </div>
         </div>
         `;
-      const btn = container.querySelector(".add-to-cart-btn");
-      if (btn) attachCartListener(btn);
-    }
-
-    function renderCarousel(items) {
-      const scrollContainer = document.getElementById("carousel-container");
-      if (!scrollContainer) return;
-      scrollContainer.innerHTML = "";
-      if (items.length === 0) {
-        scrollContainer.innerHTML =
-          '<div class="w-full text-center text-white/50 p-10">No hay productos disponibles por ahora.</div>';
-        return;
+        const btn = container.querySelector(".add-to-cart-btn");
+        if (btn) attachCartListener(btn);
       }
-      const cardTemplate = (item) => `
-          <div class="flex-none w-[85vw] md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out flex flex-col">
-            <div class="relative h-56 rounded-2xl overflow-hidden mb-4 shadow-lg shrink-0">
+
+      function renderCarousel(items) {
+        const scrollContainer = document.getElementById("carousel-container");
+        if (!scrollContainer) return;
+        scrollContainer.innerHTML = "";
+        if (items.length === 0) {
+          scrollContainer.innerHTML =
+            '<div class="w-full text-center text-white/50 p-10">No hay productos disponibles por ahora.</div>';
+          return;
+        }
+        const cardTemplate = (item) => `
+          <div class="flex-none w-[80vw] sm:w-72 md:w-[calc(25%-1.125rem)] bg-white/5 border border-white/5 rounded-2xl md:rounded-3xl p-3 md:p-4 group transition-all hover:bg-white/8 snap-center hover:-translate-y-2 duration-500 ease-out flex flex-col text-center">
+            <div class="relative h-32 md:h-48 rounded-xl md:rounded-2xl overflow-hidden mb-2 md:mb-3 shadow-lg shrink-0">
               <img alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="${item.image_url || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c"}" />
-              <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
-                <span class="text-brand-lime font-black text-xs">${item.price} BARAS</span>
+              <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-1.5 py-0.5 rounded-full border border-white/10">
+                <span class="text-brand-lime font-black text-[9px] md:text-[10px]">${item.price} B</span>
               </div>
             </div>
-            <h4 class="font-bold text-lg text-white leading-tight">${item.name}</h4>
-            <div class="grow">
-                <p class="text-white/50 text-xs mb-4 line-clamp-2 mt-1">${item.description}</p>
+            <h4 class="font-bold text-xs md:text-base text-white leading-tight mb-1 truncate px-1">${item.name}</h4>
+            <div class="grow mb-2 md:mb-3 w-full">
+                <p class="text-white/50 text-[9px] md:text-[10px] line-clamp-2 leading-tight px-1">${item.description}</p>
             </div>
-            <button class="add-to-cart-btn w-full py-3 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-xs hover:bg-brand-lime hover:text-black transition-all mt-auto"
+            <button class="add-to-cart-btn w-full py-1.5 md:py-2.5 rounded-lg md:rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-[9px] md:text-[10px] uppercase hover:bg-brand-lime hover:text-black transition-all mt-auto flex items-center justify-center gap-1"
               data-id="${item.id}" data-name="${item.name}" data-price="${item.price}" data-image="${item.image_url}">
-              Añadir al Carrito
+              <span>Agregar</span>
             </button>
           </div>
         `;
-      const createCard = (item) => {
-        const x = document.createElement("div");
-        x.innerHTML = cardTemplate(item);
-        return x.firstElementChild;
-      };
+        const createCard = (item) => {
+          const x = document.createElement("div");
+          x.innerHTML = cardTemplate(item);
+          return x.firstElementChild;
+        };
 
-      const set = items.map(createCard);
-      set.forEach((card) => {
-        scrollContainer.appendChild(card);
-        const btn = card.querySelector(".add-to-cart-btn");
-        if (btn) attachCartListener(btn);
-      });
-
-      if (items.length >= 3) {
-        // Simple cloning for infinite feeling if plenty items
-        const set2 = items.map(createCard);
-        const set3 = items.map(createCard);
-        [...set2, ...set3].forEach((card) => {
+        const set = items.map(createCard);
+        set.forEach((card) => {
           scrollContainer.appendChild(card);
           const btn = card.querySelector(".add-to-cart-btn");
           if (btn) attachCartListener(btn);
         });
-        initInfiniteScroll(items.length);
-      }
-    }
 
-    function attachCartListener(btn) {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const target = e.currentTarget;
-        const item = {
-          id: target.dataset.id,
-          name: target.dataset.name,
-          price: parseInt(target.dataset.price || "0"),
-          image: target.dataset.image,
-        };
-        addItemToCart(item);
-        isCartOpen.set(true);
-        showToast(`¡${item.name} agregado! 🍔`, "success");
-      });
-    }
-
-    // --- Cart Badge Logic ---
-    const manualCartBtn = document.getElementById("manual-cart-btn");
-    const cartBadge = document.getElementById("cart-badge-count");
-
-    cartItems.subscribe((items) => {
-      const count = Object.values(items).reduce(
-        (acc, item) => acc + item.quantity,
-        0,
-      );
-      if (cartBadge) {
-        cartBadge.textContent = count.toString();
-        if (count > 0) {
-          cartBadge.classList.remove("hidden");
-          cartBadge.classList.add("flex", "items-center", "justify-center");
-        } else {
-          cartBadge.classList.add("hidden");
-          cartBadge.classList.remove("flex", "items-center", "justify-center");
+        if (items.length >= 3) {
+          // Simple cloning for infinite feeling if plenty items
+          const set2 = items.map(createCard);
+          const set3 = items.map(createCard);
+          [...set2, ...set3].forEach((card) => {
+            scrollContainer.appendChild(card);
+            const btn = card.querySelector(".add-to-cart-btn");
+            if (btn) attachCartListener(btn);
+          });
+          initInfiniteScroll(items.length);
         }
       }
-      if (count > 0 && manualCartBtn) {
-        manualCartBtn.classList.add("scale-110");
-        setTimeout(() => manualCartBtn.classList.remove("scale-110"), 200);
+
+      function attachCartListener(btn) {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const target = e.currentTarget;
+          const item = {
+            id: target.dataset.id,
+            name: target.dataset.name,
+            price: parseInt(target.dataset.price || "0"),
+            image: target.dataset.image,
+          };
+          addItemToCart(item);
+          isCartOpen.set(true);
+          showToast(`¡${item.name} agregado! 🍔`, "success");
+        });
       }
-    });
 
-    if (manualCartBtn) {
-      manualCartBtn.addEventListener("click", () => isCartOpen.set(true));
-    }
+      // --- Cart Badge Logic ---
+      const manualCartBtn = document.getElementById("manual-cart-btn");
+      const cartBadge = document.getElementById("cart-badge-count");
 
-    // --- Infinite Scroll Helper ---
-    function initInfiniteScroll(count) {
-      const scrollContainer = document.getElementById("carousel-container");
-      const btnLeft = document.getElementById("scroll-left");
-      const btnRight = document.getElementById("scroll-right");
+      cartItems.subscribe((items) => {
+        const count = Object.values(items).reduce(
+          (acc, item) => acc + item.quantity,
+          0,
+        );
+        if (cartBadge) {
+          cartBadge.textContent = count.toString();
+          if (count > 0) {
+            cartBadge.classList.remove("hidden");
+            cartBadge.classList.add("flex", "items-center", "justify-center");
+          } else {
+            cartBadge.classList.add("hidden");
+            cartBadge.classList.remove(
+              "flex",
+              "items-center",
+              "justify-center",
+            );
+          }
+        }
+        if (count > 0 && manualCartBtn) {
+          manualCartBtn.classList.add("scale-110");
+          setTimeout(() => manualCartBtn.classList.remove("scale-110"), 200);
+        }
+      });
 
-      if (!scrollContainer || !btnLeft || !btnRight) return;
+      if (manualCartBtn) {
+        manualCartBtn.addEventListener("click", () => isCartOpen.set(true));
+      }
 
-      const getCardWidth = () => {
-        const card = scrollContainer.children[0];
-        if (!card) return 0;
-        const style = window.getComputedStyle(scrollContainer);
-        const gap = parseFloat(style.gap) || 24;
-        return card.clientWidth + gap;
-      };
+      // --- Infinite Scroll Helper ---
+      function initInfiniteScroll(count) {
+        const scrollContainer = document.getElementById("carousel-container");
+        const btnLeft = document.getElementById("scroll-left");
+        const btnRight = document.getElementById("scroll-right");
 
-      setTimeout(() => {
-        const width = getCardWidth();
-        if (width > 0) {
+        if (!scrollContainer || !btnLeft || !btnRight) return;
+
+        const getCardWidth = () => {
+          const card = scrollContainer.children[0];
+          if (!card) return 0;
+          const style = window.getComputedStyle(scrollContainer);
+          const gap = parseFloat(style.gap) || 24;
+          return card.clientWidth + gap;
+        };
+
+        setTimeout(() => {
+          const width = getCardWidth();
+          if (width > 0) {
+            const singleSetWidth = width * count;
+            scrollContainer.scrollLeft = singleSetWidth;
+          }
+        }, 100);
+
+        scrollContainer.addEventListener("scroll", () => {
+          const width = getCardWidth();
+          if (width === 0) return;
           const singleSetWidth = width * count;
-          scrollContainer.scrollLeft = singleSetWidth;
-        }
-      }, 100);
+          // teleport
+          if (scrollContainer.scrollLeft < 50) {
+            scrollContainer.scrollLeft += singleSetWidth;
+          } else if (scrollContainer.scrollLeft > singleSetWidth * 2 - 50) {
+            scrollContainer.scrollLeft -= singleSetWidth;
+          }
+        });
 
-      scrollContainer.addEventListener("scroll", () => {
-        const width = getCardWidth();
-        if (width === 0) return;
-        const singleSetWidth = width * count;
-        // teleport
-        if (scrollContainer.scrollLeft < 50) {
-          scrollContainer.scrollLeft += singleSetWidth;
-        } else if (scrollContainer.scrollLeft > singleSetWidth * 2 - 50) {
-          scrollContainer.scrollLeft -= singleSetWidth;
-        }
-      });
+        const smoothScroll = (element, change, duration) => {
+          const start = element.scrollLeft;
+          const startTime = performance.now();
+          const easeInOutCubic = (t) =>
+            t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-      const smoothScroll = (element, change, duration) => {
-        const start = element.scrollLeft;
-        const startTime = performance.now();
-        const easeInOutCubic = (t) =>
-          t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-        const animateScroll = (currentTime) => {
-          const timeElapsed = currentTime - startTime;
-          let progress = timeElapsed / duration;
-          if (progress > 1) progress = 1;
-          element.scrollLeft = start + change * easeInOutCubic(progress);
-          if (progress < 1) requestAnimationFrame(animateScroll);
+          const animateScroll = (currentTime) => {
+            const timeElapsed = currentTime - startTime;
+            let progress = timeElapsed / duration;
+            if (progress > 1) progress = 1;
+            element.scrollLeft = start + change * easeInOutCubic(progress);
+            if (progress < 1) requestAnimationFrame(animateScroll);
+          };
+          requestAnimationFrame(animateScroll);
         };
-        requestAnimationFrame(animateScroll);
-      };
 
-      btnLeft.onclick = () =>
-        smoothScroll(scrollContainer, -getCardWidth() * 2, 600);
-      btnRight.onclick = () =>
-        smoothScroll(scrollContainer, getCardWidth() * 2, 600);
-    }
+        btnLeft.onclick = () =>
+          smoothScroll(scrollContainer, -getCardWidth() * 2, 600);
+        btnRight.onclick = () =>
+          smoothScroll(scrollContainer, getCardWidth() * 2, 600);
+      }
 
-    // Init Logic
-    initComedor();
-  </script>
+      // Init Logic
+      initComedor();
+    </script>
+  </div>
 </MainLayout>

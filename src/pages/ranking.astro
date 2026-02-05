@@ -189,7 +189,7 @@ const rankData = {
       </div>
 
       <div
-        class="flex-1 max-w-md bg-linear-to-r from-accent-purple to-indigo-900 rounded-xl p-6 relative overflow-hidden flex items-center justify-between border border-white/20 shadow-2xl"
+        class="flex-1 w-full lg:w-auto max-w-md mx-auto lg:mx-0 bg-linear-to-r from-accent-purple to-indigo-900 rounded-xl p-6 relative overflow-hidden flex items-center justify-between border border-white/20 shadow-2xl"
       >
         <div class="relative z-10">
           <p class="text-xs font-bold uppercase tracking-widest text-white/70">
@@ -229,10 +229,12 @@ const rankData = {
     </div>
 
     <!-- Main Grid: Removed items-start for full height columns -->
+    <!-- RESPONSIVE: Stacks vertically on mobile (grid-cols-1), becomes 12-col grid on large screens -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
       <!-- Left & Center: Podium and List -->
       <div class="lg:col-span-8 space-y-8">
         <!-- The Podium (Top 3) -->
+        <!-- RESPONSIVE: Keeps 3 columns even on mobile for visual impact, using smaller gap and avatar sizes defined in inner elements -->
         <div
           id="podium-container"
           class="grid grid-cols-3 gap-2 md:gap-4 items-end pt-12 min-h-80 transition-opacity duration-300"
@@ -1005,9 +1007,10 @@ const rankData = {
             <div class="size-10 rounded-lg overflow-hidden border ${isMe ? "border-brand-lime/30" : "border-white/10"} relative ${isMe ? "z-10" : ""}">
                 ${iconOrAvatar}
             </div>
-             <div class="flex-1 flex flex-col justify-center ${isMe ? "z-10" : ""}">
-                <p class="font-bold text-white leading-tight">${name} ${isMe ? "(Tú)" : ""}</p>
-                ${type === "user" ? `<p class="text-xs text-white/40">${item.faculty || "Sin facultad"}</p>` : ""}
+             <!-- RESPONSIVE: min-w-0 prevents flex item from overflowing its container, allowing truncate to work -->
+             <div class="flex-1 flex flex-col justify-center min-w-0 ${isMe ? "z-10" : ""}">
+                <p class="font-bold text-white leading-tight truncate">${name} ${isMe ? "(Tú)" : ""}</p>
+                ${type === "user" ? `<p class="text-xs text-white/40 truncate">${item.faculty || "Sin facultad"}</p>` : ""}
              </div>
             <p class="text-brand-lime font-black italic text-right ${isMe ? "z-10" : ""}">${points} pts</p>
          `;
