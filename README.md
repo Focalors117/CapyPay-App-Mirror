@@ -50,7 +50,7 @@ Documentación técnica y funcional del proyecto **CapyPay**. Aplicación web de
      - 📚 **Licenciado**: 2,001 - 5,000 XP - Acceso a CapyPay Universitario y créditos internos
      - 🎖️ **Magíster**: 5,001 - 10,000 XP - Prioridad en cola del comedor y eventos
      - 👑 **Doctorado**: 10,000+ XP - Cero comisiones y VIP exclusivo
-   - ✅ **Tarjeta de Perfil Dinámica**:
+   - ✅ **Tarjeta de Perfil Dinamica**:
      - Muestra nombre real del usuario (del localStorage)
      - Badge del nivel actual con efecto de brillo diagonal
      - Barra de progreso con animación shimmer
