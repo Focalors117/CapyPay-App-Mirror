@@ -55,7 +55,7 @@ Documentación técnica y funcional del proyecto **CapyPay**. Aplicación web de
      - Badge del nivel actual con efecto de brillo diagonal
      - Barra de progreso con animación shimmer
      - Indicador de XP ganados hoy con pulso animado
-   - ✅ **Línea de Tiempo de Niveles**:
+   - ✅ **Linea de Tiempo de Niveles**:
      - Visualización vertical de todos los niveles
      - Niveles bloqueados en escala de grises
      - Nivel actual marcado con glow
