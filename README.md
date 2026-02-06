@@ -48,7 +48,7 @@ Documentación técnica y funcional del proyecto **CapyPay**. Aplicación web de
      - 🌱 **Novato (Cachorro)**: 0 - 500 XP - Registro básico y primera recarga
      - 🎓 **Bachiller**: 501 - 2,000 XP - Descuento 2% en fotocopias
      - 📚 **Licenciado**: 2,001 - 5,000 XP - Acceso a CapyPay Universitario y créditos internos
-     - 🎖️ **Magíster**: 5,001 - 10,000 XP - Prioridad en cola del comedor y eventos
+     - 🎖️ **Magister**: 5,001 - 10,000 XP - Prioridad en cola del comedor y eventos
      - 👑 **Doctorado**: 10,000+ XP - Cero comisiones y VIP exclusivo
    - ✅ **Tarjeta de Perfil Dinamica**:
      - Muestra nombre real del usuario (del localStorage)
