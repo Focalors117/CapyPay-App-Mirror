@@ -6,8 +6,8 @@ import { showToast } from "../utils/toast";
 <MainLayout title="Cantinas | CapyPay" showSidebar={true}>
   <div class="max-w-7xl mx-auto px-4 md:px-6 py-8 pb-32">
     <!-- Header -->
-    <header class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
-      <div class="flex items-center gap-3 lg:gap-4 w-full md:w-auto">
+    <header class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+      <div class="flex items-center gap-2 sm:gap-4 w-full md:w-auto">
         <a
           href="/dashboard"
           class="w-9 h-9 lg:w-10 lg:h-10 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/5 transition-colors shrink-0"
@@ -28,22 +28,26 @@ import { showToast } from "../utils/toast";
           </svg>
         </a>
         <div
-          class="size-12 bg-brand-purple/20 rounded-2xl flex items-center justify-center text-brand-purple shadow-[0_0_20px_rgba(147,51,234,0.3)]"
+          class="w-10 h-10 sm:w-12 sm:h-12 bg-brand-purple rounded-2xl flex items-center justify-center text-black shadow-[0_0_20px_rgba(147,51,234,0.3)]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24px"
-            viewBox="0 -960 960 960"
+            viewBox="0 0 24 24"
             width="24px"
-            fill="currentColor"
+            fill="none"
+            stroke="currentColor"
           >
             <path
-              d="M120-80v-366q-51-14-85.5-56T160-600v-280h80v280h40v-280h80v280h40v-280h80v280q0 56-34.5 98T360-446v366h-80Zm400 0v-320H560v-280q0-83 58.5-141.5T760-880v800h-80Z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
             ></path>
           </svg>
         </div>
         <div>
-          <h1 class="text-2xl font-extrabold tracking-tight text-white">
+          <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white leading-tight">
             CapyPay <span class="text-brand-purple">Cantinas</span>
           </h1>
           <p class="text-white/40 text-sm font-medium">
@@ -300,7 +304,7 @@ import { showToast } from "../utils/toast";
       </button>
 
       <!-- Encabezado del área -->
-      <div class="bg-linear-to-br from-brand-lime/20 via-brand-purple/10 to-brand-black border border-brand-lime/30 rounded-3xl p-4 sm:p-6 mb-8 relative overflow-hidden min-w-0">
+      <div id="cantinas-header" class="bg-linear-to-br from-brand-lime/20 via-brand-purple/10 to-brand-black border border-brand-lime/30 rounded-3xl p-4 sm:p-6 mb-8 relative overflow-hidden min-w-0">
         <div class="absolute -right-10 -top-10 w-40 h-40 bg-brand-lime/10 rounded-full blur-3xl"></div>
         <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-brand-purple/10 rounded-full blur-3xl"></div>
         <div class="relative z-10 min-w-0">
@@ -367,7 +371,7 @@ import { showToast } from "../utils/toast";
       </div>
 
       <!-- Grid de productos -->
-      <h3 class="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Menú Disponible</h3>
+      <h3 id="products-title" class="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Menú Disponible</h3>
       <div id="products-grid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 min-w-0">
         <!-- Los productos se generan dinámicamente -->
       </div>
@@ -818,33 +822,29 @@ import { showToast } from "../utils/toast";
 
         const card = document.createElement("div");
         card.className =
-          "glass-card rounded-2xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02] hover:border-brand-lime/50 group border-2 border-transparent hover:border-brand-lime/30 min-w-0";
+          "bg-white/5 border border-white/5 rounded-3xl overflow-hidden cursor-pointer transition-all hover:bg-white/8 hover:-translate-y-2 duration-500 ease-out group min-w-0";
         card.innerHTML = `
-          <div class="h-40 overflow-hidden relative">
+          <div class="relative h-48 rounded-2xl overflow-hidden mb-3 shadow-lg">
             <img
               src="${area.image}"
               alt="${area.name}"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
             />
-            <div class="absolute inset-0 bg-linear-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent opacity-90"></div>
-            <div class="absolute bottom-3 left-3 right-3">
-              <div class="flex items-center gap-2">
-                <div class="flex-1 min-w-0">
-                  <h3 class="text-lg font-extrabold text-white mb-1 truncate">${area.name}</h3>
-                  <p class="text-white/60 text-xs truncate">${area.description}</p>
-                </div>
-              </div>
+            <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+              <span class="text-brand-lime font-black text-xs">${activeCantinas}/${totalCantinas} cantinas</span>
             </div>
           </div>
-          <div class="p-4 bg-linear-to-b from-[#0a0a0a] to-[#0a0a0a]">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-              <span class="text-xs text-brand-lime font-medium flex items-center gap-1.5 truncate">
+          <div class="px-4 pb-4">
+            <h4 class="font-bold text-base text-white mb-1 truncate">${area.name}</h4>
+            <p class="text-white/50 text-[10px] mb-3 line-clamp-2">${area.description}</p>
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] text-brand-lime font-medium flex items-center gap-1.5 truncate">
                 <div class="w-1.5 h-1.5 rounded-full bg-brand-lime animate-pulse shrink-0"></div>
-                ${activeCantinas}/${totalCantinas} cantinas activas
+                ${activeCantinas} abiertas
               </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 text-brand-lime group-hover:translate-x-1 transition-transform shrink-0"
+                class="h-4 w-4 text-brand-lime group-hover:translate-x-1 transition-transform shrink-0"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -883,55 +883,50 @@ import { showToast } from "../utils/toast";
 
       areaCantinas.forEach((cantina, index) => {
         const statusBadge = cantina.isOpen
-          ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-brand-lime/20 border border-brand-lime/50 text-brand-lime text-[10px] font-bold uppercase tracking-wider">
-               <span class="w-1 h-1 rounded-full bg-brand-lime animate-pulse"></span>
+          ? `<span class="absolute top-2 left-2 inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-brand-lime/20 border border-brand-lime/50 text-brand-lime text-xs font-bold uppercase tracking-wider backdrop-blur-md">
+               <span class="w-1.5 h-1.5 rounded-full bg-brand-lime animate-pulse"></span>
                Abierto
              </span>`
-          : `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-500/20 border border-red-500/50 text-red-400 text-[10px] font-bold uppercase tracking-wider">
-               <span class="w-1 h-1 rounded-full bg-red-400"></span>
+          : `<span class="absolute top-2 left-2 inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-red-500/20 border border-red-500/50 text-red-400 text-xs font-bold uppercase tracking-wider backdrop-blur-md">
+               <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
                Cerrado
              </span>`;
 
         const card = document.createElement("div");
         card.className =
-          "glass-card rounded-2xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02] hover:border-brand-lime/50 group border-2 border-transparent hover:border-brand-lime/30 min-w-0";
+          "bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 hover:-translate-y-2 duration-500 ease-out cursor-pointer min-w-0";
         card.style.opacity = '0';
         card.style.transform = 'translateY(10px)';
         card.innerHTML = `
-          <div class="h-32 overflow-hidden relative">
+          <div class="relative h-48 rounded-2xl overflow-hidden mb-3 shadow-lg">
             <img
               src="${cantina.image}"
               alt="${cantina.name}"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
             />
-            <div class="absolute inset-0 bg-linear-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent opacity-90"></div>
-            <div class="absolute top-3 left-3">
-              ${statusBadge}
-            </div>
+            ${statusBadge}
           </div>
-          <div class="p-4 bg-linear-to-b from-[#0a0a0a] to-[#0a0a0a] min-w-0">
-            <h3 class="text-base font-bold text-white mb-1 truncate">${cantina.name}</h3>
-            <p class="text-white/50 text-xs mb-3 line-clamp-2">${cantina.description}</p>
-            <div class="flex items-center justify-between">
-              <span class="text-xs text-brand-lime font-medium flex items-center gap-1.5 truncate">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 shrink-0" fill="currentColor" viewBox="0 -960 960 960"><path d="M120-80v-366q-51-14-85.5-56T160-600v-280h80v280h40v-280h80v280h40v-280h80v280q0 56-34.5 98T360-446v366h-80Zm400 0v-320H560v-280q0-83 58.5-141.5T760-880v800h-80Z" /></svg>
-                ${cantina.products.length} productos
-              </span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4 text-brand-lime group-hover:translate-x-1 transition-transform shrink-0"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5l7 7-7 7"
-                ></path>
-              </svg>
-            </div>
+          <h4 class="font-bold text-base text-white mb-1 truncate">${cantina.name}</h4>
+          <p class="text-white/50 text-[10px] mb-3 line-clamp-2">${cantina.description}</p>
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] text-brand-lime font-medium flex items-center gap-1.5 truncate">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 shrink-0" fill="currentColor" viewBox="0 -960 960 960"><path d="M120-80v-366q-51-14-85.5-56T160-600v-280h80v280h40v-280h80v280h40v-280h80v280q0 56-34.5 98T360-446v366h-80Zm400 0v-320H560v-280q0-83 58.5-141.5T760-880v800h-80Z" /></svg>
+              ${cantina.products.length} productos
+            </span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 text-brand-lime group-hover:translate-x-1 transition-transform shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
           </div>
         `;
         card.addEventListener("click", () => showProductsView(cantina));
@@ -942,13 +937,15 @@ import { showToast } from "../utils/toast";
 
       // Animar entrada de las cards
       requestAnimationFrame(() => {
-        const cards = cantinasList.querySelectorAll('.glass-card');
+        const cards = cantinasList.querySelectorAll('div');
         cards.forEach((card, index) => {
-          setTimeout(() => {
-            card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-          }, index * 50);
+          if (card.style.opacity === '0') {
+            setTimeout(() => {
+              card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, index * 50);
+          }
         });
 
         // Mostrar el contenedor
@@ -963,36 +960,31 @@ import { showToast } from "../utils/toast";
       cantina.products.forEach((product) => {
         const card = document.createElement("div");
         card.className =
-          "glass-card rounded-2xl overflow-hidden transition-transform duration-300 hover:scale-[1.02] hover:border-brand-lime/50 group border border-white/10 min-w-0";
+          "bg-white/5 border border-white/5 rounded-3xl p-4 group transition-all hover:bg-white/8 hover:-translate-y-2 duration-500 ease-out min-w-0";
         card.innerHTML = `
-          <div class="h-28 overflow-hidden relative">
+          <div class="relative h-48 rounded-2xl overflow-hidden mb-3 shadow-lg">
             <img
               src="${product.image}"
               alt="${product.name}"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
             />
-            <div class="absolute top-2 right-2 bg-brand-lime/90 backdrop-blur-md px-2 py-0.5 rounded-lg">
-              <span class="text-black text-[10px] font-bold">+${product.xpReward} XP</span>
+            <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/10">
+              <span class="text-brand-lime font-black text-[10px]">+${product.xpReward} XP</span>
             </div>
           </div>
-          <div class="p-4 bg-linear-to-b from-[#0a0a0a] to-[#0a0a0a]">
-            <h4 class="text-sm font-bold text-white mb-2">${product.name}</h4>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs text-white/60">Bs ${product.priceBs}</span>
-              <span class="text-xs text-brand-lime font-bold">${product.priceCapys} BARAS</span>
-            </div>
-            <button
-              class="buy-btn w-full py-2.5 rounded-xl bg-brand-lime hover:bg-brand-lime/90 text-black border border-brand-lime/50 shadow-[0_0_15px_rgba(215,253,73,0.3)] transition-all text-xs font-bold uppercase tracking-wider active:scale-[0.98] flex items-center justify-center gap-2"
-              data-product-id="${product.id}"
-              data-product-name="${product.name}"
-              data-xp="${product.xpReward}"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-              Comprar
-            </button>
+          <h4 class="font-bold text-base text-white mb-1 truncate">${product.name}</h4>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-white/50 text-[10px]">Bs ${product.priceBs}</span>
+            <span class="text-brand-lime font-black text-[10px]">${product.priceCapys} BARAS</span>
           </div>
+          <button
+            class="buy-btn w-full py-2.5 rounded-xl border border-brand-lime/30 text-brand-lime font-bold text-[10px] uppercase hover:bg-brand-lime hover:text-black transition-all"
+            data-product-id="${product.id}"
+            data-product-name="${product.name}"
+            data-xp="${product.xpReward}"
+          >
+            Comprar
+          </button>
         `;
         productsGrid.appendChild(card);
       });
@@ -1013,12 +1005,35 @@ import { showToast } from "../utils/toast";
     // ==========================================
 
     function showCantinasList(area) {
+      // Scroll al inicio ANTES de cambiar la vista
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+
       currentArea = area;
       renderCantinasList(area);
 
       areasView.classList.add("hidden");
       cantinasView.classList.remove("hidden");
       productsView.classList.add("hidden");
+
+      // Forzar scroll inmediato después de cambiar la vista
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+
+        // Scroll al encabezado de cantinas
+        const header = document.getElementById("cantinas-header");
+        if (header) {
+          header.scrollIntoView({ behavior: 'instant', block: 'start' });
+        }
+      });
+
+      // Scroll suave adicional después de que las cards terminen de animarse
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 1000);
     }
 
     function showProductsView(cantina) {
@@ -1041,12 +1056,54 @@ import { showToast } from "../utils/toast";
         statusBadge.innerHTML = `<span class="inline-flex items-center gap-1 sm:gap-1.5"><span class="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-red-400"></span>Cerrado</span>`;
       }
 
-      // Renderizar productos
-      renderProducts(cantina);
+      // Renderizar productos o mensaje de cerrado
+      const productsGrid = document.getElementById("products-grid");
+      const productsTitle = document.getElementById("products-title");
+
+      if (cantina.isOpen) {
+        productsTitle.classList.remove("hidden");
+        renderProducts(cantina);
+      } else {
+        productsTitle.classList.add("hidden");
+        productsGrid.innerHTML = `
+          <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
+            <div class="w-24 h-24 rounded-full bg-red-500/10 flex items-center justify-center mb-6">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-12 w-12 text-red-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                ></path>
+              </svg>
+            </div>
+            <h4 class="text-2xl font-bold text-white mb-3">Esta cantina está cerrada</h4>
+            <p class="text-white/60 text-sm max-w-md">
+              Lo sentimos, pero por el momento esta cantina no está disponible para realizar compras.
+              Por favor, intenta con otra cantina de la facultad.
+            </p>
+            <button
+              onclick="showCantinasList(currentArea)"
+              class="mt-8 px-6 py-3 rounded-xl bg-brand-lime hover:bg-brand-lime/90 text-black font-bold text-sm uppercase tracking-wider transition-all hover:scale-105 active:scale-95"
+            >
+              Volver a cantinas
+            </button>
+          </div>
+        `;
+      }
 
       areasView.classList.add("hidden");
       cantinasView.classList.add("hidden");
       productsView.classList.remove("hidden");
+
+      // Scroll al inicio de la página
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function showAreasView() {
@@ -1056,6 +1113,9 @@ import { showToast } from "../utils/toast";
       areasView.classList.remove("hidden");
       cantinasView.classList.add("hidden");
       productsView.classList.add("hidden");
+
+      // Scroll al inicio de la página
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function showCantinasView() {
@@ -1064,6 +1124,9 @@ import { showToast } from "../utils/toast";
       areasView.classList.add("hidden");
       cantinasView.classList.remove("hidden");
       productsView.classList.add("hidden");
+
+      // Scroll al inicio de la página
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // ==========================================
