@@ -123,7 +123,7 @@ import { cartItems, clearCart } from "../store/cartStore";
   <script>
     // @ts-nocheck
     import { cartItems, clearCart } from "../store/cartStore";
-    import { authService, comedorService } from "../services/api";
+    import { authService, comedorService, fetchAPI } from "../services/api";
     import { showToast } from "../utils/toast";
 
     const itemsContainer = document.getElementById("checkout-items");
@@ -133,50 +133,146 @@ import { cartItems, clearCart } from "../store/cartStore";
     const payBtn = document.getElementById("do-payment-btn"); // Removed TS casting
 
     if (itemsContainer && totalEl && payBtn) {
-      // 1. Cargar items del store
-      const items = cartItems.get();
+      // 1. Logic for Price Sync & Rendering
+      async function initCheckout() {
+        let items = cartItems.get();
+        let itemsArray = Object.values(items);
 
-      // Removed TS Type Definition
+        if (itemsArray.length === 0) {
+          window.location.href = "/comedor";
+          return;
+        }
 
-      const itemsArray = Object.values(items);
-      let subtotal = 0;
+        // --- PRICE SYNC START ---
+        try {
+          const CACHE_KEY = "capypay_menu_cache_v2";
+          // 7 Days validation (Matches Comedor)
+          const CACHE_DURATION = 7 * 24 * 60 * 60 * 1000;
+          let menuData = null;
 
-      if (itemsArray.length === 0) {
-        window.location.href = "/comedor";
+          // 1. Try Cache
+          const cached = localStorage.getItem(CACHE_KEY);
+          if (cached) {
+            const parsed = JSON.parse(cached);
+            if (Date.now() - parsed.timestamp < CACHE_DURATION) {
+              menuData = parsed.data;
+              console.log("Checkout: Using cached prices");
+            }
+          }
+
+          // 2. Refresh Cache if needed (Once a week or initial load)
+          if (!menuData) {
+            console.log("Checkout: Refreshing prices from API...");
+            menuData = await fetchAPI("/comedor/menu");
+            if (menuData) {
+              localStorage.setItem(
+                CACHE_KEY,
+                JSON.stringify({
+                  timestamp: Date.now(),
+                  data: menuData,
+                }),
+              );
+            }
+          }
+
+          // 3. Update Cart Prices
+          if (menuData) {
+            const priceMap = new Map();
+            // Flatten all possible sources
+            if (menuData.platoDia)
+              priceMap.set(
+                String(menuData.platoDia.id),
+                parseFloat(menuData.platoDia.price),
+              );
+            if (menuData.popularItems)
+              menuData.popularItems.forEach((i) =>
+                priceMap.set(String(i.id), parseFloat(i.price)),
+              );
+            if (menuData.items)
+              menuData.items.forEach((i) =>
+                priceMap.set(String(i.id), parseFloat(i.price)),
+              );
+
+            let pricesUpdated = false;
+
+            itemsArray.forEach((item) => {
+              const freshPrice = priceMap.get(String(item.id));
+              // Only update if fresh price exists and is different
+              // If fresh price is missing (e.g. item removed from menu), we keep old price or warn?
+              // For now, keep old price to avoid breaking UI, user will get error on buy if actually invalid.
+              if (
+                freshPrice !== undefined &&
+                freshPrice !== parseFloat(item.price)
+              ) {
+                console.warn(
+                  `Updating price for ${item.name}: ${item.price} -> ${freshPrice}`,
+                );
+                item.price = freshPrice;
+                pricesUpdated = true;
+                // Persist to store logic
+                cartItems.setKey(item.id, { ...item, price: freshPrice });
+              }
+            });
+
+            if (pricesUpdated) {
+              items = cartItems.get(); // Refresh local reference
+              itemsArray = Object.values(items);
+              showToast("⚠️ Precios actualizados al valor actual", "info");
+            }
+          }
+        } catch (e) {
+          console.error("Price Sync Error:", e);
+          // Fail gracefully, use existing cart prices
+        }
+        // --- PRICE SYNC END ---
+
+        renderItems(itemsArray);
       }
 
-      // Render items
-      itemsContainer.innerHTML = itemsArray
-        .map((item) => {
-          subtotal += item.price * item.quantity;
-          return `
-                <div class="flex justify-between items-center bg-white/5 p-3 rounded-xl">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-black/20 flex items-center justify-center text-white/50 font-bold text-xs border border-white/5">
-                            x${item.quantity}
+      function renderItems(itemsArray) {
+        let subtotal = 0;
+
+        // Render items
+        itemsContainer.innerHTML = itemsArray
+          .map((item) => {
+            const itemTotal = item.price * item.quantity;
+            subtotal += itemTotal;
+            return `
+                    <div class="flex justify-between items-center bg-white/5 p-3 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-black/20 flex items-center justify-center text-white/50 font-bold text-xs border border-white/5">
+                                x${item.quantity}
+                            </div>
+                            <div class="flex flex-col">
+                                <h4 class="text-white font-bold text-sm text-balance">${item.name}</h4>
+                                <span class="text-[10px] text-white/40">Unitario: $${item.price}</span>
+                            </div>
                         </div>
-                        <div>
-                            <h4 class="text-white font-bold text-sm text-balance">${item.name}</h4>
-                        </div>
+                        <span class="text-white font-bold text-sm text-brand-lime">${itemTotal.toLocaleString()} BARAS</span>
                     </div>
-                    <span class="text-white font-bold text-sm">${(item.price * item.quantity).toLocaleString()} BARAS</span>
-                </div>
-            `;
-        })
-        .join("");
+                `;
+          })
+          .join("");
 
-      // Calculate totals
-      // Backend now handles commission/total validation, but we show estimate here
-      const commission = Math.round(subtotal * 0.05);
-      const totalAmount = subtotal + commission;
+        // Calculate totals
+        const commission = Math.round(subtotal * 0.05); // 5% Simulation
+        const totalAmount = subtotal + commission;
 
-      if (subtotalEl)
-        subtotalEl.textContent = `${subtotal.toLocaleString()} BARAS`;
-      if (feeEl) feeEl.textContent = `${commission.toLocaleString()} BARAS`;
-      totalEl.textContent = `${totalAmount.toLocaleString()} BARAS`;
+        if (subtotalEl)
+          subtotalEl.textContent = `${subtotal.toLocaleString()} BARAS`;
+        if (feeEl) feeEl.textContent = `${commission.toLocaleString()} BARAS`;
+        totalEl.textContent = `${totalAmount.toLocaleString()} BARAS`;
+
+        // Store total in memory for logic usage? No need, recalculated on backend.
+      }
+
+      // Run Init
+      initCheckout();
 
       // 2. Lógica de Pago
       payBtn.addEventListener("click", async () => {
+        // Refresh items from store to get latest state
+        const currentItems = Object.values(cartItems.get());
         const btn = payBtn;
         const originalText = btn.innerHTML;
 
@@ -195,10 +291,10 @@ import { cartItems, clearCart } from "../store/cartStore";
 
           // Prepare payload for Create Order
           // Backend expects { id, quantity }
-          const orderItems = itemsArray.map((item) => ({
+          const orderItems = currentItems.map((item) => ({
             id: item.id,
             quantity: item.quantity,
-            price: item.price,
+            price: item.price, // Send price just in case, but backend should verify
           }));
 
           const response = await comedorService.createOrder(userId, orderItems);
