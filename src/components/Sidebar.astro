@@ -4,7 +4,7 @@
 
 <aside
   id="sidebar"
-  class="group flex flex-col h-screen sticky top-0 z-50 transition-all duration-300 w-20 bg-[#0a0a0a] border-r border-white/10 shrink-0"
+  class="group flex flex-col h-screen sticky top-0 z-50 transition-all duration-300 w-20 bg-[#0a0a0a] border-r border-white/10 shrink-0 overflow-hidden"
 >
   <!-- Header: Logo, Collapse -->
   <div
@@ -53,76 +53,259 @@
             stroke-linejoin="round"
             stroke-width="2"
             d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
-          ></path>
         </svg>
       </button>
     </div>
   </div>
 
   <!-- Contenedor scrollable del contenido -->
-  <div class="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar scrollable-container">
-    <!-- User Profile Section -->
   <div
-    class="flex flex-col items-center p-2 py-4 border-b border-white/5 overflow-hidden whitespace-nowrap transition-all duration-300 origin-top"
+    class="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar scrollable-container"
   >
-    <!-- Profile Photo (Clickable) -->
-    <a
-      href="/profile"
-      id="sidebar-profile-photo"
-      class="w-9 h-9 rounded-full p-1 bg-transparent mb-2 transition-all duration-300 sidebar-photo border-2 hover:scale-105"
-      title="Ver mi perfil"
-    >
-      <img
-        src="https://api.dicebear.com/9.x/lorelei/svg?seed=Aneka"
-        alt="User Profile"
-        class="w-full h-full rounded-full bg-black object-cover"
-      />
-    </a>
-
-    <!-- Profile Info Wrapper (Name & Level) -->
+    <!-- User Profile Section -->
     <div
-      class="w-full flex flex-col items-center overflow-hidden transition-all duration-300 profile-content max-h-0 opacity-0"
+      class="flex flex-col items-center p-2 py-4 border-b border-white/5 overflow-hidden whitespace-nowrap transition-all duration-300 origin-top"
     >
-      <!-- Name -->
-      <h3 id="sidebar-username" class="text-white font-semibold text-base lg:text-lg mb-1">
-        Cargando...
-      </h3>
+      <!-- Profile Photo (Clickable) -->
+      <a
+        href="/profile"
+        id="sidebar-profile-photo"
+        class="w-9 h-9 rounded-full p-1 bg-transparent mb-2 transition-all duration-300 sidebar-photo border-2 hover:scale-105"
+        title="Ver mi perfil"
+      >
+        <img
+          src="https://api.dicebear.com/9.x/lorelei/svg?seed=Aneka"
+          alt="User Profile"
+          class="w-full h-full rounded-full bg-black object-cover"
+        />
+      </a>
 
-      <!-- Level Info -->
-      <div class="w-full mt-2">
-        <div class="flex justify-between items-center text-xs text-slate-400 mb-1">
-          <span id="sidebar-level-text" class="text-brand-lime font-bold">Nivel -</span>
-        </div>
-        <div class="flex justify-between items-center text-[10px] text-slate-500 mb-1">
-          <span id="sidebar-level-xp">0 XP</span>
-          <span id="sidebar-level-max">0 XP</span>
-        </div>
-        <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+      <!-- Profile Info Wrapper (Name & Level) -->
+      <div
+        class="w-full flex flex-col items-center overflow-hidden transition-all duration-300 profile-content max-h-0 opacity-0"
+      >
+        <!-- Name -->
+        <h3
+          id="sidebar-username"
+          class="text-white font-semibold text-base lg:text-lg mb-1"
+        >
+          Cargando...
+        </h3>
+
+        <!-- Level Info -->
+        <div class="w-full mt-2">
           <div
-            id="sidebar-level-bar"
-            class="bg-brand-lime h-full rounded-full w-[0%] shadow-[0_0_10px_rgba(215,253,72,0.5)]"
+            class="flex justify-between items-center text-xs text-slate-400 mb-1"
           >
+            <span id="sidebar-level-text" class="text-brand-lime font-bold"
+              >Nivel -</span
+            >
+          </div>
+          <div
+            class="flex justify-between items-center text-[10px] text-slate-500 mb-1"
+          >
+            <span id="sidebar-level-xp">0 XP</span>
+            <span id="sidebar-level-max">0 XP</span>
+          </div>
+          <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+            <div
+              id="sidebar-level-bar"
+              class="bg-brand-lime h-full rounded-full w-[0%] shadow-[0_0_10px_rgba(215,253,72,0.5)]"
+            >
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- MAIN NAVIGATION -->
-  <div class="flex flex-col gap-1 px-3 mt-4 pb-4">
-    <!-- Dashboard Link -->
-    <a
-      href="/dashboard"
-      class="group/nav flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left"
-      title="Ir al Dashboard"
-    >
-      <div class="relative shrink-0">
+    <!-- MAIN NAVIGATION -->
+    <div class="flex flex-col gap-1 px-3 mt-4 pb-4">
+      <!-- Dashboard Link -->
+      <a
+        href="/dashboard"
+        class="group/nav flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left"
+        title="Ir al Dashboard"
+      >
+        <div class="relative shrink-0">
+          <div
+            class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 group-hover/nav:text-brand-lime transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              ></path>
+            </svg>
+          </div>
+        </div>
         <div
-          class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 group-hover/nav:text-brand-lime transition-colors"
+          class="overflow-hidden whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 transition-all duration-500 ease-in-out"
         >
+          <p class="text-sm text-slate-200 font-medium truncate">Dashboard</p>
+        </div>
+      </a>
+
+      <!-- Historial Link -->
+      <a
+        href="/history"
+        class="group/nav flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left"
+        title="Historial"
+      >
+        <div class="relative shrink-0">
+          <div
+            class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 group-hover/nav:text-brand-lime transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              ></path>
+            </svg>
+          </div>
+        </div>
+        <div
+          class="overflow-hidden whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 transition-all duration-500 ease-in-out"
+        >
+          <p class="text-sm text-slate-200 font-medium truncate">Historial</p>
+        </div>
+      </a>
+
+      <!-- Pedidos/Órdenes Link (Center Action Style) -->
+      <a
+        href="/orders"
+        class="group/nav flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left"
+        title="Mis Pedidos"
+      >
+        <div class="relative shrink-0">
+          <div
+            class="w-9 h-9 rounded-full bg-brand-lime/20 flex items-center justify-center text-brand-lime group-hover/nav:bg-brand-lime group-hover/nav:text-black transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+              ></path>
+            </svg>
+          </div>
+        </div>
+        <div
+          class="overflow-hidden whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 transition-all duration-500 ease-in-out"
+        >
+          <p class="text-sm text-slate-200 font-medium truncate">Pedidos</p>
+        </div>
+      </a>
+
+      <!-- Contactos Link -->
+      <a
+        href="/contacts"
+        class="group/nav flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left"
+        title="Contactos"
+      >
+        <div class="relative shrink-0">
+          <div
+            class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 group-hover/nav:text-brand-lime transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+              ></path>
+            </svg>
+          </div>
+        </div>
+        <div
+          class="overflow-hidden whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 transition-all duration-500 ease-in-out"
+        >
+          <p class="text-sm text-slate-200 font-medium truncate">Contactos</p>
+        </div>
+      </a>
+
+      <!-- Niveles Link -->
+      <a
+        href="/niveles"
+        class="group/nav flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left"
+        title="Mis Niveles"
+      >
+        <div class="relative shrink-0">
+          <div
+            class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 group-hover/nav:text-brand-lime transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+              ></path>
+            </svg>
+          </div>
+        </div>
+        <div
+          class="overflow-hidden whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 transition-all duration-500 ease-in-out"
+        >
+          <p class="text-sm text-slate-200 font-medium truncate">Niveles</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- Contacts Section (Frecuentes) -->
+    <div
+      class="flex-1 overflow-y-auto custom-scrollbar flex flex-col py-6 border-t border-white/5"
+    >
+      <!-- Search Bar -->
+      <div class="px-3 mb-4">
+        <button
+          id="sidebar-search-trigger"
+          class="w-full relative group/search"
+        >
+          <input
+            id="sidebar-search-input"
+            type="text"
+            autocomplete="off"
+            placeholder="Buscar..."
+            class="bg-slate-800/50 text-slate-200 text-sm rounded-lg border-white/5 focus:outline-none focus:border-brand-lime/50 focus:bg-slate-800 transition-all placeholder:text-slate-500 w-0 p-0 border-0 opacity-0 pointer-events-none"
+          />
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
+            class="h-4 w-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none group-hover/search:text-brand-lime transition-colors"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -131,170 +314,41 @@
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
-              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-            ></path>
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
           </svg>
-        </div>
+        </button>
       </div>
-      <div
-        class="overflow-hidden whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 transition-all duration-500 ease-in-out"
-      >
-        <p class="text-sm text-slate-200 font-medium truncate">Dashboard</p>
-      </div>
-    </a>
 
-    <!-- Historial Link -->
-    <a
-      href="/history"
-      class="group/nav flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left"
-      title="Historial"
-    >
-      <div class="relative shrink-0">
+      <!-- Contacts Title -->
+      <div
+        class="px-3 mb-2 sidebar-content opacity-0 pointer-events-none max-w-0 overflow-hidden ml-3 transition-all duration-500 ease-in-out"
+      >
+        <h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest">
+          Frecuentes
+        </h4>
+      </div>
+
+      <div id="sidebar-contacts-list" class="flex flex-col gap-1 px-3">
+        <!-- Contactos se cargarán aquí -->
         <div
-          class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 group-hover/nav:text-brand-lime transition-colors"
+          class="p-2 text-xs text-slate-500 text-center sidebar-content opacity-0 pointer-events-none max-w-0 overflow-hidden ml-0 transition-all duration-500"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-            ></path>
-          </svg>
+          Cargando...
         </div>
       </div>
-      <div
-        class="overflow-hidden whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 transition-all duration-500 ease-in-out"
-      >
-        <p class="text-sm text-slate-200 font-medium truncate">Historial</p>
-      </div>
-    </a>
+    </div>
 
-    <!-- Pedidos/Órdenes Link (Center Action Style) -->
-    <a
-      href="/orders"
-      class="group/nav flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left"
-      title="Mis Pedidos"
+    <!-- Footer: Settings -->
+    <div
+      class="p-4 border-t border-white/5 mt-auto bg-black/50 flex flex-col gap-1 shrink-0"
     >
-      <div class="relative shrink-0">
-        <div
-          class="w-9 h-9 rounded-full bg-brand-lime/20 flex items-center justify-center text-brand-lime group-hover/nav:bg-brand-lime group-hover/nav:text-black transition-colors"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-            ></path>
-          </svg>
-        </div>
-      </div>
-      <div
-        class="overflow-hidden whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 transition-all duration-500 ease-in-out"
-      >
-        <p class="text-sm text-slate-200 font-medium truncate">Pedidos</p>
-      </div>
-    </a>
-
-    <!-- Contactos Link -->
-    <a
-      href="/contacts"
-      class="group/nav flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left"
-      title="Contactos"
-    >
-      <div class="relative shrink-0">
-        <div
-          class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 group-hover/nav:text-brand-lime transition-colors"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-            ></path>
-          </svg>
-        </div>
-      </div>
-      <div
-        class="overflow-hidden whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 transition-all duration-500 ease-in-out"
-      >
-        <p class="text-sm text-slate-200 font-medium truncate">Contactos</p>
-      </div>
-    </a>
-
-    <!-- Niveles Link -->
-    <a
-      href="/niveles"
-      class="group/nav flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors relative w-full text-left"
-      title="Mis Niveles"
-    >
-      <div class="relative shrink-0">
-        <div
-          class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 group-hover/nav:text-brand-lime transition-colors"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-            ></path>
-          </svg>
-        </div>
-      </div>
-      <div
-        class="overflow-hidden whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 transition-all duration-500 ease-in-out"
-      >
-        <p class="text-sm text-slate-200 font-medium truncate">Niveles</p>
-      </div>
-    </a>
-  </div>
-
-  <!-- Contacts Section (Frecuentes) -->
-  <div
-    class="flex-1 overflow-y-auto custom-scrollbar flex flex-col py-6 border-t border-white/5"
-  >
-     <!-- Search Bar -->
-    <div class="px-3 mb-4">
+      <!-- Share Button -->
       <button
-        id="sidebar-search-trigger"
-        class="w-full relative group/search"
+        class="flex items-center text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-lg transition-all group/share w-full text-left"
       >
-         <input
-           id="sidebar-search-input"
-           type="text"
-           placeholder="Buscar..."
-           class="bg-slate-800/50 text-slate-200 text-sm rounded-lg border-white/5 focus:outline-none focus:border-brand-lime/50 focus:bg-slate-800 transition-all placeholder:text-slate-500 w-0 p-0 border-0 opacity-0 pointer-events-none"
-         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-4 w-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none group-hover/search:text-brand-lime transition-colors"
+          class="h-6 w-6 shrink-0 group-hover/share:scale-110 transition-transform duration-300"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -303,115 +357,71 @@
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke-width="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
           ></path>
         </svg>
+        <span
+          class="font-medium whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 overflow-hidden transition-all duration-500 ease-in-out"
+          >Compartir</span
+        >
       </button>
+
+      <!-- Settings Button -->
+      <a
+        href="/profile#configuracion"
+        class="flex items-center text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-lg transition-all group/settings w-full"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 shrink-0 group-hover/settings:rotate-90 transition-transform duration-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+          ></path>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        </svg>
+        <span
+          class="font-medium whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 overflow-hidden transition-all duration-500 ease-in-out"
+          >Ajustes</span
+        >
+      </a>
+
+      <!-- Logout Button -->
+      <a
+        href="#"
+        id="desktop-logout-btn"
+        class="flex items-center text-red-400 hover:text-red-300 hover:bg-white/5 p-2 rounded-lg transition-all group/logout w-full"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 shrink-0 group-hover/logout:translate-x-1 transition-transform duration-300"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+          ></path>
+        </svg>
+        <span
+          class="font-medium whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 overflow-hidden transition-all duration-500 ease-in-out"
+          >Cerrar Sesión</span
+        >
+      </a>
     </div>
-
-    <!-- Contacts Title -->
-    <div
-      class="px-3 mb-2 sidebar-content opacity-0 pointer-events-none max-w-0 overflow-hidden ml-3 transition-all duration-500 ease-in-out"
-    >
-      <h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest">
-        Frecuentes
-      </h4>
-    </div>
-
-    <div id="sidebar-contacts-list" class="flex flex-col gap-1 px-3">
-      <!-- Contactos se cargarán aquí -->
-      <div
-        class="p-2 text-xs text-slate-500 text-center sidebar-content opacity-0 pointer-events-none max-w-0 overflow-hidden ml-0 transition-all duration-500"
-      >
-        Cargando...
-      </div>
-     </div>
-  </div>
-
-  <!-- Footer: Settings -->
-  <div
-    class="p-4 border-t border-white/5 mt-auto bg-black/50 flex flex-col gap-1 shrink-0"
-  >
-    <!-- Share Button -->
-    <button
-      class="flex items-center text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-lg transition-all group/share w-full text-left"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6 shrink-0 group-hover/share:scale-110 transition-transform duration-300"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
-        ></path>
-      </svg>
-      <span
-        class="font-medium whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 overflow-hidden transition-all duration-500 ease-in-out"
-        >Compartir</span
-      >
-    </button>
-
-    <!-- Settings Button -->
-    <a
-      href="/profile#configuracion"
-      class="flex items-center text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-lg transition-all group/settings w-full"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6 shrink-0 group-hover/settings:rotate-90 transition-transform duration-500"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-        ></path>
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-        ></path>
-      </svg>
-      <span
-        class="font-medium whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 overflow-hidden transition-all duration-500 ease-in-out"
-        >Ajustes</span
-      >
-    </a>
-
-    <!-- Logout Button -->
-    <a
-      href="#"
-      id="desktop-logout-btn"
-      class="flex items-center text-red-400 hover:text-red-300 hover:bg-white/5 p-2 rounded-lg transition-all group/logout w-full"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6 shrink-0 group-hover/logout:translate-x-1 transition-transform duration-300"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-        ></path>
-      </svg>
-      <span
-        class="font-medium whitespace-nowrap sidebar-content opacity-0 pointer-events-none max-w-0 ml-0 overflow-hidden transition-all duration-500 ease-in-out"
-        >Cerrar Sesión</span
-      >
-    </a>
   </div>
 </aside>
 
@@ -432,7 +442,7 @@
 <!-- PORTAL FLOTANTE PARA MENUS CONTEXTUALES -->
 <div
   id="sidebar-floating-menu"
-  class="hidden fixed w-48 bg-[#1a1a1a] border border-white/10 rounded-xl shadow-[0_0_30px_rgba(0,0,0,0.5)] z-[9999] overflow-hidden animate-fade-in backdrop-blur-xl"
+  class="hidden fixed w-48 bg-[#1a1a1a] border border-white/10 rounded-xl shadow-[0_0_30px_rgba(0,0,0,0.5)] z-9999 overflow-hidden animate-fade-in backdrop-blur-xl"
 >
   <div id="floating-menu-content" class="p-1 flex flex-col gap-0.5">
     <!-- Dynamic content -->
@@ -550,11 +560,45 @@
 
     // Calcular nivel según XP
     function obtenerNivel(xp) {
-      if (xp >= 10001) return { id: 'doctorado', color: '#A8E638', nombre: 'Doctorado', min: 10001, max: Infinity };
-      if (xp >= 5001) return { id: 'master', color: '#DB2777', nombre: 'Magíster', min: 5001, max: 10000 };
-      if (xp >= 2001) return { id: 'licenciado', color: '#7C3AED', nombre: 'Licenciado', min: 2001, max: 5000 };
-      if (xp >= 501) return { id: 'bachiller', color: '#3B82F6', nombre: 'Bachiller', min: 501, max: 2000 };
-      return { id: 'novato', color: '#6B7280', nombre: 'Novato', min: 0, max: 500 };
+      if (xp >= 10001)
+        return {
+          id: "doctorado",
+          color: "#A8E638",
+          nombre: "Doctorado",
+          min: 10001,
+          max: Infinity,
+        };
+      if (xp >= 5001)
+        return {
+          id: "master",
+          color: "#DB2777",
+          nombre: "Magíster",
+          min: 5001,
+          max: 10000,
+        };
+      if (xp >= 2001)
+        return {
+          id: "licenciado",
+          color: "#7C3AED",
+          nombre: "Licenciado",
+          min: 2001,
+          max: 5000,
+        };
+      if (xp >= 501)
+        return {
+          id: "bachiller",
+          color: "#3B82F6",
+          nombre: "Bachiller",
+          min: 501,
+          max: 2000,
+        };
+      return {
+        id: "novato",
+        color: "#6B7280",
+        nombre: "Novato",
+        min: 0,
+        max: 500,
+      };
     }
 
     const nivel = obtenerNivel(xp);
@@ -571,14 +615,14 @@
     const levelXpEl = document.getElementById("sidebar-level-xp");
     const levelMaxEl = document.getElementById("sidebar-level-max");
     const levelBarEl = document.getElementById("sidebar-level-bar");
-    
+
     if (levelTextEl) levelTextEl.textContent = `Nivel ${nivel.nombre}`;
     if (levelXpEl) levelXpEl.textContent = `${xp} XP`;
     if (levelMaxEl) levelMaxEl.textContent = `${nivel.max} XP`;
-    
+
     if (levelBarEl) {
-      if (nivel.id === 'doctorado') {
-        levelBarEl.style.width = '100%';
+      if (nivel.id === "doctorado") {
+        levelBarEl.style.width = "100%";
       } else {
         const progress = ((xp - nivel.min) / (nivel.max - nivel.min)) * 100;
         levelBarEl.style.width = `${Math.min(100, Math.max(0, progress))}%`;
@@ -766,12 +810,30 @@
     }
 
     // Show search input
-    searchInput?.classList.add("w-full", "pl-10", "pr-3", "py-2", "border", "opacity-100");
-    searchInput?.classList.remove("w-0", "p-0", "border-0", "opacity-0", "pointer-events-none");
+    searchInput?.classList.add(
+      "w-full",
+      "pl-10",
+      "pr-3",
+      "py-2",
+      "border",
+      "opacity-100",
+    );
+    searchInput?.classList.remove(
+      "w-0",
+      "p-0",
+      "border-0",
+      "opacity-0",
+      "pointer-events-none",
+    );
 
     // Show labels
     currentContents.forEach((el) => {
-      el.classList.remove("opacity-0", "pointer-events-none", "max-w-0", "ml-0");
+      el.classList.remove(
+        "opacity-0",
+        "pointer-events-none",
+        "max-w-0",
+        "ml-0",
+      );
       el.classList.add("max-w-xs", "ml-3");
     });
 
@@ -806,8 +868,21 @@
     }
 
     // Hide search input
-    searchInput?.classList.remove("w-full", "pl-10", "pr-3", "py-2", "border", "opacity-100");
-    searchInput?.classList.add("w-0", "p-0", "border-0", "opacity-0", "pointer-events-none");
+    searchInput?.classList.remove(
+      "w-full",
+      "pl-10",
+      "pr-3",
+      "py-2",
+      "border",
+      "opacity-100",
+    );
+    searchInput?.classList.add(
+      "w-0",
+      "p-0",
+      "border-0",
+      "opacity-0",
+      "pointer-events-none",
+    );
 
     currentContents.forEach((el) => {
       el.classList.add("opacity-0", "pointer-events-none", "max-w-0", "ml-0");

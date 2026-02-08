@@ -209,6 +209,7 @@ import MainLayout from "../layouts/MainLayout.astro";
             <input
               type="text"
               id="search-input"
+              autocomplete="off"
               placeholder="Concepto, monto..."
               class="w-full bg-black/30 border border-white/10 rounded-xl sm:rounded-2xl py-2 sm:py-3 pl-10 pr-4 text-sm sm:text-base text-white focus:outline-none focus:border-brand-lime/50 transition-all placeholder:text-slate-700"
             />
@@ -529,11 +530,12 @@ import MainLayout from "../layouts/MainLayout.astro";
                 <div class="col-span-12 md:col-span-6 flex items-center justify-between gap-2 md:gap-3">
                     <div class="flex items-center gap-2 md:gap-4 flex-1 min-w-0">
                         <div class="w-8 h-8 rounded-full ${iconBg} flex items-center justify-center ${iconColor} shrink-0">
-                             ${isNegative ? 
-                               `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                             ${
+                               isNegative
+                                 ? `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                                </svg>` : 
-                               `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                </svg>`
+                                 : `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
                                 </svg>`
                              }

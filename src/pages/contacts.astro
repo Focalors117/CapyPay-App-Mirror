@@ -3,7 +3,9 @@ import MainLayout from "../layouts/MainLayout.astro";
 ---
 
 <MainLayout title="Contactos | CapyPay">
-  <div class="flex flex-col gap-4 lg:gap-6 min-h-screen lg:h-full p-3 sm:p-4 lg:p-0 relative overflow-y-auto">
+  <div
+    class="flex flex-col gap-4 lg:gap-6 min-h-screen lg:h-full p-3 sm:p-4 lg:p-0 relative overflow-y-auto"
+  >
     <!-- Header -->
     <header
       class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 lg:gap-4 shrink-0"
@@ -24,12 +26,13 @@ import MainLayout from "../layouts/MainLayout.astro";
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
-              d="M10 19l-7-7 7-7m8 14l-7-7 7-7"
-            ></path>
+              d="M10 19l-7-7 7-7m8 14l-7-7 7-7"></path>
           </svg>
         </a>
         <div class="min-w-0 flex-1">
-          <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white flex items-center gap-2">
+          <h1
+            class="text-xl sm:text-2xl lg:text-3xl font-bold text-white flex items-center gap-2"
+          >
             Contactos
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -68,8 +71,7 @@ import MainLayout from "../layouts/MainLayout.astro";
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke-width="2"
-            d="M12 4v16m8-8H4"
-          ></path>
+            d="M12 4v16m8-8H4"></path>
         </svg>
         <span class="text-sm font-medium hidden sm:inline">Añadir Nuevo</span>
       </button>
@@ -82,6 +84,7 @@ import MainLayout from "../layouts/MainLayout.astro";
         <input
           type="text"
           id="search-input"
+          autocomplete="off"
           placeholder="Buscar por nombre, cédula o alias..."
           class="w-full bg-brand-black border border-white/10 text-white text-sm rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-brand-lime/30 focus:bg-brand-black transition-all placeholder:text-slate-500"
         />
@@ -96,13 +99,14 @@ import MainLayout from "../layouts/MainLayout.astro";
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke-width="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          ></path>
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
       </div>
 
       <!-- Filter Tabs -->
-      <div class="flex p-1 bg-brand-black rounded-xl border border-white/10 self-stretch sm:self-auto shrink-0">
+      <div
+        class="flex p-1 bg-brand-black rounded-xl border border-white/10 self-stretch sm:self-auto shrink-0"
+      >
         <button
           class="px-3 py-2 rounded-lg text-xs font-bold bg-brand-lime text-black shadow-sm transition-all filter-btn"
           data-filter="all">Todos</button
@@ -113,7 +117,8 @@ import MainLayout from "../layouts/MainLayout.astro";
         >
         <button
           class="px-3 py-2 rounded-lg text-xs font-bold text-slate-500 hover:text-white transition-all filter-btn"
-          data-filter="favorites">Favoritos</button>
+          data-filter="favorites">Favoritos</button
+        >
       </div>
     </div>
 
@@ -154,6 +159,7 @@ import MainLayout from "../layouts/MainLayout.astro";
       </div>
 
       <h2
+        id="modal-title"
         class="text-xl font-bold text-white mb-4 relative z-10 flex items-center gap-2"
       >
         <div
@@ -174,12 +180,22 @@ import MainLayout from "../layouts/MainLayout.astro";
             ></path>
           </svg>
         </div>
-        Añadir Contacto
+        <span id="modal-title-text">Añadir Contacto</span>
       </h2>
 
-      <form id="form-add-contact" class="flex flex-col gap-4 relative z-10">
+      <form
+        id="form-add-contact"
+        class="flex flex-col gap-4 relative z-10"
+        autocomplete="off"
+      >
+        <input type="hidden" name="contactId" id="input-contactId" value="" />
+
+        <!-- Fake fields to trick browser autocomplete -->
+        <input type="text" style="display:none" />
+        <input type="password" style="display:none" />
+
         <!-- Input Cédula -->
-        <div class="relative group/input">
+        <div class="relative group/input" id="field-cedula-container">
           <label
             class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-2"
             >Cédula del Usuario</label
@@ -190,7 +206,7 @@ import MainLayout from "../layouts/MainLayout.astro";
               id="input-cedula"
               name="cedula"
               required
-              autocomplete="off"
+              autocomplete="new-password"
               placeholder="Ej: 8459201"
               class="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3.5 text-white focus:border-brand-lime/50 focus:outline-none transition-all placeholder:text-slate-600"
             />
@@ -235,8 +251,7 @@ import MainLayout from "../layouts/MainLayout.astro";
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
-              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            ></path>
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
           <span id="add-error-text">Error</span>
         </div>
@@ -273,9 +288,14 @@ import MainLayout from "../layouts/MainLayout.astro";
 
   // Modal
   const modal = document.getElementById("modal-add-contact");
+  const modalTitle = document.getElementById("modal-title-text");
   const btnOpen = document.getElementById("btn-open-modal");
   const btnClose = document.getElementById("btn-close-modal");
   const form = document.getElementById("form-add-contact");
+  const inputContactId = document.getElementById("input-contactId");
+  const fieldCedulaContainer = document.getElementById(
+    "field-cedula-container",
+  );
   const errorContainer = document.getElementById("add-error");
   const errorText = document.getElementById("add-error-text");
 
@@ -286,10 +306,13 @@ import MainLayout from "../layouts/MainLayout.astro";
   // --- STATE ---
   let allContacts = [];
   let currentFilter = "all";
+  let isEditMode = false;
 
   // --- MODAL LOGIC ---
-  function toggleModal(show) {
+  function toggleModal(show, editMode = false, contactData = null) {
     if (!modal) return;
+    isEditMode = editMode;
+
     if (show) {
       modal.classList.remove("opacity-0", "pointer-events-none");
       const inner = modal.querySelector("div");
@@ -297,7 +320,32 @@ import MainLayout from "../layouts/MainLayout.astro";
         inner.classList.remove("scale-95");
         inner.classList.add("scale-100");
       }
-      if (inputCedula) inputCedula.focus();
+
+      // Reset Form
+      if (form) form.reset();
+      if (errorContainer) errorContainer.classList.add("hidden");
+
+      if (editMode && contactData) {
+        modalTitle.innerText = "Editar Alias";
+        if (inputContactId) inputContactId.value = contactData.id;
+        if (inputCedula) {
+          inputCedula.value = contactData.cedula;
+          // Disable cedula editing
+          inputCedula.setAttribute("disabled", "true");
+          inputCedula.classList.add("opacity-50", "cursor-not-allowed");
+        }
+        const aliasInput = form.querySelector('input[name="alias"]');
+        if (aliasInput) aliasInput.value = contactData.alias;
+      } else {
+        modalTitle.innerText = "Añadir Contacto";
+        if (inputContactId) inputContactId.value = "";
+        if (inputCedula) {
+          inputCedula.value = "";
+          inputCedula.removeAttribute("disabled");
+          inputCedula.classList.remove("opacity-50", "cursor-not-allowed");
+          inputCedula.focus();
+        }
+      }
     } else {
       modal.classList.add("opacity-0", "pointer-events-none");
       const inner = modal.querySelector("div");
@@ -305,13 +353,12 @@ import MainLayout from "../layouts/MainLayout.astro";
         inner.classList.remove("scale-100");
         inner.classList.add("scale-95");
       }
-      if (form) form.reset();
-      if (errorContainer) errorContainer.classList.add("hidden");
       if (suggestionsBox) suggestionsBox.classList.add("hidden");
     }
   }
 
-  if (btnOpen) btnOpen.addEventListener("click", () => toggleModal(true));
+  if (btnOpen)
+    btnOpen.addEventListener("click", () => toggleModal(true, false));
   if (btnClose) btnClose.addEventListener("click", () => toggleModal(false));
 
   // --- LIVE SEARCH (AUTOCOMPLETE) ---
@@ -411,7 +458,7 @@ import MainLayout from "../layouts/MainLayout.astro";
 
     // Add Star Badge if favorite
     const favBadge = isFav
-      ? `<div class="absolute top-4 right-4 text-brand-lime"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.24 8.63 1.64-7.03L5.82 21l-1.63-4.73L12 2 9.24 7.19 8.63 1.63L14.36 21l-1.64-4.73L12 2 9.24 5.82 21z"/></svg></div>`
+      ? `<div class="absolute top-4 right-4 text-brand-lime"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>`
       : "";
 
     div.innerHTML = `
@@ -462,6 +509,9 @@ import MainLayout from "../layouts/MainLayout.astro";
                         <div class="p-1 flex flex-col gap-0.5">
                             <button class="w-full text-left px-3 py-2.5 text-xs font-medium text-slate-300 hover:bg-white/5 hover:text-white rounded-lg flex items-center gap-3 transition-colors btn-favorite" data-id="${contact.id}" data-fav="${isFav}">
                                 <span class="${isFav ? "text-brand-lime" : "text-slate-500"}">★</span> ${isFav ? "Quitar de Favoritos" : "Añadir a Favoritos"}
+                            </button>
+                            <button class="w-full text-left px-3 py-2.5 text-xs font-medium text-slate-300 hover:bg-white/5 hover:text-white rounded-lg flex items-center gap-3 transition-colors btn-edit" data-id="${contact.id}" data-alias="${contact.alias || ""}" data-cedula="${contact.cedula}">
+                                <span>✎</span> Editar Alias
                             </button>
                             <button class="w-full text-left px-3 py-2.5 text-xs font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300 rounded-lg flex items-center gap-3 transition-colors btn-delete" data-id="${contact.id}">
                                 <span>🗑</span> Eliminar Contacto
@@ -553,6 +603,16 @@ import MainLayout from "../layouts/MainLayout.astro";
     }
 
     // Attach Listeners to dynamic elements
+    document.querySelectorAll(".btn-edit").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const id = btn.getAttribute("data-id");
+        const cedula = btn.getAttribute("data-cedula");
+        const alias = btn.getAttribute("data-alias");
+
+        toggleModal(true, true, { id, cedula, alias });
+      });
+    });
+
     document.querySelectorAll(".btn-delete").forEach((btn) => {
       btn.addEventListener("click", async (e) => {
         const id = btn.getAttribute("data-id");
@@ -577,8 +637,7 @@ import MainLayout from "../layouts/MainLayout.astro";
           await userService.toggleFavorite(id, !isFav);
           loadContacts();
         } catch (err) {
-          console.error(err);
-          alert("Error al actualizar favorito");
+          alert(err.message);
         }
       });
     });
@@ -589,6 +648,7 @@ import MainLayout from "../layouts/MainLayout.astro";
     if (!grid) return;
     try {
       const data = await userService.getContacts();
+      errorContainer.classList.add("hidden");
       allContacts = data.contactos || [];
       renderGrid();
     } catch (error) {
@@ -622,13 +682,20 @@ import MainLayout from "../layouts/MainLayout.astro";
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const formData = new FormData(form);
+      const contactId = formData.get("contactId");
       const cedula = formData.get("cedula");
       const alias = formData.get("alias");
 
       errorContainer.classList.add("hidden");
 
       try {
-        await userService.addContact(cedula, alias);
+        if (isEditMode && contactId) {
+          // UPDATE existing
+          await userService.updateContact(contactId, alias);
+        } else {
+          // ADD new
+          await userService.addContact(cedula, alias);
+        }
         toggleModal(false);
         loadContacts();
       } catch (error) {

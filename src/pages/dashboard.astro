@@ -1,13 +1,13 @@
- ---
- import CapyPay from "../layouts/MainLayout.astro";
- import BalanceCard from "../components/BalanceCard.astro";
- import HistoryCard from "../components/HistoryCard.astro";
- import QuickPay from "../components/QuickPay.astro";
- import FinanceChart from "../components/FinanceChart.astro";
- import TransferWidget from "../components/TransferWidget.astro";
- import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
- import NivelBadge from "../components/NivelBadge.astro";
- ---
+---
+import CapyPay from "../layouts/MainLayout.astro";
+import BalanceCard from "../components/BalanceCard.astro";
+import HistoryCard from "../components/HistoryCard.astro";
+import QuickPay from "../components/QuickPay.astro";
+import FinanceChart from "../components/FinanceChart.astro";
+import TransferWidget from "../components/TransferWidget.astro";
+import ExchangeRateWidget from "../components/ExchangeRateWidget.astro";
+import NivelBadge from "../components/NivelBadge.astro";
+---
 
 <CapyPay title="Dashboard | CapyPay" showSidebar={true}>
   <!-- 
@@ -26,9 +26,14 @@
         <!-- Widget de Nivel -->
         <NivelBadge nombre="Bachiller" xp={1500} icono="🎓" />
         <!-- Saludo -->
-        <h1 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+        <h1
+          class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2"
+        >
           Hola, <span id="header-username">Cormex</span>
-          <span class="animate-wave origin-bottom-right inline-block text-2xl sm:text-3xl">👋</span>
+          <span
+            class="animate-wave origin-bottom-right inline-block text-2xl sm:text-3xl"
+            >👋</span
+          >
         </h1>
       </div>
       <!-- Campanita de Notificaciones y Cerrar Sesion -->
@@ -90,6 +95,7 @@
       <div class="relative group/search">
         <input
           type="text"
+          autocomplete="off"
           placeholder="Buscar contactos..."
           class="w-full bg-brand-black text-white text-sm rounded-xl pl-10 pr-4 py-2.5 sm:py-3 border border-white/10 focus:outline-none focus:border-brand-lime/50 focus:bg-black transition-all placeholder:text-slate-500"
         />
@@ -114,14 +120,14 @@
     </div>
 
     <!-- 
-      COLUMNA IZQUIERDA: Widgets (4 Columnas en Escritorio)
+      COLUMNA IZQUIERDA: Widgets (5 Columnas en Escritorio para más espacio)
       Movil: Contents (Los hijos se convierten en Orden 3, 4, 6)
     -->
     <aside
-      class="contents lg:col-span-4 lg:flex lg:flex-col lg:order-1 animate-fade-in-left gap-4 sm:gap-6 h-full min-h-0"
+      class="contents lg:col-span-5 lg:flex lg:flex-col lg:order-1 animate-fade-in-left gap-4 sm:gap-6 h-full min-h-0"
     >
       <div class="shrink-0 order-3 lg:order-0">
-        <BalanceCard amount="12,450.00" />
+        <BalanceCard amount="..." />
       </div>
 
       <div class="shrink-0 order-4 lg:order-0">
@@ -134,24 +140,31 @@
     </aside>
 
     <!-- 
-      COLUMNA PRINCIPAL (8 Columnas en Escritorio)
+      COLUMNA PRINCIPAL (7 Columnas en Escritorio)
       Movil: Contents (Encabezado Oculto, Hijos Orden 5, 7, 8)
     -->
     <section
-      class="contents lg:col-span-8 lg:flex lg:flex-col lg:order-2 animate-fade-in-up gap-4 sm:gap-6 h-full min-h-0"
+      class="contents lg:col-span-7 lg:flex lg:flex-col lg:order-2 animate-fade-in-up gap-4 sm:gap-6 h-full min-h-0"
     >
       <!-- Encabezado (Solo Escritorio) -->
       <header
         class="hidden lg:flex justify-between items-center bg-brand-black border border-white/10 rounded-3xl p-6 w-full shrink-0 isolate shadow-none animate-fade-in-down"
       >
         <div>
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white flex gap-3 items-center">
+          <h1
+            class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white flex gap-3 items-center"
+          >
             Hola, <span id="desktop-username">Cormex</span>
-            <span class="animate-wave origin-bottom-right inline-block text-4xl sm:text-5xl lg:text-6xl">👋</span>
+            <span
+              class="animate-wave origin-bottom-right inline-block text-4xl sm:text-5xl lg:text-6xl"
+              >👋</span
+            >
           </h1>
-          <p class="text-slate-400 text-sm sm:text-base mt-2 flex items-center gap-2">
+          <p
+            class="text-slate-400 text-sm sm:text-base mt-2 flex items-center gap-2"
+          >
             <span class="w-2 h-2 rounded-full bg-brand-lime"></span>
-            Último acceso: Hoy, 09:30 AM
+            <span id="last-access-display">Último acceso: Cargando...</span>
           </p>
         </div>
         <div
@@ -173,9 +186,7 @@
         <!-- COLUMNA CENTRAL (Transferencias/Tasa de Cambio) -->
         <div class="contents lg:flex lg:flex-col lg:gap-6 animate-fade-in-up">
           <!-- Widget de Transferencia (Orden 5) -->
-          <div
-            class="shrink-0 lg:flex-1 lg:min-h-50 order-5 lg:order-0"
-          >
+          <div class="shrink-0 lg:flex-1 lg:min-h-50 order-5 lg:order-0">
             <TransferWidget />
           </div>
           <!-- Widget de Tasa de Cambio (Orden 7) -->
@@ -193,10 +204,16 @@
           <div
             class="bg-brand-black border border-white/10 rounded-3xl flex flex-col h-full isolate shadow-none w-full overflow-hidden lg:min-h-0 min-h-75"
           >
-            <div class="p-4 sm:p-6 pb-3 sm:pb-4 shrink-0 border-b border-white/10">
+            <div
+              class="p-4 sm:p-6 pb-3 sm:pb-4 shrink-0 border-b border-white/10"
+            >
               <div class="flex flex-col gap-2">
                 <div class="flex items-center justify-between">
-                  <h2 class="text-base sm:text-lg lg:text-xl font-bold text-white">Actividad</h2>
+                  <h2
+                    class="text-base sm:text-lg lg:text-xl font-bold text-white"
+                  >
+                    Actividad
+                  </h2>
                   <a
                     href="/history"
                     class="text-[10px] sm:text-xs text-brand-lime hover:text-white transition-colors flex items-center gap-1 group"
@@ -284,8 +301,7 @@
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="1.5"
-              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 11-6 0v-1m6 0H9"
-            ></path>
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 11-6 0v-1m6 0H9"></path>
           </svg>
         </div>
 
@@ -298,11 +314,13 @@
           <button
             id="cancel-logout"
             class="flex-1 py-3 bg-white/5 hover:bg-white/10 text-white text-sm font-bold rounded-xl transition-colors"
-          >No</button>
+            >No</button
+          >
           <button
             id="confirm-logout"
             class="flex-1 py-3 bg-red-500 hover:bg-red-600 text-white text-sm font-bold rounded-xl shadow-[0_0_10px_rgba(239,68,68,0.3)] transition-colors"
-          >Sí, cerrar sesión</button>
+            >Sí, cerrar sesión</button
+          >
         </div>
       </div>
     </div>
@@ -372,7 +390,11 @@
 
   <script>
     // @ts-nocheck
-    import { authService, userService, notificationService } from "../services/api.js";
+    import {
+      authService,
+      userService,
+      notificationService,
+    } from "../services/api.js";
 
     let cachedMovements = [];
     let currentFilter = "all"; // 'all' | 'income' | 'expense'
@@ -516,8 +538,37 @@
         if (desktopName) desktopName.innerText = firstName;
       };
 
+      const updateLastAccess = (dateString) => {
+        const el = document.getElementById("last-access-display");
+        if (!el || !dateString) return;
+
+        const date = new Date(dateString);
+        const now = new Date();
+        const isToday = date.toDateString() === now.toDateString();
+
+        const timeStr = date.toLocaleTimeString("es-ES", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        });
+
+        if (isToday) {
+          el.innerText = `Último acceso: Hoy, ${timeStr}`;
+        } else {
+          const dateStr = date.toLocaleDateString("es-ES", {
+            month: "long",
+            day: "numeric",
+          });
+          el.innerText = `Último acceso: ${dateStr}, ${timeStr}`;
+        }
+      };
+
       if (user.nombre || user.name) {
         updateName(user.nombre || user.name);
+      }
+
+      if (user.last_login) {
+        updateLastAccess(user.last_login);
       }
 
       // Logout Mobile
@@ -638,11 +689,16 @@
 
           // Guardar XP en localStorage para que las otras cards usen el color correcto
           const xp = realUser.xp || realUser.puntos || 1500;
-          localStorage.setItem('capypay_user_xp', xp.toString());
+          localStorage.setItem("capypay_user_xp", xp.toString());
 
           // Actualizar Nombre si cambió
           if (realUser.nombre || realUser.name) {
             updateName(realUser.nombre || realUser.name);
+          }
+
+          // Actualizar Último Acceso
+          if (realUser.last_login) {
+            updateLastAccess(realUser.last_login);
           }
 
           // Cargar Historial

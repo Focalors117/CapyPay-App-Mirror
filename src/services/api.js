@@ -78,7 +78,8 @@ export const authService = {
             nombre: response.nombre,
             cedula: response.cedula,
             balance: response.balance,
-            xp: response.xp || 0
+            xp: response.xp || 0,
+            last_login: response.last_login // Nuevo campo
         };
         localStorage.setItem('capypay_user', JSON.stringify(userToSave));
     } else if (response.user || response.usuario || response.id) {
@@ -202,6 +203,13 @@ export const userService = {
       return fetchAPI(`/contactos/${contactId}/favorite`, {
           method: 'PUT',
           body: JSON.stringify({ is_favorite: isFavorite })
+      });
+  },
+
+  updateContact: async (contactId, alias) => {
+      return fetchAPI(`/contactos/${contactId}`, {
+          method: 'PUT',
+          body: JSON.stringify({ alias })
       });
   }
 };
