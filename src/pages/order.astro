@@ -164,10 +164,10 @@ import MainLayout from "../layouts/MainLayout.astro";
           const price = i.price_at_time || i.price || 0;
           return acc + price * i.quantity;
         }, 0);
-        
+
         // Use the SERVER stored total which includes commission
         const totalPagado = parseFloat(order.total) || subtotal;
-        
+
         // Calculate commission for display
         const comision = totalPagado - subtotal;
 
@@ -203,7 +203,9 @@ import MainLayout from "../layouts/MainLayout.astro";
                      </div>
                      
                      <!-- Subtotal & Commission Breakdown -->
-                     ${comision > 0 ? `
+                     ${
+                       comision > 0
+                         ? `
                      <div class="pt-3 border-t border-white/5 flex justify-between text-xs text-white/50">
                         <span>Subtotal</span>
                         <span>${subtotal.toFixed(2)}</span>
@@ -212,7 +214,9 @@ import MainLayout from "../layouts/MainLayout.astro";
                         <span>Tasa de Servicio (5%)</span>
                         <span>${comision.toFixed(2)}</span>
                      </div>
-                     ` : ''}
+                     `
+                         : ""
+                     }
                 </div>
 
                 <div class="border-t-2 border-dashed border-white/10 pt-6">
