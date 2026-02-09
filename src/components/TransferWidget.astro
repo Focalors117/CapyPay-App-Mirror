@@ -8,7 +8,9 @@
   <!-- Encabezado -->
   <div class="flex justify-between items-start mb-4 sm:mb-6 z-10">
     <div>
-      <h3 class="text-white text-lg sm:text-xl font-semibold flex items-center gap-2">
+      <h3
+        class="text-white text-lg sm:text-xl font-semibold flex items-center gap-2"
+      >
         Transferir
         <span
           class="text-xs sm:text-sm bg-brand-lime/10 text-brand-lime px-2.5 py-1 rounded-full border border-brand-lime/30"
@@ -37,7 +39,7 @@
     </button>
   </div>
 
-   <!-- Pestañas -->
+  <!-- Pestañas -->
   <div
     class="flex p-1 bg-black/40 rounded-xl border border-brand-lime/20 mb-4 sm:mb-6 z-10"
     id="transferTabs"
@@ -62,17 +64,19 @@
     class="flex flex-col gap-3 sm:gap-4 flex-1 z-10 transition-all duration-300 relative"
   >
     <div class="space-y-1 relative" id="contact-select-wrapper">
-      <label class="text-[10px] sm:text-xs text-slate-400 font-medium ml-1">Destinatario</label
+      <label class="text-[10px] sm:text-xs text-slate-400 font-medium ml-1"
+        >Destinatario</label
       >
       <!-- Select Personalizado -->
       <div class="relative">
-         <button
-           id="custom-select-trigger"
-           class="w-full bg-black/30 text-white text-xs sm:text-sm rounded-xl border border-white/10 py-2.5 sm:py-3 pl-4 sm:pl-4 pr-4 flex justify-between items-center hover:border-brand-lime/50 focus:outline-none focus:border-brand-lime/50 transition-all"
-           type="button"
-         >
-          <span class="text-slate-400 text-xs sm:text-sm" id="selected-contact-text"
-            >Selecciona un contacto...</span
+        <button
+          id="custom-select-trigger"
+          class="w-full bg-black/30 text-white text-xs sm:text-sm rounded-xl border border-white/10 py-2.5 sm:py-3 pl-4 sm:pl-4 pr-4 flex justify-between items-center hover:border-brand-lime/50 focus:outline-none focus:border-brand-lime/50 transition-all"
+          type="button"
+        >
+          <span
+            class="text-slate-400 text-xs sm:text-sm"
+            id="selected-contact-text">Selecciona un contacto...</span
           >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -107,23 +111,22 @@
     </div>
 
     <div class="space-y-1">
-      <label class="text-[10px] sm:text-xs text-slate-400 font-medium ml-1">Cantidad</label>
+      <label class="text-[10px] sm:text-xs text-slate-400 font-medium ml-1"
+        >Cantidad</label
+      >
       <div class="relative">
         <span
           class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-semibold"
           >$</span
         >
-         <input
-           id="contact-amount"
-           type="number"
-           placeholder="0.00"
-           autocomplete="off"
-           class="w-full bg-black/30 text-white text-base sm:text-lg font-bold rounded-xl border border-white/10 py-2.5 sm:py-3 pl-8 pr-4 outline-none focus:border-brand-lime/50 transition-all placeholder:text-slate-600"
-         />
+        <input
+          id="contact-amount"
+          type="number"
+          placeholder="0.00"
+          autocomplete="off"
+          class="w-full bg-black/30 text-white text-base sm:text-lg font-bold rounded-xl border border-white/10 py-2.5 sm:py-3 pl-8 pr-4 outline-none focus:border-brand-lime/50 transition-all placeholder:text-slate-600"
+        />
       </div>
-      <p class="text-[9px] sm:text-[10px] text-slate-500 text-right italic">
-        * Aplica comisión del servicio
-      </p>
     </div>
   </div>
 
@@ -137,12 +140,12 @@
         >Cédula del Destinatario</label
       >
       <div class="relative">
-         <input
-           id="external-identifier"
-           type="text"
-           placeholder="Ej: V-12345678"
-           class="w-full bg-black/30 text-white text-xs sm:text-sm rounded-xl border border-white/10 py-2.5 sm:py-3 pl-4 sm:pl-4 pr-4 outline-none focus:border-brand-lime/50 transition-all"
-         />
+        <input
+          id="external-identifier"
+          type="text"
+          placeholder="Ej: V-12345678"
+          class="w-full bg-black/30 text-white text-xs sm:text-sm rounded-xl border border-white/10 py-2.5 sm:py-3 pl-4 sm:pl-4 pr-4 outline-none focus:border-brand-lime/50 transition-all"
+        />
         <div
           class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500 hidden"
         >
@@ -168,22 +171,21 @@
     </div>
 
     <div class="space-y-1">
-      <label class="text-[10px] sm:text-xs text-slate-400 font-medium ml-1">Cantidad</label>
+      <label class="text-[10px] sm:text-xs text-slate-400 font-medium ml-1"
+        >Cantidad</label
+      >
       <div class="relative">
         <span
           class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-semibold"
           >$</span
         >
-         <input
-           id="external-amount"
-           type="number"
-           placeholder="0.00"
-           class="w-full bg-black/30 text-white text-base sm:text-lg font-bold rounded-xl border border-white/10 py-2.5 sm:py-3 pl-8 pr-4 outline-none focus:border-brand-lime/50 transition-all placeholder:text-slate-600"
-         />
+        <input
+          id="external-amount"
+          type="number"
+          placeholder="0.00"
+          class="w-full bg-black/30 text-white text-base sm:text-lg font-bold rounded-xl border border-white/10 py-2.5 sm:py-3 pl-8 pr-4 outline-none focus:border-brand-lime/50 transition-all placeholder:text-slate-600"
+        />
       </div>
-      <p class="text-[9px] sm:text-[10px] text-slate-500 text-right italic">
-        * Aplica comisión del servicio
-      </p>
     </div>
   </div>
 
