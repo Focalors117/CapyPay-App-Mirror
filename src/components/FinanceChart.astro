@@ -410,4 +410,10 @@
 
   // Iniciar
   initChart();
+
+  // Escuchar evento global para refrescar datos sin recargar (ej: tras transferencia)
+  document.addEventListener("capypay:refresh-data", () => {
+    console.log("Refrescando gráfico...");
+    initChart();
+  });
 </script>

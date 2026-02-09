@@ -145,7 +145,7 @@ import { cartItems, clearCart } from "../store/cartStore";
 
         // --- PRICE SYNC START ---
         try {
-          const CACHE_KEY = "capypay_menu_cache_v2";
+          const CACHE_KEY = "capypay_menu_cache_v3";
           // 7 Days validation (Matches Comedor)
           const CACHE_DURATION = 7 * 24 * 60 * 60 * 1000;
           let menuData = null;
@@ -288,6 +288,22 @@ import { cartItems, clearCart } from "../store/cartStore";
           const userId = user.id || user.usuarioId;
           if (!userId)
             throw new Error("ID de usuario no encontrado en sesión local");
+
+          // CALCULAR TOTAL LOCALMENTE PARA VALIDACIÓN PREVIA
+          const totalLocal = currentItems.reduce(
+            (acc, item) => acc + parseFloat(item.price) * item.quantity,
+            0,
+          );
+          const commissionLocal = Math.round(totalLocal * 0.05);
+          const grandTotal = totalLocal + commissionLocal;
+
+          const userBalance = parseFloat(user.balance || 0);
+
+          if (userBalance < grandTotal) {
+            throw new Error(
+              `Saldo insuficiente. Tienes ${userBalance.toFixed(2)} pero necesitas ${grandTotal.toFixed(2)}.`,
+            );
+          }
 
           // Prepare payload for Create Order
           // Backend expects { id, quantity }
