@@ -12,6 +12,13 @@ import "../styles/landing.css";
   <body>
     <header class="main-header">
       <div class="header-container">
+        <!-- Botón de menú hamburguesa -->
+        <button class="menu-hamburguesa" id="menuBtn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
         <div class="logo">
           <img
             src="/assets/landing/vectors/logocapinamedbottom.svg"
@@ -35,6 +42,20 @@ import "../styles/landing.css";
         </div>
       </div>
     </header>
+
+    <!-- Menú desplegable -->
+    <div class="menu-desplegable" id="menuDesplegable">
+      <div class="menu-contenido">
+        <h3 class="menu-titulo">Menú</h3>
+        <ul class="menu-lista">
+          <li><a href="#" class="menu-enlace">Sobre Nosotros</a></li>
+          <li><a href="#" class="menu-enlace">Términos y Condiciones</a></li>
+          <li><a href="#" class="menu-enlace">Política de Privacidad</a></li>
+          <li><a href="#" class="menu-enlace">Contacto</a></li>
+        </ul>
+        <button class="menu-cerrar" id="menuCerrar">✕</button>
+      </div>
+    </div>
 
     <main>
       <section class="hero-titulo-seccion">
@@ -330,5 +351,36 @@ import "../styles/landing.css";
         />
       </section>
     </main>
+
+    <script>
+      // Funcionalidad del menú hamburguesa
+      const menuBtn = document.getElementById('menuBtn');
+      const menuDesplegable = document.getElementById('menuDesplegable');
+      const menuCerrar = document.getElementById('menuCerrar');
+
+      if (menuBtn && menuDesplegable && menuCerrar) {
+        menuBtn.addEventListener('click', () => {
+          menuDesplegable.classList.add('active');
+        });
+
+        menuCerrar.addEventListener('click', () => {
+          menuDesplegable.classList.remove('active');
+        });
+
+        // Cerrar menú al hacer clic fuera del contenido
+        menuDesplegable.addEventListener('click', (e) => {
+          if (e.target === menuDesplegable) {
+            menuDesplegable.classList.remove('active');
+          }
+        });
+
+        // Cerrar menú al presionar la tecla Escape
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && menuDesplegable.classList.contains('active')) {
+            menuDesplegable.classList.remove('active');
+          }
+        });
+      }
+    </script>
   </body>
 </html>
