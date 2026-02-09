@@ -739,7 +739,32 @@
   }
 
   // --- NOTIFICATION LÓGIC ---
-  let showedNotifIds = new Set();
+  // Persistir IDs de notificaciones ya mostradas en localStorage
+  const SHOWN_NOTIFS_KEY = "capypay_shown_notifs";
+
+  function getShownNotifIds() {
+    try {
+      const stored = localStorage.getItem(SHOWN_NOTIFS_KEY);
+      return stored ? new Set(JSON.parse(stored)) : new Set();
+    } catch {
+      return new Set();
+    }
+  }
+
+  function saveShownNotifId(id) {
+    try {
+      const shown = getShownNotifIds();
+      shown.add(id);
+      // Mantener solo los últimos 100 IDs para no llenar localStorage
+      const arr = Array.from(shown).slice(-100);
+      localStorage.setItem(SHOWN_NOTIFS_KEY, JSON.stringify(arr));
+    } catch (e) {
+      console.error("Error saving notif id", e);
+    }
+  }
+
+  // Solo mostrar toasts en el dashboard
+  const isDashboard = window.location.pathname === "/dashboard";
 
   // 1. Polling System
   async function checkNotifications() {
@@ -752,20 +777,21 @@
         await notificationService.getNotifications(userId);
 
       if (notifications && notifications.length > 0) {
-        const unreadCount = notifications.filter((n) => !n.is_read).length;
+        const shownIds = getShownNotifIds();
 
-        // Handle Toasts (New Unread Notifications)
-        notifications.forEach((n) => {
-          if (!n.is_read && !showedNotifIds.has(n.id)) {
-            if (n.type === "payment_received") {
-              window.showToast(n.message, "success", "Pago Recibido");
-            } else {
-              window.showToast(n.message, "info", "Nueva Notificación");
+        // Handle Toasts (New Unread Notifications) - SOLO en dashboard
+        if (isDashboard) {
+          notifications.forEach((n) => {
+            if (!n.is_read && !shownIds.has(n.id)) {
+              if (n.type === "payment_received") {
+                window.showToast(n.message, "success", "Pago Recibido");
+              } else {
+                window.showToast(n.message, "info", "Nueva Notificación");
+              }
+              saveShownNotifId(n.id);
             }
-            showedNotifIds.add(n.id);
-          }
-          if (n.is_read) showedNotifIds.add(n.id);
-        });
+          });
+        }
       }
     } catch (e) {
       console.error("Polling error", e);
@@ -774,8 +800,10 @@
 
   // Poll every 10 seconds
   setInterval(checkNotifications, 10000);
-  // Initial check
-  setTimeout(checkNotifications, 2000);
+  // Initial check (solo en dashboard)
+  if (isDashboard) {
+    setTimeout(checkNotifications, 2000);
+  }
 
   const toggleContainer = document.getElementById("toggleContainer");
 
