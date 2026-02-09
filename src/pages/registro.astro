@@ -1,0 +1,93 @@
+---
+import "../styles/landing.css";
+// Layouts
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Súmate al Plan | CapyPay</title>
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="header-container">
+        <div class="logo">
+          <a href="/">
+            <img
+              src="/assets/landing/vectors/logocapinamedbottom.svg"
+              alt="CapyPay Logo"
+              style="width: 76px; height: 91.48px;"
+            />
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="contenedor-registro">
+        <div class="texto-hero">
+          <h1 class="titulo-hackea">
+            HACKEA EL <br />
+            SEMESTRE. <br />
+            PAGA EN SEGUNDOS!
+          </h1>
+          <p class="subtitulo-cero">CERO ESTRES</p>
+        </div>
+
+        <div class="card-registro">
+          <h2>CREAR CUENTA</h2>
+
+          <form class="form-neubrutalist" action="/dashboard" method="GET">
+            <!-- Nota: En un backend real, esto seria un POST a la API -->
+            <div class="input-group">
+              <label>Nombre</label>
+              <input type="text" placeholder="Escribe tu nombre" />
+            </div>
+
+            <div class="input-group">
+              <label>Correo Electrónico</label>
+              <input
+                type="email"
+                placeholder="Introduce tu correo electronico"
+              />
+            </div>
+
+            <div class="input-group">
+              <label>Contraseña</label>
+              <input type="password" placeholder="Introduce tu contraseña" />
+            </div>
+
+            <p class="login-link">
+              ¿Ya tienes una cuenta? <a
+                href="/login"
+                style="text-decoration: none; font-weight: bold;"
+                >Inicia Sesión</a
+              >
+            </p>
+
+            <button type="submit" class="btn-sumate">¡Súmate al Plan!</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Usando rutas relativas a public/assets/landing/vectors suponiendo que el usuario las pondra ahi o ya estan -->
+      <img
+        src="/assets/landing/vectors/manodosdedos.svg"
+        class="ilustracion-libre"
+        alt="Mano"
+      />
+      <img
+        src="/assets/landing/vectors/vectormoneda.svg"
+        class="ilustracion-fondo"
+        alt="Monedas Fondo"
+      />
+      <img
+        src="/assets/landing/vectors/vectormoneda.svg"
+        class="ilustracion-libre espejo"
+        alt="Mano Espejo"
+      />
+    </main>
+  </body>
+</html>
