@@ -1,7 +1,7 @@
 // src/services/api.js
 
 const BASE_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:3000';
-const API_URL = `${BASE_URL}/api`;
+const API_URL = BASE_URL.endsWith('/api') ? BASE_URL : `${BASE_URL}/api`;
 
 /**
  * Función genérica para hacer peticiones al backend
